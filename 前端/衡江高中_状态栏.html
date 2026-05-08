@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>衡江高中 - 学生终端</title>
+  
   <style>
 /* ===== 主题系统 - CSS 自定义属性 ===== */
 .theme-default {
@@ -60,62 +61,6 @@
 }
 
 
-/* ===== 主题系统 - CSS 自定义属性 ===== */
-.theme-default {
-  --bg-base: #0d0d1a;
-  --bg-surface: #16162a;
-  --bg-elevated: #1e1e3a;
-  --bg-glass: rgba(22, 22, 42, 0.7);
-  --border-subtle: #2a2a4a;
-  --border-moderate: #3a3a5a;
-  --text-primary: #e8e6f0;
-  --text-secondary: #a8a0c8;
-  --text-muted: #6a6478;
-  --accent: #7c5cfc;
-  --accent-glow: rgba(124, 92, 252, 0.4);
-  --accent-secondary: #5ce0c8;
-  --gold: #f0b840;
-  --gold-glow: rgba(240, 184, 64, 0.4);
-  --danger: #e8465e;
-  --danger-glow: rgba(232, 70, 94, 0.4);
-  --success: #3cc878;
-  --scroll-thumb: #3a3a5a;
-  --pbar-bg: #2a2a4a;
-  --tag-accent-bg: rgba(124, 92, 252, 0.15);
-  --tag-accent-color: #a08cfc;
-  --tag-gold-bg: rgba(240, 184, 64, 0.15);
-  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.3);
-}
-
-.theme-default:not(.dark),
-.theme-default.light {
-  --bg-base: #f0ecf5;
-  --bg-surface: #e0daf0;
-  --bg-elevated: #d0cae0;
-  --bg-glass: rgba(224, 218, 240, 0.7);
-  --border-subtle: #ccc8d8;
-  --border-moderate: #b0a8c0;
-  --text-primary: #1a1630;
-  --text-secondary: #5a5478;
-  --text-muted: #8a84a0;
-  --accent: #6c48e4;
-  --accent-glow: rgba(108, 72, 228, 0.3);
-  --accent-secondary: #48b4a0;
-  --gold: #b08020;
-  --gold-glow: rgba(176, 128, 32, 0.3);
-  --danger: #c0405a;
-  --danger-glow: rgba(192, 64, 90, 0.3);
-  --success: #30a068;
-  --scroll-thumb: #b0a8c0;
-  --pbar-bg: #d8d4e0;
-  --tag-accent-bg: rgba(108, 72, 228, 0.1);
-  --tag-accent-color: #5c38d4;
-  --tag-gold-bg: rgba(176, 128, 32, 0.1);
-  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.1);
-}
-
-</style>
-  <style>
 /* ===== 衡江高中 - 学生终端 v2.0 ===== */
 /* 设计: 校园档案风格 (Campus Archive Style) */
 
@@ -702,6 +647,7 @@ html, body {
   border-left: 3px solid var(--paper-border);
   box-shadow: -4px 0 24px rgba(0,0,0,0.5);
   overflow-y: auto;
+  position: relative;
   animation: slideInRight 0.3s ease;
 }
 @keyframes slideInRight { from { transform: translateX(100%); } to { transform: translateX(0); } }
@@ -952,7 +898,7 @@ html, body {
 
     <!-- 页脚 -->
     <div class="term-footer">
-      <span class="footer-tips">点击顶部或展开箭头可收起面板</span>
+      <span class="footer-tips">点击分区标题可收起/展开</span>
       <button class="collapse-btn" id="btn-collapse">⌃</button>
     </div>
   </div>
@@ -1209,6 +1155,7 @@ function populateData() {
 
   setEl('player-class', player.当前班级 || '未分班');
   setEl('player-money', `¥${player.金钱 ?? 0}`);
+  setEl('player-loc', player.当前位置 || '未知');
   setEl('player-action', player.当前行为 || '无');
   setEl('player-course', player.当前课程或活动 && player.当前课程或活动 !== '无' ? player.当前课程或活动 : '课间/休息');
 
@@ -1219,9 +1166,9 @@ function populateData() {
   if (fill) fill.style.width = `${stamina}%`;
 
   const sv = document.getElementById('player-stamina-val');
-  [sv, bar, fill].forEach(el => el?.classList.remove('warn', 'danger'));
-  if (stamina < 30) [sv, bar, fill].forEach(el => el?.classList.add('danger'));
-  else if (stamina < 50) [sv, bar, fill].forEach(el => el?.classList.add('warn'));
+  [sv, fill].forEach(el => el?.classList.remove('warn', 'danger'));
+  if (stamina < 30) [sv, fill].forEach(el => el?.classList.add('danger'));
+  else if (stamina < 50) [sv, fill].forEach(el => el?.classList.add('warn'));
 
   syncSummary();
   renderCharRoster();
@@ -1563,8 +1510,10 @@ async function init() {
   /* 图鉴搜索 */
   document.getElementById('album-search-btn')?.addEventListener('click', () => {
     const bar = document.getElementById('album-search-area');
-    if (bar) bar.style.display = bar.style.display !== 'none' ? 'block' : 'none';
-    if (bar?.style.display !== 'none') document.getElementById('album-search-input')?.focus();
+    if (!bar) return;
+    const isHidden = bar.style.display === 'none' || !bar.style.display;
+    bar.style.display = isHidden ? 'block' : 'none';
+    if (isHidden) document.getElementById('album-search-input')?.focus();
   });
   document.getElementById('album-search-input')?.addEventListener('input', function() {
     af.search = this.value.trim();
