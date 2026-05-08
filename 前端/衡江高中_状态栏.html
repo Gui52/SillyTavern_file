@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="theme-campus dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>衡江高中 - 学生终端</title>
+  <style>
+/* ===== 主题系统 - CSS 自定义属性 ===== */
+.theme-default {
+  --bg-base: #0d0d1a;
+  --bg-surface: #16162a;
+  --bg-elevated: #1e1e3a;
+  --bg-glass: rgba(22, 22, 42, 0.7);
+  --border-subtle: #2a2a4a;
+  --border-moderate: #3a3a5a;
+  --text-primary: #e8e6f0;
+  --text-secondary: #a8a0c8;
+  --text-muted: #6a6478;
+  --accent: #7c5cfc;
+  --accent-glow: rgba(124, 92, 252, 0.4);
+  --accent-secondary: #5ce0c8;
+  --gold: #f0b840;
+  --gold-glow: rgba(240, 184, 64, 0.4);
+  --danger: #e8465e;
+  --danger-glow: rgba(232, 70, 94, 0.4);
+  --success: #3cc878;
+  --scroll-thumb: #3a3a5a;
+  --pbar-bg: #2a2a4a;
+  --tag-accent-bg: rgba(124, 92, 252, 0.15);
+  --tag-accent-color: #a08cfc;
+  --tag-gold-bg: rgba(240, 184, 64, 0.15);
+  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+.theme-default:not(.dark),
+.theme-default.light {
+  --bg-base: #f0ecf5;
+  --bg-surface: #e0daf0;
+  --bg-elevated: #d0cae0;
+  --bg-glass: rgba(224, 218, 240, 0.7);
+  --border-subtle: #ccc8d8;
+  --border-moderate: #b0a8c0;
+  --text-primary: #1a1630;
+  --text-secondary: #5a5478;
+  --text-muted: #8a84a0;
+  --accent: #6c48e4;
+  --accent-glow: rgba(108, 72, 228, 0.3);
+  --accent-secondary: #48b4a0;
+  --gold: #b08020;
+  --gold-glow: rgba(176, 128, 32, 0.3);
+  --danger: #c0405a;
+  --danger-glow: rgba(192, 64, 90, 0.3);
+  --success: #30a068;
+  --scroll-thumb: #b0a8c0;
+  --pbar-bg: #d8d4e0;
+  --tag-accent-bg: rgba(108, 72, 228, 0.1);
+  --tag-accent-color: #5c38d4;
+  --tag-gold-bg: rgba(176, 128, 32, 0.1);
+  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+
+/* ===== 主题系统 - CSS 自定义属性 ===== */
+.theme-default {
+  --bg-base: #0d0d1a;
+  --bg-surface: #16162a;
+  --bg-elevated: #1e1e3a;
+  --bg-glass: rgba(22, 22, 42, 0.7);
+  --border-subtle: #2a2a4a;
+  --border-moderate: #3a3a5a;
+  --text-primary: #e8e6f0;
+  --text-secondary: #a8a0c8;
+  --text-muted: #6a6478;
+  --accent: #7c5cfc;
+  --accent-glow: rgba(124, 92, 252, 0.4);
+  --accent-secondary: #5ce0c8;
+  --gold: #f0b840;
+  --gold-glow: rgba(240, 184, 64, 0.4);
+  --danger: #e8465e;
+  --danger-glow: rgba(232, 70, 94, 0.4);
+  --success: #3cc878;
+  --scroll-thumb: #3a3a5a;
+  --pbar-bg: #2a2a4a;
+  --tag-accent-bg: rgba(124, 92, 252, 0.15);
+  --tag-accent-color: #a08cfc;
+  --tag-gold-bg: rgba(240, 184, 64, 0.15);
+  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+.theme-default:not(.dark),
+.theme-default.light {
+  --bg-base: #f0ecf5;
+  --bg-surface: #e0daf0;
+  --bg-elevated: #d0cae0;
+  --bg-glass: rgba(224, 218, 240, 0.7);
+  --border-subtle: #ccc8d8;
+  --border-moderate: #b0a8c0;
+  --text-primary: #1a1630;
+  --text-secondary: #5a5478;
+  --text-muted: #8a84a0;
+  --accent: #6c48e4;
+  --accent-glow: rgba(108, 72, 228, 0.3);
+  --accent-secondary: #48b4a0;
+  --gold: #b08020;
+  --gold-glow: rgba(176, 128, 32, 0.3);
+  --danger: #c0405a;
+  --danger-glow: rgba(192, 64, 90, 0.3);
+  --success: #30a068;
+  --scroll-thumb: #b0a8c0;
+  --pbar-bg: #d8d4e0;
+  --tag-accent-bg: rgba(108, 72, 228, 0.1);
+  --tag-accent-color: #5c38d4;
+  --tag-gold-bg: rgba(176, 128, 32, 0.1);
+  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+</style>
+  <style>
+/* ===== 衡江高中 - 学生终端 样式 ===== */
+
+/* --- 主题变量 --- */
+:root, .theme-campus.dark {
+  --bg-gradient: linear-gradient(135deg, #0f1419 0%, #1a2332 30%, #1f2b3f 60%, #182232 100%);
+  --card-bg: rgba(30, 38, 52, 0.95);
+  --card-bg-hover: rgba(35, 44, 60, 0.98);
+  --text-main: #e2e8f0;
+  --text-sub: #cbd5e0;
+  --text-muted: #718096;
+  --border-color: rgba(255, 255, 255, 0.08);
+  --primary-color: #38b2e8;
+  --primary-light: #81d4f0;
+  --primary-dark: #2980b9;
+  --secondary-color: #9f7aea;
+  --secondary-light: #c3a5f0;
+  --accent-color: #f6ad55;
+  --accent-light: #fcd5a0;
+  --success-color: #48bb78;
+  --success-light: #9ae6b4;
+  --danger-color: #f56565;
+  --danger-light: #feb2b2;
+  --warning-color: #ed8936;
+  --shadow-sm: 0 2px 8px rgba(56, 178, 232, 0.08);
+  --shadow-md: 0 4px 16px rgba(56, 178, 232, 0.12);
+  --shadow-lg: 0 8px 32px rgba(56, 178, 232, 0.16);
+  --shadow-card: 0 2px 12px rgba(56, 178, 232, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-card-hover: 0 12px 32px rgba(56, 178, 232, 0.18), 0 4px 8px rgba(0, 0, 0, 0.08);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --safe-area-top: env(safe-area-inset-top, 0px);
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.theme-campus:not(.dark),
+.theme-campus.light {
+  --bg-gradient: linear-gradient(135deg, #e8f5f9 0%, #f0f4f8 25%, #f5f0e6 50%, #faf5f0 75%, #e8f0f4 100%);
+  --card-bg: rgba(255, 255, 255, 0.94);
+  --card-bg-hover: rgba(255, 255, 255, 0.98);
+  --text-main: #2d3748;
+  --text-sub: #4a5568;
+  --text-muted: #a0aec0;
+  --border-color: rgba(255, 255, 255, 0.7);
+  --primary-color: #38b2e8;
+  --primary-light: #81d4f0;
+  --primary-dark: #2980b9;
+  --secondary-color: #9f7aea;
+  --secondary-light: #c3a5f0;
+  --accent-color: #f6ad55;
+  --accent-light: #fcd5a0;
+  --success-color: #48bb78;
+  --success-light: #9ae6b4;
+  --danger-color: #f56565;
+  --danger-light: #feb2b2;
+  --warning-color: #ed8936;
+  --shadow-sm: 0 2px 8px rgba(56, 178, 232, 0.08);
+  --shadow-md: 0 4px 16px rgba(56, 178, 232, 0.12);
+  --shadow-lg: 0 8px 32px rgba(56, 178, 232, 0.16);
+  --shadow-card: 0 2px 12px rgba(56, 178, 232, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-card-hover: 0 12px 32px rgba(56, 178, 232, 0.18), 0 4px 8px rgba(0, 0, 0, 0.08);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --safe-area-top: env(safe-area-inset-top, 0px);
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* --- 基础 --- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  background: transparent;
+  color: var(--text-main);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- 仪表板 --- */
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 6px;
+  background: var(--bg-gradient);
+  border-radius: 16px;
+  box-shadow: var(--shadow-lg);
+  max-width: 500px;
+}
+
+/* --- 顶部卡片 --- */
+.header-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-wrap: wrap;
+  position: relative;
+}
+.header-card:hover { background: var(--card-bg-hover); box-shadow: var(--shadow-card-hover); }
+
+.header-left { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.school-logo {
+  width: 40px; height: 40px;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; font-weight: 700; color: #fff;
+}
+.header-info h1 { font-size: 16px; font-weight: 700; line-height: 1.2; }
+.header-info span { font-size: 11px; color: var(--text-muted); }
+
+.header-center { flex: 1; text-align: center; min-width: 120px; }
+.header-date { font-size: 13px; font-weight: 600; }
+.header-time { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+.header-right { flex-shrink: 0; }
+.header-btn {
+  width: 32px; height: 32px; border: 1px solid var(--border-color);
+  background: var(--card-bg); border-radius: 50%; cursor: pointer;
+  font-size: 16px; display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.header-btn:hover { background: var(--card-bg-hover); transform: scale(1.1); }
+
+.header-summary {
+  display: flex; gap: 8px; flex-wrap: wrap;
+  width: 100%; margin-top: 2px; padding-top: 8px;
+  border-top: 1px solid var(--border-color);
+}
+.header-chip {
+  display: flex; align-items: center; gap: 4px;
+  background: var(--card-bg); padding: 4px 10px; border-radius: 20px;
+  border: 1px solid var(--border-color); font-size: 11px;
+}
+.header-chip-icon { font-size: 12px; }
+.header-chip-text { display: flex; flex-direction: column; line-height: 1.2; }
+.header-chip-label { font-size: 9px; color: var(--text-muted); }
+.header-chip-value { font-weight: 600; font-size: 11px; }
+
+.expand-indicator {
+  position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 4px;
+  background: var(--card-bg); padding: 2px 12px; border-radius: 10px;
+  border: 1px solid var(--border-color); font-size: 10px; color: var(--text-muted);
+  box-shadow: var(--shadow-sm);
+}
+.expand-arrow { font-size: 14px; transition: transform 0.3s; }
+
+/* --- 折叠卡片 --- */
+.card {
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.card:hover { box-shadow: var(--shadow-card-hover); }
+
+.card-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px; cursor: pointer;
+  transition: background 0.2s;
+}
+.card-header:hover { background: var(--card-bg-hover); }
+
+.card-title { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 13px; }
+.card-icon {
+  width: 28px; height: 28px; border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center; font-size: 14px;
+}
+
+.toggle-btn { background: none; border: none; cursor: pointer; padding: 4px; color: var(--text-muted); font-size: 12px; transition: transform 0.3s; }
+.card.collapsed .toggle-btn .toggle-arrow { transform: rotate(-90deg); display: inline-block; }
+
+.card-body { padding: 0 16px 16px; transition: all 0.3s; }
+.card.collapsed .card-body { display: none; }
+
+/* --- 环境网格 --- */
+.env-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.env-item {
+  padding: 10px; background: var(--card-bg);
+  border: 1px solid var(--border-color); border-radius: var(--radius-sm);
+  text-align: center; transition: all 0.2s;
+}
+.env-icon { font-size: 20px; margin-bottom: 4px; }
+.env-label { font-size: 10px; color: var(--text-muted); margin-bottom: 2px; }
+.env-value { font-size: 13px; font-weight: 600; }
+
+/* --- 状态 --- */
+.status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.status-item {
+  padding: 10px; background: var(--card-bg);
+  border: 1px solid var(--border-color); border-radius: var(--radius-sm);
+  display: flex; flex-direction: column; gap: 2px;
+}
+.status-item.full { grid-column: 1 / -1; }
+.status-label { font-size: 10px; color: var(--text-muted); }
+.status-value { font-size: 13px; font-weight: 600; }
+.status-value.highlight { color: var(--primary-color); }
+
+.stamina-section { margin-top: 12px; }
+.stamina-header { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 12px; }
+.stamina-label { font-weight: 600; }
+.stamina-value { color: var(--text-muted); }
+.stamina-value.warning { color: var(--warning-color); }
+.stamina-value.danger { color: var(--danger-color); }
+
+.stamina-bar {
+  height: 8px; background: var(--border-color); border-radius: 4px; overflow: hidden;
+}
+.stamina-fill {
+  height: 100%; background: linear-gradient(90deg, var(--success-color), var(--primary-color));
+  border-radius: 4px; transition: width 0.5s ease;
+}
+.stamina-fill.warning { background: linear-gradient(90deg, var(--warning-color), var(--accent-color)); }
+.stamina-fill.danger { background: linear-gradient(90deg, var(--danger-color), #e53e3e); }
+
+.quick-actions { display: flex; gap: 8px; margin-top: 12px; }
+.quick-btn {
+  flex: 1; padding: 8px; border: 1px solid var(--border-color);
+  background: var(--card-bg); border-radius: var(--radius-sm);
+  color: var(--text-main); font-size: 12px; cursor: pointer;
+  transition: all 0.2s;
+}
+.quick-btn:hover { background: var(--card-bg-hover); border-color: var(--primary-color); }
+
+/* --- 社交 --- */
+.social-summary {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px; background: var(--card-bg);
+  border: 1px solid var(--border-color); border-radius: var(--radius-sm);
+  margin-bottom: 8px;
+}
+.social-count {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent-color), var(--accent-light));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 700; color: #fff; flex-shrink: 0;
+}
+.social-title { font-weight: 600; font-size: 13px; }
+.social-desc { font-size: 11px; color: var(--text-muted); }
+
+.char-list { display: flex; flex-direction: column; gap: 6px; }
+
+.char-card {
+  display: flex; flex-direction: column; gap: 6px;
+  padding: 10px 12px; background: var(--card-bg);
+  border: 1px solid var(--border-color); border-radius: var(--radius-sm);
+  cursor: pointer; transition: all 0.2s;
+}
+.char-card:hover { background: var(--card-bg-hover); border-color: var(--primary-color); transform: translateX(4px); }
+
+.char-header { display: flex; justify-content: space-between; align-items: center; }
+.char-name { display: flex; align-items: center; gap: 6px; font-weight: 600; font-size: 13px; }
+.char-avatar {
+  width: 24px; height: 24px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; color: #fff; font-weight: 700; flex-shrink: 0;
+}
+.char-relation { font-size: 11px; color: var(--text-muted); padding: 2px 8px; background: var(--border-color); border-radius: 10px; }
+.char-affection { display: flex; justify-content: space-between; font-size: 11px; }
+.char-affection-label { color: var(--text-muted); }
+.char-affection-value { font-weight: 600; }
+.char-bar { height: 4px; background: var(--border-color); border-radius: 2px; overflow: hidden; }
+.char-bar-fill { height: 100%; background: linear-gradient(90deg, var(--primary-color), var(--accent-color)); border-radius: 2px; transition: width 0.5s ease; }
+
+.empty-state { text-align: center; padding: 20px; color: var(--text-muted); font-size: 13px; font-style: italic; }
+
+/* --- 模态框 --- */
+.modal-overlay {
+  display: none; position: fixed; inset: 0; z-index: 9999;
+  background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px);
+  justify-content: center; align-items: center;
+  padding: 20px; animation: fadeIn 0.2s ease;
+}
+.modal-overlay.active { display: flex; }
+
+.modal-content {
+  background: var(--card-bg); border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl); width: 100%; max-width: 340px;
+  box-shadow: var(--shadow-lg); overflow: hidden; position: relative;
+  animation: slideUp 0.3s ease;
+}
+
+.modal-header {
+  text-align: center; padding: 24px 20px 16px;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: #fff; position: relative;
+}
+.modal-close {
+  position: absolute; top: 8px; right: 12px;
+  background: rgba(255,255,255,0.2); border: none; color: #fff;
+  width: 28px; height: 28px; border-radius: 50%; cursor: pointer;
+  font-size: 16px; display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+}
+.modal-close:hover { background: rgba(255,255,255,0.35); }
+
+.modal-avatar {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: rgba(255,255,255,0.25); margin: 0 auto 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; font-weight: 700;
+}
+.modal-name { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+.modal-relation { font-size: 12px; opacity: 0.85; display: inline-block; background: rgba(255,255,255,0.15); padding: 2px 10px; border-radius: 10px; }
+
+.modal-body { padding: 20px; }
+
+.modal-affection { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+.modal-affection-label { font-size: 12px; color: var(--text-muted); }
+.modal-affection-value { font-size: 22px; font-weight: 700; color: var(--accent-color); }
+.modal-affection-value span { font-size: 13px; color: var(--text-muted); font-weight: 400; }
+
+.modal-bar { height: 8px; background: var(--border-color); border-radius: 4px; overflow: hidden; margin-bottom: 16px; }
+.modal-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent-color), var(--danger-color)); border-radius: 4px; transition: width 0.5s ease; }
+
+.modal-level { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+.level-badge {
+  padding: 4px 12px; border-radius: 12px; font-size: 11px;
+  background: var(--border-color); color: var(--text-muted);
+  transition: all 0.2s;
+}
+.level-badge.active { background: var(--accent-color); color: #fff; font-weight: 600; }
+
+/* --- 动画 --- */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+</style>
+</head>
+<body>
+  <div class="dashboard">
+    <div class="header-card" id="header-toggle" role="button" tabindex="0" aria-expanded="false" aria-controls="card-env card-status card-social">
+      <div class="header-left">
+        <div class="school-logo">衡</div>
+        <div class="header-info">
+          <h1>衡江高中</h1>
+          <span>Student Terminal</span>
+        </div>
+      </div>
+      <div class="header-center">
+        <div class="header-date" id="sys-date">----年-月-日</div>
+        <div class="header-time" id="sys-time">---- --:--</div>
+      </div>
+      <div class="header-right">
+        <button class="header-btn" id="toggle-theme" title="切换主题" aria-label="切换主题">🌙</button>
+      </div>
+      <div class="header-summary" aria-label="快速状态概览">
+        <div class="header-chip">
+          <span class="header-chip-text">
+            <span class="header-chip-label">位置</span>
+            <span class="header-chip-value" id="summary-loc">未知</span>
+          </span>
+        </div>
+        <div class="header-chip">
+          <span class="header-chip-text">
+            <span class="header-chip-label">行为</span>
+            <span class="header-chip-value" id="summary-action">无</span>
+          </span>
+        </div>
+        <div class="header-chip">
+          <span class="header-chip-text">
+            <span class="header-chip-label">体力</span>
+            <span class="header-chip-value" id="summary-stamina">0/100</span>
+          </span>
+        </div>
+        <div class="header-chip">
+          <span class="header-chip-text">
+            <span class="header-chip-label">相遇</span>
+            <span class="header-chip-value" id="summary-social">0</span>
+          </span>
+        </div>
+      </div>
+      <div class="expand-indicator">
+        <span class="expand-label">展开</span>
+        <span class="expand-arrow">⌄</span>
+      </div>
+    </div>
+
+    <div class="card" id="card-env">
+      <div class="card-header" role="button" tabindex="0" aria-expanded="true">
+        <div class="card-title">
+          <div class="card-icon" style="background: linear-gradient(135deg, #38b2e8, #81d4f0);">🌤</div>
+          校园环境
+        </div>
+        <button class="toggle-btn"><span class="toggle-arrow">▼</span></button>
+      </div>
+      <div class="card-body">
+        <div class="env-grid">
+          <div class="env-item"><div class="env-icon">📅</div><div class="env-label">日期</div><div class="env-value" id="env-date">----</div></div>
+          <div class="env-item"><div class="env-icon">🌡</div><div class="env-label">气候</div><div class="env-value" id="sys-env">----</div></div>
+          <div class="env-item"><div class="env-icon">🎉</div><div class="env-label">事件</div><div class="env-value" id="sys-festival">----</div></div>
+          <div class="env-item"><div class="env-icon">📍</div><div class="env-label">位置</div><div class="env-value" id="player-loc">----</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" id="card-status">
+      <div class="card-header" role="button" tabindex="0" aria-expanded="true">
+        <div class="card-title">
+          <div class="card-icon" style="background: linear-gradient(135deg, #48bb78, #9ae6b4);">👤</div>
+          当前状态
+        </div>
+        <button class="toggle-btn"><span class="toggle-arrow">▼</span></button>
+      </div>
+      <div class="card-body">
+        <div class="status-grid">
+          <div class="status-item"><div class="status-label">班级</div><div class="status-value" id="player-class">----</div></div>
+          <div class="status-item"><div class="status-label">余额</div><div class="status-value highlight" id="player-money">----</div></div>
+          <div class="status-item full"><div class="status-label">当前行为</div><div class="status-value" id="player-action">----</div></div>
+          <div class="status-item full"><div class="status-label">课程/活动</div><div class="status-value highlight" id="player-course">----</div></div>
+        </div>
+        <div class="stamina-section">
+          <div class="stamina-header">
+            <span class="stamina-label">⚡ 体力状态</span>
+            <span class="stamina-value" id="player-stamina-val">0/100</span>
+          </div>
+          <div class="stamina-bar">
+            <div class="stamina-fill" id="player-stamina-bar" style="width: 0%"></div>
+          </div>
+        </div>
+        <div class="quick-actions">
+          <button class="quick-btn" id="quick-rest">🏠 休息恢复</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" id="card-social">
+      <div class="card-header" role="button" tabindex="0" aria-expanded="true">
+        <div class="card-title">
+          <div class="card-icon" style="background: linear-gradient(135deg, #ed8936, #fbd38d);">💕</div>
+          社交关系
+        </div>
+        <button class="toggle-btn"><span class="toggle-arrow">▼</span></button>
+      </div>
+      <div class="card-body">
+        <div class="social-summary">
+          <div class="social-count" id="social-count">0</div>
+          <div class="social-info">
+            <div class="social-title">已相遇角色</div>
+            <div class="social-desc" id="social-desc">等待相遇...</div>
+          </div>
+        </div>
+        <div class="char-list" id="social-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="char-modal">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-name">
+      <div class="modal-header">
+        <button class="modal-close" id="modal-close">✕</button>
+        <div class="modal-avatar" id="modal-avatar">?</div>
+        <div class="modal-name" id="modal-name">角色名称</div>
+        <span class="modal-relation" id="modal-relation">关系</span>
+      </div>
+      <div class="modal-body">
+        <div class="modal-affection">
+          <div class="modal-affection-label">好感度</div>
+          <div class="modal-affection-value" id="modal-affection-value">0 <span>/ 100</span></div>
+        </div>
+        <div class="modal-bar"><div class="modal-bar-fill" id="modal-bar-fill" style="width: 0%"></div></div>
+        <div class="modal-level" id="modal-levels"></div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+
+/* ===== 公共工具函数 ===== */
+
+/** 获取 MVU 数据 */
+export function getMvuData() {
+  try {
+    return window.Mvu?.getMvuData() ?? {};
+  } catch { return {} }
+}
+
+/** 安全获取嵌套值 */
+export function get(obj, path, fallback = null) {
+  try {
+    const keys = String(path).split('.');
+    let cur = obj;
+    for (const k of keys) {
+      if (cur == null || typeof cur !== 'object') return fallback;
+      cur = cur[k];
+    }
+    return cur ?? fallback;
+  } catch { return fallback }
+}
+
+/** 获取稀有度 class */
+export function rarityClass(rarity) {
+  if (rarity === 'SSR') return 'rarity-ssr';
+  if (rarity === 'SR') return 'rarity-sr';
+  return 'rarity-r';
+}
+
+/** 切换折叠面板 */
+export function togglePanel(headerEl) {
+  const content = headerEl.nextElementSibling;
+  headerEl.classList.toggle('expanded');
+  if (content) {
+    content.style.display = content.style.display === 'none' ? 'block' : 'none';
+  }
+}
+
+/** 设置面板折叠 */
+export function setupCollapsiblePanels(container) {
+  container.querySelectorAll('.panel-header').forEach(header => {
+    header.addEventListener('click', () => togglePanel(header));
+  });
+}
+
+/** 主题管理 */
+export const ThemeManager = {
+  container: null,
+
+  init(containerEl) {
+    this.container = containerEl;
+    this.restore();
+  },
+
+  restore() {
+    try {
+      const theme = localStorage.getItem('ui_theme') || 'theme-default';
+      const dark = localStorage.getItem('ui_dark');
+      if (this.container) {
+        this.container.className = theme;
+        if (dark === '1' || (dark === null && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          this.container.classList.add('dark');
+        }
+      }
+    } catch {}
+  },
+
+  setTheme(name) {
+    if (!this.container) return;
+    this.container.className = name;
+    const isDark = this.container.classList.contains('dark');
+    if (!isDark) this.container.classList.remove('dark');
+    try { localStorage.setItem('ui_theme', name) } catch {}
+  },
+
+  toggleDark() {
+    if (!this.container) return;
+    this.container.classList.toggle('dark');
+    try {
+      localStorage.setItem('ui_dark', this.container.classList.contains('dark') ? '1' : '0');
+    } catch {}
+  }
+};
+
+/** 等待 MVU 初始化 */
+export function waitMvu() {
+  return new Promise(resolve => {
+    if (window.Mvu?.getMvuData) return resolve();
+    const check = setInterval(() => {
+      if (window.Mvu?.getMvuData) {
+        clearInterval(check);
+        resolve();
+      }
+    }, 100);
+    setTimeout(() => { clearInterval(check); resolve() }, 10000);
+  });
+}
+
+
+/* ===== 工具 ===== */
+function pad(num) {
+  return num < 10 ? '0' + num : num;
+}
+
+/* ===== 数据填充 ===== */
+function populateData() {
+  const vars = getMvuData();
+  const sysTime = get(vars, 'stat_data.系统.时间', {});
+  const sysEnv = get(vars, 'stat_data.系统.环境', {});
+  const player = get(vars, 'stat_data.主角', {});
+
+  const dateStr = `${sysTime.年 || '---'}年${sysTime.月 || '-'}月${sysTime.日 || '-'}日`;
+  const timeStr = `${pad(sysTime.时 || 0)}:${pad(sysTime.分 || 0)}`;
+  setText('sys-date', dateStr);
+  setText('sys-time', `${sysTime.星期 || '---'} ${timeStr}`);
+  setText('env-date', dateStr);
+  setText('sys-env', `${sysEnv.季节 || '-'}季 / ${sysEnv.天气 || '-'}`);
+  setText('sys-festival', sysEnv.特殊节日 && sysEnv.特殊节日 !== '无' ? sysEnv.特殊节日 : '日常');
+
+  const weather = sysEnv.天气 || '晴';
+  document.querySelectorAll('.env-item').forEach(item => {
+    item.classList.remove('weather-sunny', 'weather-rainy');
+    if (weather === '晴' || weather === '多云') item.classList.add('weather-sunny');
+    else if (weather === '小雨' || weather === '雷阵雨') item.classList.add('weather-rainy');
+  });
+
+  setText('player-class', player.当前班级 || '未分班');
+  setText('player-loc', player.当前位置 || '未知');
+  setText('player-action', player.当前行为 || '无');
+  setText('player-money', `¥${player.金钱 || 0}`);
+  setText('player-course', player.当前课程或活动 && player.当前课程或活动 !== '无' ? player.当前课程或活动 : '课间/休息');
+
+  const stamina = player.体力 || 0;
+  const staminaVal = document.getElementById('player-stamina-val');
+  const staminaBar = document.getElementById('player-stamina-bar');
+  if (staminaVal) staminaVal.textContent = `${stamina}/100`;
+  if (staminaBar) staminaBar.style.width = `${stamina}%`;
+
+  if (staminaVal) staminaVal.classList.remove('warning', 'danger');
+  if (staminaBar) staminaBar.classList.remove('warning', 'danger');
+  if (stamina < 30) {
+    if (staminaVal) staminaVal.classList.add('danger');
+    if (staminaBar) staminaBar.classList.add('danger');
+  } else if (stamina < 50) {
+    if (staminaVal) staminaVal.classList.add('warning');
+    if (staminaBar) staminaBar.classList.add('warning');
+  }
+
+  /* 社交 */
+  const charsData = get(vars, 'stat_data.角色', {});
+  let charHtml = '';
+  let metCount = 0;
+
+  Object.keys(charsData).forEach(charName => {
+    const charInfo = charsData[charName];
+    if (charInfo && charInfo.已相遇 === true) {
+      metCount++;
+      const affection = charInfo.好感度 || 0;
+      const relation = charInfo.关系状态 || '陌生人';
+      const initial = charName.charAt(0);
+      charHtml += `
+        <div class="char-card" data-char="${charName}" data-affection="${affection}" data-relation="${relation}" role="button" tabindex="0">
+          <div class="char-header">
+            <span class="char-name"><span class="char-avatar">${initial}</span>${charName}</span>
+            <span class="char-relation">${relation}</span>
+          </div>
+          <div class="char-affection">
+            <span class="char-affection-label">好感度</span>
+            <span class="char-affection-value">${affection}/100</span>
+          </div>
+          <div class="char-bar"><div class="char-bar-fill" style="width: ${affection}%"></div></div>
+        </div>`;
+    }
+  });
+
+  setText('social-count', String(metCount));
+  setText('social-desc', metCount > 0 ? '已相遇的角色' : '等待相遇...');
+
+  const socialList = document.getElementById('social-list');
+  if (socialList) {
+    socialList.innerHTML = metCount === 0
+      ? '<div class="empty-state">茫茫人海中，你还在等待那场注定的相遇...</div>'
+      : charHtml;
+  }
+
+  syncCompactSummary();
+}
+
+function setText(id, text) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = text;
+}
+
+function syncCompactSummary() {
+  const getText = (id) => document.getElementById(id)?.textContent || '未知';
+  setText('summary-loc', getText('player-loc'));
+  setText('summary-action', getText('player-action'));
+  setText('summary-stamina', getText('player-stamina-val'));
+  setText('summary-social', getText('social-count'));
+}
+
+/* ===== 主题管理 ===== */
+function loadTheme() {
+  try {
+    const saved = localStorage.getItem('status-bar-theme');
+    if (saved === 'light') {
+      document.documentElement.classList.remove('dark');
+      document.getElementById('toggle-theme').textContent = '☀️';
+    } else {
+      document.documentElement.classList.add('dark');
+      document.getElementById('toggle-theme').textContent = '🌙';
+    }
+  } catch {}
+}
+
+function saveTheme(isDark) {
+  try { localStorage.setItem('status-bar-theme', isDark ? 'dark' : 'light') } catch {}
+}
+
+/* ===== 折叠管理 ===== */
+function toggleCardCollapse(card) {
+  const isCollapsed = card.classList.toggle('collapsed');
+  const header = card.querySelector('.card-header');
+  if (header) header.setAttribute('aria-expanded', String(!isCollapsed));
+  saveCollapseState(card.id, isCollapsed);
+}
+
+function toggleExpand() {
+  const dashboard = document.querySelector('.dashboard');
+  const isExpanded = dashboard.classList.toggle('expanded');
+  try { localStorage.setItem('status-bar-expanded', String(isExpanded)) } catch {}
+  updateExpandIndicator();
+}
+
+function updateExpandIndicator() {
+  const isExpanded = document.querySelector('.dashboard')?.classList.contains('expanded');
+  document.querySelector('.expand-label').textContent = isExpanded ? '收起' : '展开';
+  document.getElementById('header-toggle')?.setAttribute('aria-expanded', String(isExpanded));
+  document.querySelector('.expand-arrow').textContent = isExpanded ? '⌃' : '⌄';
+}
+
+function loadCollapseStates() {
+  try {
+    const isExpanded = localStorage.getItem('status-bar-expanded') === 'true';
+    if (isExpanded) document.querySelector('.dashboard')?.classList.add('expanded');
+    const states = JSON.parse(localStorage.getItem('status-bar-collapse') || '{}');
+    Object.keys(states).forEach(id => {
+      if (states[id]) document.getElementById(id)?.classList.add('collapsed');
+    });
+  } catch {}
+}
+
+function saveCollapseState(id, isCollapsed) {
+  try {
+    const states = JSON.parse(localStorage.getItem('status-bar-collapse') || '{}');
+    states[id] = isCollapsed;
+    localStorage.setItem('status-bar-collapse', JSON.stringify(states));
+  } catch {}
+}
+
+/* ===== 好感度等级 ===== */
+function getAffectionLevel(affection) {
+  if (affection >= 90) return { level: '家人', color: 'var(--danger-color)' };
+  if (affection >= 75) return { level: '恋人', color: 'var(--accent-color)' };
+  if (affection >= 60) return { level: '在意', color: 'var(--success-color)' };
+  if (affection >= 40) return { level: '朋友', color: 'var(--primary-color)' };
+  if (affection >= 20) return { level: '已相识', color: 'var(--text-sub)' };
+  return { level: '陌生人', color: 'var(--text-muted)' };
+}
+
+/* ===== 模态框 ===== */
+function showCharModal(charName, affection, relation) {
+  const initial = charName.charAt(0);
+  const levelInfo = getAffectionLevel(affection);
+
+  setText('modal-avatar', initial);
+  setText('modal-name', charName);
+  setText('modal-relation', relation);
+  const affVal = document.getElementById('modal-affection-value');
+  if (affVal) affVal.innerHTML = `${affection} <span>/ 100</span>`;
+  const barFill = document.getElementById('modal-bar-fill');
+  if (barFill) barFill.style.width = `${affection}%`;
+
+  const levels = ['陌生人', '已相识', '朋友', '在意', '恋人', '家人'];
+  const modalLevels = document.getElementById('modal-levels');
+  if (modalLevels) {
+    modalLevels.innerHTML = levels.map(lv =>
+      `<span class="level-badge ${lv === levelInfo.level ? 'active' : ''}">${lv}</span>`
+    ).join('');
+  }
+
+  document.getElementById('char-modal')?.classList.add('active');
+}
+
+function closeCharModal() {
+  document.getElementById('char-modal')?.classList.remove('active');
+  document.getElementById('header-toggle')?.focus();
+}
+
+/* ===== 初始化 ===== */
+async function init() {
+  loadTheme();
+  loadCollapseStates();
+  updateExpandIndicator();
+
+  await waitMvu();
+  populateData();
+
+  /* MVU 监听 */
+  if (window.Mvu?.events?.VARIABLE_UPDATE_ENDED) {
+    eventOn(Mvu.events.VARIABLE_UPDATE_ENDED, () => {
+      populateData();
+      enhanceDynamicCards();
+    });
+  }
+
+  /* 交互事件 */
+  document.getElementById('header-toggle')?.addEventListener('click', function(e) {
+    if (e.target.closest('#toggle-theme')) return;
+    toggleExpand();
+  });
+
+  document.querySelectorAll('.card-header').forEach(header => {
+    header.addEventListener('click', () => toggleCardCollapse(header.closest('.card')));
+  });
+
+  document.getElementById('social-list')?.addEventListener('click', e => {
+    const card = e.target.closest('.char-card');
+    if (card) {
+      showCharModal(card.dataset.char, Number(card.dataset.affection), card.dataset.relation);
+    }
+  });
+
+  document.getElementById('modal-close')?.addEventListener('click', closeCharModal);
+  document.getElementById('char-modal')?.addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeCharModal();
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && document.getElementById('char-modal')?.classList.contains('active')) {
+      closeCharModal();
+    }
+  });
+
+  document.getElementById('toggle-theme')?.addEventListener('click', function(e) {
+    e.stopPropagation();
+    const isDark = document.documentElement.classList.toggle('dark');
+    this.textContent = isDark ? '🌙' : '☀️';
+    saveTheme(isDark);
+  });
+
+  document.getElementById('quick-rest')?.addEventListener('click', function() {
+    if (window.Mvu) {
+      Mvu.setVariable('stat_data.主角.体力', 100);
+      Mvu.commit();
+    }
+  });
+}
+
+function enhanceDynamicCards() {
+  document.querySelectorAll('.char-card').forEach(el => {
+    el.setAttribute('tabindex', '0');
+    el.setAttribute('role', 'button');
+  });
+}
+
+document.addEventListener('DOMContentLoaded', init);
+
+
+</script>
+</body>
+</html>
