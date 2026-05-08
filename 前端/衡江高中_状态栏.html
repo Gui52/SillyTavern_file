@@ -116,484 +116,961 @@
 
 </style>
   <style>
-/* ===== 衡江高中 - 学生终端 样式 ===== */
+/* ===== 衡江高中 - 学生终端 v2.0 ===== */
+/* 设计: 校园档案风格 (Campus Archive Style) */
 
-/* --- 主题变量 --- */
+/* === 主题变量 === */
 :root, .theme-campus.dark {
-  --bg-gradient: linear-gradient(135deg, #0f1419 0%, #1a2332 30%, #1f2b3f 60%, #182232 100%);
-  --card-bg: rgba(30, 38, 52, 0.95);
-  --card-bg-hover: rgba(35, 44, 60, 0.98);
-  --text-main: #e2e8f0;
-  --text-sub: #cbd5e0;
-  --text-muted: #718096;
-  --border-color: rgba(255, 255, 255, 0.08);
-  --primary-color: #38b2e8;
-  --primary-light: #81d4f0;
-  --primary-dark: #2980b9;
-  --secondary-color: #9f7aea;
-  --secondary-light: #c3a5f0;
-  --accent-color: #f6ad55;
-  --accent-light: #fcd5a0;
-  --success-color: #48bb78;
-  --success-light: #9ae6b4;
-  --danger-color: #f56565;
-  --danger-light: #feb2b2;
-  --warning-color: #ed8936;
-  --shadow-sm: 0 2px 8px rgba(56, 178, 232, 0.08);
-  --shadow-md: 0 4px 16px rgba(56, 178, 232, 0.12);
-  --shadow-lg: 0 8px 32px rgba(56, 178, 232, 0.16);
-  --shadow-card: 0 2px 12px rgba(56, 178, 232, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
-  --shadow-card-hover: 0 12px 32px rgba(56, 178, 232, 0.18), 0 4px 8px rgba(0, 0, 0, 0.08);
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 20px;
-  --safe-area-top: env(safe-area-inset-top, 0px);
-  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --bg-page: transparent;
+  --bg-terminal: #0a0c10;
+  --bg-section: #12151c;
+  --bg-elevated: #1a1e28;
+  --bg-hover: #222838;
+  --border-main: #2a3040;
+  --border-sub: #1e2432;
+  --text-primary: #e8e4dc;
+  --text-secondary: #9a9688;
+  --text-muted: #5a5848;
+  --text-dim: #3a3830;
+  --accent: #4a8fc8;
+  --accent-glow: rgba(74, 143, 200, 0.3);
+  --accent-warm: #c8a84b;
+  --accent-warm-glow: rgba(200, 168, 75, 0.25);
+  --success: #5a9a6a;
+  --danger: #b85a5a;
+  --warning: #c89a3a;
+  --folder-bg: #1c1f28;
+  --folder-tab: #8a7a5a;
+  --folder-border: #3a3528;
+  --stamp-red: #c84040;
+  --paper-dark: #14151a;
+  --paper-light: #1e2230;
+  --paper-border: #2a2e3a;
+  --paper-text: #d4d0c0;
+  --paper-muted: #6a6658;
+  --paper-highlight: #c8a84b;
+  --paper-accent: #4a90c8;
+  --shadow-terminal: 0 0 40px rgba(74, 143, 200, 0.08), 0 8px 32px rgba(0,0,0,0.6);
+  --shadow-card: 0 2px 12px rgba(0,0,0,0.4);
+  --shadow-card-hover: 0 6px 24px rgba(74, 143, 200, 0.15), 0 2px 8px rgba(0,0,0,0.4);
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --font-mono: "Cascadia Code", "JetBrains Mono", "Fira Code", "Consolas", monospace;
+  --font-serif: "Noto Serif SC", "Source Han Serif SC", "SimSun", serif;
 }
 
 .theme-campus:not(.dark),
 .theme-campus.light {
-  --bg-gradient: linear-gradient(135deg, #e8f5f9 0%, #f0f4f8 25%, #f5f0e6 50%, #faf5f0 75%, #e8f0f4 100%);
-  --card-bg: rgba(255, 255, 255, 0.94);
-  --card-bg-hover: rgba(255, 255, 255, 0.98);
-  --text-main: #2d3748;
-  --text-sub: #4a5568;
-  --text-muted: #a0aec0;
-  --border-color: rgba(255, 255, 255, 0.7);
-  --primary-color: #38b2e8;
-  --primary-light: #81d4f0;
-  --primary-dark: #2980b9;
-  --secondary-color: #9f7aea;
-  --secondary-light: #c3a5f0;
-  --accent-color: #f6ad55;
-  --accent-light: #fcd5a0;
-  --success-color: #48bb78;
-  --success-light: #9ae6b4;
-  --danger-color: #f56565;
-  --danger-light: #feb2b2;
-  --warning-color: #ed8936;
-  --shadow-sm: 0 2px 8px rgba(56, 178, 232, 0.08);
-  --shadow-md: 0 4px 16px rgba(56, 178, 232, 0.12);
-  --shadow-lg: 0 8px 32px rgba(56, 178, 232, 0.16);
-  --shadow-card: 0 2px 12px rgba(56, 178, 232, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
-  --shadow-card-hover: 0 12px 32px rgba(56, 178, 232, 0.18), 0 4px 8px rgba(0, 0, 0, 0.08);
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 20px;
-  --safe-area-top: env(safe-area-inset-top, 0px);
-  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --bg-page: transparent;
+  --bg-terminal: #f0ebe0;
+  --bg-section: #e8e2d4;
+  --bg-elevated: #ddd6c4;
+  --bg-hover: #d4ccb8;
+  --border-main: #c4bca8;
+  --border-sub: #d4ccb8;
+  --text-primary: #2a2820;
+  --text-secondary: #5a5848;
+  --text-muted: #9a9688;
+  --text-dim: #bab4a4;
+  --accent: #2a6090;
+  --accent-glow: rgba(42, 96, 144, 0.15);
+  --accent-warm: #9a7a2a;
+  --accent-warm-glow: rgba(154, 122, 42, 0.15);
+  --success: #3a7a4a;
+  --danger: #9a3a3a;
+  --warning: #9a7a2a;
+  --folder-bg: #e0d8c4;
+  --folder-tab: #a09060;
+  --folder-border: #b8a888;
+  --stamp-red: #c84040;
+  --paper-dark: #e8e0d0;
+  --paper-light: #f0e8d8;
+  --paper-border: #c8c0a8;
+  --paper-text: #2a2820;
+  --paper-muted: #6a6658;
+  --paper-highlight: #9a7a2a;
+  --paper-accent: #2a6090;
+  --shadow-terminal: 0 0 40px rgba(42, 96, 144, 0.05), 0 8px 32px rgba(0,0,0,0.15);
+  --shadow-card: 0 2px 8px rgba(0,0,0,0.1);
+  --shadow-card-hover: 0 4px 16px rgba(42, 96, 144, 0.1), 0 2px 6px rgba(0,0,0,0.1);
 }
 
-/* --- 基础 --- */
+/* === 基础 === */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body {
-  background: transparent;
-  color: var(--text-main);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
-  font-size: 14px;
-  line-height: 1.5;
+  background: var(--bg-page);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
 
-/* --- 仪表板 --- */
-.dashboard {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 6px;
-  background: var(--bg-gradient);
-  border-radius: 16px;
-  box-shadow: var(--shadow-lg);
-  max-width: 500px;
-}
-
-/* --- 顶部卡片 --- */
-.header-card {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 14px 16px;
-  background: var(--card-bg);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--border-color);
+/* === 终端主体 === */
+.terminal {
+  width: 440px;
+  background: var(--bg-terminal);
+  border: 1px solid var(--border-main);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-card);
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  flex-wrap: wrap;
+  box-shadow: var(--shadow-terminal);
+  overflow: hidden;
   position: relative;
 }
-.header-card:hover { background: var(--card-bg-hover); box-shadow: var(--shadow-card-hover); }
 
-.header-left { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-.school-logo {
-  width: 40px; height: 40px;
-  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-  border-radius: var(--radius-md);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 20px; font-weight: 700; color: #fff;
+/* === 顶部标题栏 === */
+.term-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--bg-section);
+  border-bottom: 1px solid var(--border-main);
 }
-.header-info h1 { font-size: 16px; font-weight: 700; line-height: 1.2; }
-.header-info span { font-size: 11px; color: var(--text-muted); }
 
-.header-center { flex: 1; text-align: center; min-width: 120px; }
-.header-date { font-size: 13px; font-weight: 600; }
-.header-time { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+.term-brand { display: flex; align-items: center; gap: 10px; }
+.term-logo {
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg, var(--accent), #2a5080);
+  border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-serif); font-size: 18px; font-weight: 900; color: #fff;
+  flex-shrink: 0;
+}
+.term-brand-text { display: flex; flex-direction: column; }
+.term-brand-name { font-size: 14px; font-weight: 700; letter-spacing: 0.05em; }
+.term-brand-sub { font-size: 10px; color: var(--text-muted); letter-spacing: 0.1em; }
 
-.header-right { flex-shrink: 0; }
-.header-btn {
-  width: 32px; height: 32px; border: 1px solid var(--border-color);
-  background: var(--card-bg); border-radius: 50%; cursor: pointer;
-  font-size: 16px; display: flex; align-items: center; justify-content: center;
+.term-datetime { margin-left: auto; text-align: right; }
+.term-date { font-size: 12px; font-weight: 600; }
+.term-time { font-size: 18px; font-weight: 700; color: var(--accent); font-family: var(--font-mono); letter-spacing: 0.05em; }
+
+.term-controls { display: flex; gap: 6px; }
+.term-btn {
+  width: 30px; height: 30px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-main);
+  border-radius: var(--radius-sm);
+  cursor: pointer; font-size: 14px;
+  display: flex; align-items: center; justify-content: center;
   transition: all 0.2s;
 }
-.header-btn:hover { background: var(--card-bg-hover); transform: scale(1.1); }
+.term-btn:hover { background: var(--bg-hover); border-color: var(--accent); }
 
-.header-summary {
-  display: flex; gap: 8px; flex-wrap: wrap;
-  width: 100%; margin-top: 2px; padding-top: 8px;
-  border-top: 1px solid var(--border-color);
+/* === 快捷状态栏 === */
+.term-status-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border-main);
+  border-bottom: 1px solid var(--border-main);
 }
-.header-chip {
-  display: flex; align-items: center; gap: 4px;
-  background: var(--card-bg); padding: 4px 10px; border-radius: 20px;
-  border: 1px solid var(--border-color); font-size: 11px;
-}
-.header-chip-icon { font-size: 12px; }
-.header-chip-text { display: flex; flex-direction: column; line-height: 1.2; }
-.header-chip-label { font-size: 9px; color: var(--text-muted); }
-.header-chip-value { font-weight: 600; font-size: 11px; }
-
-.expand-indicator {
-  position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%);
-  display: flex; align-items: center; gap: 4px;
-  background: var(--card-bg); padding: 2px 12px; border-radius: 10px;
-  border: 1px solid var(--border-color); font-size: 10px; color: var(--text-muted);
-  box-shadow: var(--shadow-sm);
-}
-.expand-arrow { font-size: 14px; transition: transform 0.3s; }
-
-/* --- 折叠卡片 --- */
-.card {
-  background: var(--card-bg);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-card);
-  overflow: hidden;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.card:hover { box-shadow: var(--shadow-card-hover); }
-
-.card-header {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 12px 16px; cursor: pointer;
+.status-chip {
+  display: flex; align-items: center; gap: 5px;
+  padding: 8px 10px;
+  background: var(--bg-section);
+  font-size: 11px;
   transition: background 0.2s;
 }
-.card-header:hover { background: var(--card-bg-hover); }
+.status-chip.clickable { cursor: pointer; }
+.status-chip.clickable:hover { background: var(--bg-elevated); }
+.chip-icon { font-size: 12px; }
+.chip-label { color: var(--text-muted); font-size: 9px; letter-spacing: 0.1em; }
+.chip-value { font-weight: 600; font-size: 11px; }
 
-.card-title { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 13px; }
-.card-icon {
-  width: 28px; height: 28px; border-radius: var(--radius-sm);
-  display: flex; align-items: center; justify-content: center; font-size: 14px;
+/* === 分区通用 === */
+.term-section {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-sub);
+}
+.term-section:last-of-type { border-bottom: none; }
+
+.section-header {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 10px;
+}
+.section-tag { font-size: 14px; }
+.section-title { font-size: 12px; font-weight: 600; letter-spacing: 0.1em; color: var(--text-secondary); }
+.section-count {
+  margin-left: auto;
+  background: var(--accent-warm);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 8px;
+  border-radius: 10px;
 }
 
-.toggle-btn { background: none; border: none; cursor: pointer; padding: 4px; color: var(--text-muted); font-size: 12px; transition: transform 0.3s; }
-.card.collapsed .toggle-btn .toggle-arrow { transform: rotate(-90deg); display: inline-block; }
-
-.card-body { padding: 0 16px 16px; transition: all 0.3s; }
-.card.collapsed .card-body { display: none; }
-
-/* --- 环境网格 --- */
-.env-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
-.env-item {
-  padding: 10px; background: var(--card-bg);
-  border: 1px solid var(--border-color); border-radius: var(--radius-sm);
-  text-align: center; transition: all 0.2s;
+/* === 环境信息 === */
+.env-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.env-cell {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-sub);
+  border-radius: var(--radius-sm);
+  padding: 8px;
+  text-align: center;
 }
-.env-icon { font-size: 20px; margin-bottom: 4px; }
-.env-label { font-size: 10px; color: var(--text-muted); margin-bottom: 2px; }
-.env-value { font-size: 13px; font-weight: 600; }
+.cell-label { display: block; font-size: 9px; color: var(--text-muted); letter-spacing: 0.1em; margin-bottom: 3px; }
+.cell-value { font-size: 12px; font-weight: 600; }
+.cell-value.highlight { color: var(--accent-warm); }
+.cell-value.money { color: var(--success); }
 
-/* --- 状态 --- */
-.status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.status-item {
-  padding: 10px; background: var(--card-bg);
-  border: 1px solid var(--border-color); border-radius: var(--radius-sm);
+/* === 玩家状态 === */
+.player-row { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 6px; }
+.player-cell {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-sub);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
   display: flex; flex-direction: column; gap: 2px;
 }
-.status-item.full { grid-column: 1 / -1; }
-.status-label { font-size: 10px; color: var(--text-muted); }
-.status-value { font-size: 13px; font-weight: 600; }
-.status-value.highlight { color: var(--primary-color); }
+.player-cell.full { grid-column: 1 / -1; }
+.player-cell .cell-label { display: block; }
+.player-cell .cell-value { font-size: 12px; font-weight: 600; }
+.player-cell .cell-value.highlight { color: var(--accent); }
 
-.stamina-section { margin-top: 12px; }
-.stamina-header { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 12px; }
-.stamina-label { font-weight: 600; }
-.stamina-value { color: var(--text-muted); }
-.stamina-value.warning { color: var(--warning-color); }
-.stamina-value.danger { color: var(--danger-color); }
+.stamina-block { margin-top: 10px; background: var(--bg-elevated); border: 1px solid var(--border-sub); border-radius: var(--radius-sm); padding: 10px 12px; }
+.stamina-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+.stamina-label { font-size: 11px; color: var(--text-secondary); }
+.stamina-num { font-size: 14px; font-weight: 700; color: var(--success); }
+.stamina-num.warn { color: var(--warning); }
+.stamina-num.danger { color: var(--danger); }
+.stamina-bar-wrap {}
+.stamina-bar { height: 6px; background: var(--border-main); border-radius: 3px; overflow: hidden; }
+.stamina-fill { height: 100%; background: linear-gradient(90deg, var(--success), var(--accent)); border-radius: 3px; transition: width 0.4s ease; }
+.stamina-fill.warn { background: linear-gradient(90deg, var(--warning), var(--accent-warm)); }
+.stamina-fill.danger { background: linear-gradient(90deg, var(--danger), #c04040); }
 
-.stamina-bar {
-  height: 8px; background: var(--border-color); border-radius: 4px; overflow: hidden;
-}
-.stamina-fill {
-  height: 100%; background: linear-gradient(90deg, var(--success-color), var(--primary-color));
-  border-radius: 4px; transition: width 0.5s ease;
-}
-.stamina-fill.warning { background: linear-gradient(90deg, var(--warning-color), var(--accent-color)); }
-.stamina-fill.danger { background: linear-gradient(90deg, var(--danger-color), #e53e3e); }
-
-.quick-actions { display: flex; gap: 8px; margin-top: 12px; }
+.quick-row { display: flex; gap: 8px; margin-top: 8px; }
 .quick-btn {
-  flex: 1; padding: 8px; border: 1px solid var(--border-color);
-  background: var(--card-bg); border-radius: var(--radius-sm);
-  color: var(--text-main); font-size: 12px; cursor: pointer;
+  flex: 1; padding: 7px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-main);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 12px; cursor: pointer;
   transition: all 0.2s;
 }
-.quick-btn:hover { background: var(--card-bg-hover); border-color: var(--primary-color); }
+.quick-btn:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
 
-/* --- 社交 --- */
-.social-summary {
-  display: flex; align-items: center; gap: 12px;
-  padding: 12px; background: var(--card-bg);
-  border: 1px solid var(--border-color); border-radius: var(--radius-sm);
-  margin-bottom: 8px;
+/* === 社交关系 === */
+.filter-bar { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; flex-wrap: wrap; }
+.filter-pills { display: flex; flex-wrap: wrap; gap: 4px; }
+.pill {
+  padding: 3px 10px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-sub);
+  border-radius: 12px;
+  font-size: 11px; cursor: pointer;
+  color: var(--text-muted);
+  transition: all 0.2s;
 }
-.social-count {
-  width: 44px; height: 44px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent-color), var(--accent-light));
+.pill:hover { border-color: var(--accent); color: var(--text-primary); }
+.pill.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+.search-wrap { position: relative; }
+.char-search {
+  width: 120px; padding: 4px 24px 4px 10px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-sub);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 11px; outline: none;
+  transition: border-color 0.2s;
+}
+.char-search:focus { border-color: var(--accent); }
+.char-search::placeholder { color: var(--text-muted); }
+.search-clear {
+  position: absolute; right: 6px; top: 50%;
+  transform: translateY(-50%);
+  background: none; border: none;
+  color: var(--text-muted); cursor: pointer;
+  font-size: 10px; padding: 2px;
+}
+.search-clear:hover { color: var(--text-primary); }
+
+.char-roster { display: flex; flex-direction: column; gap: 4px; max-height: 240px; overflow-y: auto; }
+
+.char-row {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 10px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-sub);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.char-row:hover { background: var(--bg-hover); border-color: var(--accent); transform: translateX(3px); }
+.char-row.unmet { opacity: 0.55; }
+
+.char-row-avatar {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), #2a5080);
   display: flex; align-items: center; justify-content: center;
-  font-size: 18px; font-weight: 700; color: #fff; flex-shrink: 0;
+  font-size: 12px; font-weight: 700; color: #fff; flex-shrink: 0;
 }
-.social-title { font-weight: 600; font-size: 13px; }
-.social-desc { font-size: 11px; color: var(--text-muted); }
+.char-row-info { flex: 1; min-width: 0; }
+.char-row-name { font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.char-row-academy { font-size: 10px; color: var(--text-muted); }
+.char-row-rel { font-size: 10px; color: var(--text-muted); padding: 2px 7px; background: var(--border-sub); border-radius: 8px; white-space: nowrap; }
+.char-row-aff { display: flex; align-items: center; gap: 5px; flex-shrink: 0; }
+.char-row-aff-label { font-size: 9px; color: var(--text-muted); }
+.char-row-bar { width: 40px; height: 4px; background: var(--border-main); border-radius: 2px; overflow: hidden; }
+.char-row-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-warm)); border-radius: 2px; }
+.char-row-num { font-size: 11px; font-weight: 700; color: var(--accent-warm); min-width: 20px; text-align: right; }
 
-.char-list { display: flex; flex-direction: column; gap: 6px; }
+.empty-roster { text-align: center; padding: 16px; color: var(--text-muted); font-size: 12px; font-style: italic; }
 
-.char-card {
-  display: flex; flex-direction: column; gap: 6px;
-  padding: 10px 12px; background: var(--card-bg);
-  border: 1px solid var(--border-color); border-radius: var(--radius-sm);
-  cursor: pointer; transition: all 0.2s;
+.album-entrance {
+  display: flex; align-items: center; gap: 8px;
+  width: 100%; margin-top: 10px;
+  padding: 9px 12px;
+  background: var(--bg-elevated);
+  border: 1px dashed var(--border-main);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 12px; cursor: pointer;
+  transition: all 0.2s;
 }
-.char-card:hover { background: var(--card-bg-hover); border-color: var(--primary-color); transform: translateX(4px); }
+.album-entrance:hover { background: var(--bg-hover); border-color: var(--accent-warm); color: var(--accent-warm); }
+.entrance-icon { font-size: 14px; }
+.entrance-text { flex: 1; }
+.entrance-arrow { font-size: 16px; }
 
-.char-header { display: flex; justify-content: space-between; align-items: center; }
-.char-name { display: flex; align-items: center; gap: 6px; font-weight: 600; font-size: 13px; }
-.char-avatar {
-  width: 24px; height: 24px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+/* === 页脚 === */
+.term-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 16px;
+  background: var(--bg-section);
+  border-top: 1px solid var(--border-sub);
+}
+.footer-tips { font-size: 10px; color: var(--text-dim); font-style: italic; }
+.collapse-btn {
+  background: none; border: 1px solid var(--border-main);
+  color: var(--text-muted); cursor: pointer;
+  width: 24px; height: 24px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 11px; color: #fff; font-weight: 700; flex-shrink: 0;
+  transition: all 0.2s;
 }
-.char-relation { font-size: 11px; color: var(--text-muted); padding: 2px 8px; background: var(--border-color); border-radius: 10px; }
-.char-affection { display: flex; justify-content: space-between; font-size: 11px; }
-.char-affection-label { color: var(--text-muted); }
-.char-affection-value { font-weight: 600; }
-.char-bar { height: 4px; background: var(--border-color); border-radius: 2px; overflow: hidden; }
-.char-bar-fill { height: 100%; background: linear-gradient(90deg, var(--primary-color), var(--accent-color)); border-radius: 2px; transition: width 0.5s ease; }
+.collapse-btn:hover { background: var(--bg-elevated); color: var(--text-primary); }
 
-.empty-state { text-align: center; padding: 20px; color: var(--text-muted); font-size: 13px; font-style: italic; }
+/* === 折叠状态 === */
+.terminal.collapsed .term-status-strip,
+.terminal.collapsed .term-section { display: none; }
+.terminal.collapsed .term-header { border-bottom: none; }
+.terminal.collapsed .term-footer { display: none; }
 
-/* --- 模态框 --- */
-.modal-overlay {
-  display: none; position: fixed; inset: 0; z-index: 9999;
-  background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px);
+.term-section.collapsed .env-row,
+.term-section.collapsed .player-row,
+.term-section.collapsed .stamina-block,
+.term-section.collapsed .quick-row { display: none; }
+.term-section.collapsed .filter-bar { display: none; }
+.term-section.collapsed .char-roster { display: none; }
+.term-section.collapsed .album-entrance { display: none; }
+
+/* ========================================
+   人物图鉴 - 档案夹弹窗
+   ======================================== */
+.album-backdrop {
+  display: none;
+  position: fixed; inset: 0; z-index: 9999;
+  background: rgba(10, 12, 18, 0.88);
+  backdrop-filter: blur(3px);
   justify-content: center; align-items: center;
-  padding: 20px; animation: fadeIn 0.2s ease;
+  padding: 20px;
+  animation: fadeIn 0.2s ease;
 }
-.modal-overlay.active { display: flex; }
+.album-backdrop.active { display: flex; }
 
-.modal-content {
-  background: var(--card-bg); border: 1px solid var(--border-color);
-  border-radius: var(--radius-xl); width: 100%; max-width: 340px;
-  box-shadow: var(--shadow-lg); overflow: hidden; position: relative;
-  animation: slideUp 0.3s ease;
+.album-folder {
+  width: 100%; max-width: 860px; max-height: 92vh;
+  background: var(--folder-bg);
+  border: 2px solid var(--folder-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-terminal);
+  overflow: hidden;
+  display: flex; flex-direction: column;
+  animation: scaleIn 0.28s ease;
+  position: relative;
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes scaleIn { from { opacity: 0; transform: scale(0.96) translateY(8px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+
+.folder-tab {
+  position: absolute; top: -1px; left: 50%; transform: translateX(-50%);
+  background: var(--folder-tab);
+  color: #fff;
+  font-size: 11px; letter-spacing: 0.12em;
+  padding: 5px 20px;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
 }
 
-.modal-header {
-  text-align: center; padding: 24px 20px 16px;
-  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+.album-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, var(--paper-dark), #1e2230);
+  border-bottom: 2px solid var(--folder-border);
+  flex-shrink: 0;
+}
+.album-head-left { display: flex; align-items: center; gap: 14px; }
+.album-emblem {
+  width: 40px; height: 40px;
+  background: linear-gradient(135deg, var(--accent), #1a3a60);
+  border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-serif); font-size: 20px; font-weight: 900; color: #fff;
+}
+.album-title { font-family: var(--font-serif); font-size: 16px; font-weight: 700; letter-spacing: 0.08em; }
+.album-subtitle { font-size: 11px; color: var(--text-muted); letter-spacing: 0.12em; }
+.album-head-right { display: flex; gap: 8px; }
+.album-search-btn, .album-close-btn {
+  width: 34px; height: 34px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-main);
+  border-radius: var(--radius-sm);
+  cursor: pointer; font-size: 14px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.album-search-btn:hover, .album-close-btn:hover { background: var(--bg-hover); border-color: var(--accent); }
+
+.album-search-area {
+  padding: 12px 20px;
+  background: var(--paper-light);
+  border-bottom: 1px solid var(--paper-border);
+  position: relative; flex-shrink: 0;
+}
+.album-search-input {
+  width: 100%; padding: 10px 36px 10px 14px;
+  background: var(--paper-dark);
+  border: 1px solid var(--paper-border);
+  border-radius: var(--radius-sm);
+  color: var(--paper-text);
+  font-family: var(--font-mono);
+  font-size: 13px; outline: none;
+  transition: border-color 0.2s;
+}
+.album-search-input:focus { border-color: var(--paper-accent); }
+.album-search-input::placeholder { color: var(--paper-muted); }
+.album-search-x {
+  position: absolute; right: 32px; top: 50%;
+  transform: translateY(-50%);
+  background: none; border: none;
+  color: var(--paper-muted); cursor: pointer; font-size: 12px; padding: 4px;
+}
+
+.album-filter-area {
+  display: flex; gap: 20px; flex-wrap: wrap;
+  padding: 12px 20px;
+  background: var(--paper-light);
+  border-bottom: 1px solid var(--paper-border); flex-shrink: 0;
+}
+.af-group { display: flex; align-items: center; gap: 8px; }
+.af-label { font-size: 11px; color: var(--paper-muted); font-weight: 600; letter-spacing: 0.1em; white-space: nowrap; }
+.af-chips { display: flex; flex-wrap: wrap; gap: 5px; }
+.af-chip {
+  padding: 3px 10px;
+  background: var(--paper-dark);
+  border: 1px solid var(--paper-border);
+  border-radius: 12px;
+  font-size: 11px; cursor: pointer;
+  color: var(--paper-muted); transition: all 0.2s;
+}
+.af-chip:hover, .af-chip.active { background: var(--paper-accent); border-color: var(--paper-accent); color: #fff; }
+
+.album-stats-row {
+  display: flex; align-items: center;
+  padding: 10px 20px;
+  background: var(--paper-dark);
+  border-bottom: 1px solid var(--paper-border); flex-shrink: 0;
+}
+.as-item { display: flex; align-items: baseline; gap: 6px; }
+.as-num { font-family: var(--font-serif); font-size: 22px; font-weight: 900; color: var(--paper-highlight); }
+.as-label { font-size: 11px; color: var(--paper-muted); letter-spacing: 0.1em; }
+.as-divider { width: 1px; height: 20px; background: var(--paper-border); margin: 0 20px; }
+
+.album-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 12px;
+  padding: 16px 20px;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 280px;
+}
+
+.album-card {
+  background: var(--paper-light);
+  border: 1px solid var(--paper-border);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+.album-card::before {
+  content: ''; position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  background: var(--paper-border); transition: background 0.2s;
+}
+.album-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card-hover);
+  border-color: var(--paper-accent);
+}
+.album-card:hover::before { background: var(--paper-accent); }
+.album-card.unmet { opacity: 0.55; }
+
+.ac-stamp {
+  position: absolute; top: 10px; right: 10px;
+  padding: 2px 7px; font-size: 9px; letter-spacing: 0.1em;
+  border: 1px solid; border-radius: 2px; font-weight: 700; opacity: 0.7;
+}
+.ac-stamp.met { color: var(--success); border-color: var(--success); background: rgba(90,154,106,0.1); }
+.ac-stamp.unmet { color: var(--paper-muted); border-color: var(--paper-border); }
+
+.ac-header { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+.ac-avatar {
+  width: 42px; height: 42px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), #2a5080);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-serif); font-size: 16px; font-weight: 700; color: #fff;
+  border: 2px solid var(--paper-border); flex-shrink: 0;
+}
+.ac-info { flex: 1; min-width: 0; }
+.ac-name { font-family: var(--font-serif); font-size: 14px; font-weight: 700; color: var(--paper-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ac-academy { font-size: 10px; color: var(--paper-muted); margin-top: 2px; }
+
+.ac-body {}
+.ac-rel-row { display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 5px; }
+.ac-rel-label { color: var(--paper-muted); }
+.ac-rel-val { color: var(--paper-text); font-weight: 600; }
+.ac-aff-row { display: flex; align-items: center; gap: 6px; }
+.ac-aff-label { font-size: 10px; color: var(--paper-muted); }
+.ac-aff-num { font-size: 12px; font-weight: 700; color: var(--paper-highlight); margin-left: auto; }
+.ac-bar { flex: 1; height: 4px; background: var(--paper-border); border-radius: 2px; overflow: hidden; }
+.ac-bar-fill { height: 100%; background: linear-gradient(90deg, var(--paper-accent), var(--paper-highlight)); border-radius: 2px; }
+
+.album-empty { padding: 48px 20px; text-align: center; }
+.ae-icon { font-size: 42px; margin-bottom: 12px; opacity: 0.45; }
+.ae-text { font-size: 15px; color: var(--paper-muted); margin-bottom: 6px; }
+.ae-hint { font-size: 12px; color: var(--paper-muted); opacity: 0.65; font-style: italic; }
+
+.album-page-row {
+  display: flex; align-items: center; justify-content: center; gap: 16px;
+  padding: 12px 20px;
+  background: var(--paper-dark);
+  border-top: 2px solid var(--paper-border); flex-shrink: 0;
+}
+.page-btn {
+  width: 30px; height: 30px;
+  background: var(--paper-light);
+  border: 1px solid var(--paper-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer; font-size: 12px; color: var(--paper-text);
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.page-btn:hover:not(:disabled) { background: var(--paper-accent); border-color: var(--paper-accent); color: #fff; }
+.page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.page-cur { font-size: 12px; color: var(--paper-muted); }
+.page-cur em { font-style: normal; color: var(--paper-text); font-weight: 600; }
+
+/* ========================================
+   角色详情抽屉 - 档案风格
+   ======================================== */
+.detail-backdrop {
+  display: none;
+  position: fixed; inset: 0; z-index: 99999;
+  background: rgba(10, 12, 18, 0.88);
+  backdrop-filter: blur(3px);
+  justify-content: flex-end;
+  animation: fadeIn 0.2s ease;
+}
+.detail-backdrop.active { display: flex; }
+
+.detail-panel {
+  width: 100%; max-width: 400px; height: 100%;
+  background: var(--paper-dark);
+  border-left: 3px solid var(--paper-border);
+  box-shadow: -4px 0 24px rgba(0,0,0,0.5);
+  overflow-y: auto;
+  animation: slideInRight 0.3s ease;
+}
+@keyframes slideInRight { from { transform: translateX(100%); } to { transform: translateX(0); } }
+
+.dp-handle {
+  width: 44px; height: 5px;
+  background: var(--paper-border);
+  border-radius: 3px;
+  margin: 12px auto;
+  cursor: grab;
+}
+.dp-close {
+  position: absolute; top: 12px; right: 12px;
+  width: 30px; height: 30px;
+  background: var(--paper-light);
+  border: 1px solid var(--paper-border);
+  border-radius: 50%; cursor: pointer;
+  font-size: 14px; color: var(--paper-muted);
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.dp-close:hover { background: var(--danger); border-color: var(--danger); color: #fff; }
+
+.dp-header {
+  padding: 20px 20px 24px;
+  background: linear-gradient(160deg, var(--accent) 0%, #1a3a60 100%);
   color: #fff; position: relative;
 }
-.modal-close {
-  position: absolute; top: 8px; right: 12px;
-  background: rgba(255,255,255,0.2); border: none; color: #fff;
-  width: 28px; height: 28px; border-radius: 50%; cursor: pointer;
-  font-size: 16px; display: flex; align-items: center; justify-content: center;
-  transition: background 0.2s;
-}
-.modal-close:hover { background: rgba(255,255,255,0.35); }
-
-.modal-avatar {
-  width: 56px; height: 56px; border-radius: 50%;
-  background: rgba(255,255,255,0.25); margin: 0 auto 10px;
+.dp-avatar {
+  width: 68px; height: 68px; border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  border: 3px solid rgba(255,255,255,0.35);
+  margin: 0 auto 14px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 24px; font-weight: 700;
+  font-family: var(--font-serif); font-size: 30px; font-weight: 900;
 }
-.modal-name { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
-.modal-relation { font-size: 12px; opacity: 0.85; display: inline-block; background: rgba(255,255,255,0.15); padding: 2px 10px; border-radius: 10px; }
-
-.modal-body { padding: 20px; }
-
-.modal-affection { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
-.modal-affection-label { font-size: 12px; color: var(--text-muted); }
-.modal-affection-value { font-size: 22px; font-weight: 700; color: var(--accent-color); }
-.modal-affection-value span { font-size: 13px; color: var(--text-muted); font-weight: 400; }
-
-.modal-bar { height: 8px; background: var(--border-color); border-radius: 4px; overflow: hidden; margin-bottom: 16px; }
-.modal-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent-color), var(--danger-color)); border-radius: 4px; transition: width 0.5s ease; }
-
-.modal-level { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
-.level-badge {
-  padding: 4px 12px; border-radius: 12px; font-size: 11px;
-  background: var(--border-color); color: var(--text-muted);
-  transition: all 0.2s;
+.dp-identity { text-align: center; }
+.dp-name { font-family: var(--font-serif); font-size: 22px; font-weight: 900; letter-spacing: 0.1em; }
+.dp-academy { font-size: 12px; opacity: 0.8; letter-spacing: 0.15em; margin-top: 3px; }
+.dp-badge {
+  position: absolute; top: 16px; right: 16px;
+  padding: 4px 10px; font-size: 10px; letter-spacing: 0.1em;
+  border: 2px solid; border-radius: 2px; font-weight: 700;
 }
-.level-badge.active { background: var(--accent-color); color: #fff; font-weight: 600; }
+.dp-badge.unmet { color: rgba(255,255,255,0.55); border-color: rgba(255,255,255,0.35); }
+.dp-badge.met { color: #7adf8a; border-color: #7adf8a; background: rgba(122,223,138,0.1); }
 
-/* --- 动画 --- */
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.dp-body { padding: 20px; }
 
+.dp-section { margin-bottom: 26px; }
+.dp-section-title {
+  font-family: var(--font-serif); font-size: 11px; font-weight: 700;
+  color: var(--paper-muted); letter-spacing: 0.18em;
+  margin-bottom: 10px; padding-bottom: 6px;
+  border-bottom: 1px solid var(--paper-border);
+}
+
+.dp-info-table { display: flex; flex-direction: column; gap: 5px; }
+.dp-info-row {
+  display: flex;
+  background: var(--paper-light);
+  border: 1px solid var(--paper-border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+.dp-info-key {
+  width: 72px; flex-shrink: 0;
+  padding: 8px 10px;
+  background: var(--paper-dark);
+  font-size: 10px; color: var(--paper-muted);
+  letter-spacing: 0.1em;
+  border-right: 1px solid var(--paper-border);
+}
+.dp-info-val { flex: 1; padding: 8px 12px; font-size: 12px; color: var(--paper-text); }
+
+.dp-rel-panel {
+  background: var(--paper-light);
+  border: 1px solid var(--paper-border);
+  border-radius: var(--radius-md);
+  padding: 14px; margin-bottom: 12px;
+}
+.dp-rel-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.dp-rel-label { font-size: 11px; color: var(--paper-muted); letter-spacing: 0.1em; }
+.dp-rel-val { font-size: 15px; font-weight: 700; color: var(--paper-accent); }
+.dp-aff-label { font-size: 10px; color: var(--paper-muted); margin-bottom: 7px; letter-spacing: 0.1em; }
+.dp-aff-row { display: flex; align-items: center; gap: 10px; }
+.dp-aff-bar { flex: 1; height: 8px; background: var(--paper-border); border-radius: 4px; overflow: hidden; }
+.dp-aff-fill { height: 100%; background: linear-gradient(90deg, var(--paper-accent), var(--paper-highlight)); border-radius: 4px; transition: width 0.5s ease; }
+.dp-aff-num { font-size: 16px; font-weight: 900; color: var(--paper-highlight); min-width: 36px; text-align: right; }
+
+.dp-levels { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+.dp-level {
+  padding: 4px 12px; border-radius: 12px; font-size: 10px;
+  background: var(--paper-light); border: 1px solid var(--paper-border);
+  color: var(--paper-muted); transition: all 0.2s;
+}
+.dp-level.on { background: var(--paper-highlight); border-color: var(--paper-highlight); color: #fff; font-weight: 700; }
+
+.dp-log { display: flex; flex-direction: column; gap: 7px; }
+.dp-log-empty { text-align: center; padding: 18px; color: var(--paper-muted); font-size: 12px; font-style: italic; }
+.dp-log-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 10px; background: var(--paper-light);
+  border: 1px solid var(--paper-border); border-radius: var(--radius-sm);
+  border-left: 3px solid var(--paper-accent);
+}
+.dp-log-time { font-size: 10px; color: var(--paper-muted); letter-spacing: 0.05em; white-space: nowrap; }
+.dp-log-text { font-size: 12px; color: var(--paper-text); line-height: 1.5; }
 </style>
 </head>
 <body>
-  <div class="dashboard">
-    <div class="header-card" id="header-toggle" role="button" tabindex="0" aria-expanded="false" aria-controls="card-env card-status card-social">
-      <div class="header-left">
-        <div class="school-logo">衡</div>
-        <div class="header-info">
-          <h1>衡江高中</h1>
-          <span>Student Terminal</span>
+  <div class="terminal" id="terminal">
+    <!-- 顶部标题栏 -->
+    <div class="term-header" id="term-header">
+      <div class="term-brand">
+        <div class="term-logo">衡</div>
+        <div class="term-brand-text">
+          <span class="term-brand-name">衡江高中</span>
+          <span class="term-brand-sub">Student Terminal v2.0</span>
         </div>
       </div>
-      <div class="header-center">
-        <div class="header-date" id="sys-date">----年-月-日</div>
-        <div class="header-time" id="sys-time">---- --:--</div>
+      <div class="term-datetime">
+        <div class="term-date" id="sys-date">----年--月--日</div>
+        <div class="term-time" id="sys-time">--:--</div>
       </div>
-      <div class="header-right">
-        <button class="header-btn" id="toggle-theme" title="切换主题" aria-label="切换主题">🌙</button>
-      </div>
-      <div class="header-summary" aria-label="快速状态概览">
-        <div class="header-chip">
-          <span class="header-chip-text">
-            <span class="header-chip-label">位置</span>
-            <span class="header-chip-value" id="summary-loc">未知</span>
-          </span>
-        </div>
-        <div class="header-chip">
-          <span class="header-chip-text">
-            <span class="header-chip-label">行为</span>
-            <span class="header-chip-value" id="summary-action">无</span>
-          </span>
-        </div>
-        <div class="header-chip">
-          <span class="header-chip-text">
-            <span class="header-chip-label">体力</span>
-            <span class="header-chip-value" id="summary-stamina">0/100</span>
-          </span>
-        </div>
-        <div class="header-chip">
-          <span class="header-chip-text">
-            <span class="header-chip-label">相遇</span>
-            <span class="header-chip-value" id="summary-social">0</span>
-          </span>
-        </div>
-      </div>
-      <div class="expand-indicator">
-        <span class="expand-label">展开</span>
-        <span class="expand-arrow">⌄</span>
+      <div class="term-controls">
+        <button class="term-btn" id="btn-theme" title="切换主题">🌙</button>
+        <button class="term-btn" id="btn-album" title="人物图鉴">📖</button>
       </div>
     </div>
 
-    <div class="card" id="card-env">
-      <div class="card-header" role="button" tabindex="0" aria-expanded="true">
-        <div class="card-title">
-          <div class="card-icon" style="background: linear-gradient(135deg, #38b2e8, #81d4f0);">🌤</div>
-          校园环境
-        </div>
-        <button class="toggle-btn"><span class="toggle-arrow">▼</span></button>
+    <!-- 快捷状态栏 -->
+    <div class="term-status-strip">
+      <div class="status-chip" id="chip-loc">
+        <span class="chip-icon">📍</span>
+        <span class="chip-label">位置</span>
+        <span class="chip-value" id="summary-loc">未知</span>
       </div>
-      <div class="card-body">
-        <div class="env-grid">
-          <div class="env-item"><div class="env-icon">📅</div><div class="env-label">日期</div><div class="env-value" id="env-date">----</div></div>
-          <div class="env-item"><div class="env-icon">🌡</div><div class="env-label">气候</div><div class="env-value" id="sys-env">----</div></div>
-          <div class="env-item"><div class="env-icon">🎉</div><div class="env-label">事件</div><div class="env-value" id="sys-festival">----</div></div>
-          <div class="env-item"><div class="env-icon">📍</div><div class="env-label">位置</div><div class="env-value" id="player-loc">----</div></div>
+      <div class="status-chip" id="chip-action">
+        <span class="chip-icon">⚡</span>
+        <span class="chip-label">行为</span>
+        <span class="chip-value" id="summary-action">无</span>
+      </div>
+      <div class="status-chip" id="chip-stamina">
+        <span class="chip-icon">💚</span>
+        <span class="chip-label">体力</span>
+        <span class="chip-value" id="summary-stamina">0/100</span>
+      </div>
+      <div class="status-chip clickable" id="chip-social">
+        <span class="chip-icon">💕</span>
+        <span class="chip-label">相遇</span>
+        <span class="chip-value" id="summary-social">0</span>
+      </div>
+    </div>
+
+    <!-- 环境信息 -->
+    <div class="term-section" id="section-env">
+      <div class="section-header">
+        <span class="section-tag">📋</span>
+        <span class="section-title">校园环境</span>
+      </div>
+      <div class="env-row">
+        <div class="env-cell"><span class="cell-label">季节</span><span class="cell-value" id="env-season">--</span></div>
+        <div class="env-cell"><span class="cell-label">天气</span><span class="cell-value" id="env-weather">--</span></div>
+        <div class="env-cell"><span class="cell-label">事件</span><span class="cell-value highlight" id="env-festival">日常</span></div>
+      </div>
+      <div class="player-row" style="margin-top:6px">
+        <div class="player-cell full">
+          <span class="cell-label">当前位置</span>
+          <span class="cell-value" id="player-loc">未知</span>
         </div>
       </div>
     </div>
 
-    <div class="card" id="card-status">
-      <div class="card-header" role="button" tabindex="0" aria-expanded="true">
-        <div class="card-title">
-          <div class="card-icon" style="background: linear-gradient(135deg, #48bb78, #9ae6b4);">👤</div>
-          当前状态
-        </div>
-        <button class="toggle-btn"><span class="toggle-arrow">▼</span></button>
+    <!-- 玩家状态 -->
+    <div class="term-section" id="section-player">
+      <div class="section-header">
+        <span class="section-tag">👤</span>
+        <span class="section-title">当前状态</span>
       </div>
-      <div class="card-body">
-        <div class="status-grid">
-          <div class="status-item"><div class="status-label">班级</div><div class="status-value" id="player-class">----</div></div>
-          <div class="status-item"><div class="status-label">余额</div><div class="status-value highlight" id="player-money">----</div></div>
-          <div class="status-item full"><div class="status-label">当前行为</div><div class="status-value" id="player-action">----</div></div>
-          <div class="status-item full"><div class="status-label">课程/活动</div><div class="status-value highlight" id="player-course">----</div></div>
+      <div class="player-row">
+        <div class="player-cell">
+          <span class="cell-label">班级</span>
+          <span class="cell-value" id="player-class">未分班</span>
         </div>
-        <div class="stamina-section">
-          <div class="stamina-header">
-            <span class="stamina-label">⚡ 体力状态</span>
-            <span class="stamina-value" id="player-stamina-val">0/100</span>
-          </div>
-          <div class="stamina-bar">
-            <div class="stamina-fill" id="player-stamina-bar" style="width: 0%"></div>
-          </div>
+        <div class="player-cell">
+          <span class="cell-label">余额</span>
+          <span class="cell-value money" id="player-money">¥0</span>
         </div>
-        <div class="quick-actions">
-          <button class="quick-btn" id="quick-rest">🏠 休息恢复</button>
+      </div>
+      <div class="player-row">
+        <div class="player-cell full">
+          <span class="cell-label">当前行为</span>
+          <span class="cell-value" id="player-action">无</span>
         </div>
+      </div>
+      <div class="player-row">
+        <div class="player-cell full">
+          <span class="cell-label">课程/活动</span>
+          <span class="cell-value highlight" id="player-course">--</span>
+        </div>
+      </div>
+      <div class="stamina-block">
+        <div class="stamina-header">
+          <span class="stamina-label">体力值</span>
+          <span class="stamina-num" id="player-stamina-val">0/100</span>
+        </div>
+        <div class="stamina-bar-wrap">
+          <div class="stamina-bar" id="player-stamina-bar"><div class="stamina-fill" style="width:0%"></div></div>
+        </div>
+      </div>
+      <div class="quick-row">
+        <button class="quick-btn" id="btn-rest">🏠 休息恢复</button>
       </div>
     </div>
 
-    <div class="card" id="card-social">
-      <div class="card-header" role="button" tabindex="0" aria-expanded="true">
-        <div class="card-title">
-          <div class="card-icon" style="background: linear-gradient(135deg, #ed8936, #fbd38d);">💕</div>
-          社交关系
-        </div>
-        <button class="toggle-btn"><span class="toggle-arrow">▼</span></button>
+    <!-- 社交关系 -->
+    <div class="term-section" id="section-social">
+      <div class="section-header">
+        <span class="section-tag">💕</span>
+        <span class="section-title">社交关系</span>
+        <span class="section-count" id="social-count">0</span>
       </div>
-      <div class="card-body">
-        <div class="social-summary">
-          <div class="social-count" id="social-count">0</div>
-          <div class="social-info">
-            <div class="social-title">已相遇角色</div>
-            <div class="social-desc" id="social-desc">等待相遇...</div>
+
+      <div class="filter-bar">
+        <div class="filter-pills" id="filter-pills">
+          <span class="pill active" data-filter="all">全部</span>
+          <span class="pill" data-filter="文科学院">文科</span>
+          <span class="pill" data-filter="理科学院">理科</span>
+          <span class="pill" data-filter="体育学院">体育</span>
+          <span class="pill" data-filter="音乐学院">音乐</span>
+          <span class="pill" data-filter="美术学院">美术</span>
+        </div>
+        <div class="search-wrap">
+          <input type="text" class="char-search" id="char-search" placeholder="搜索角色...">
+          <button class="search-clear" id="search-clear" style="display:none">✕</button>
+        </div>
+      </div>
+
+      <div class="char-roster" id="char-roster"></div>
+
+      <button class="album-entrance" id="btn-open-album">
+        <span class="entrance-icon">📖</span>
+        <span class="entrance-text">查看完整图鉴</span>
+        <span class="entrance-arrow">›</span>
+      </button>
+    </div>
+
+    <!-- 页脚 -->
+    <div class="term-footer">
+      <span class="footer-tips">点击顶部或展开箭头可收起面板</span>
+      <button class="collapse-btn" id="btn-collapse">⌃</button>
+    </div>
+  </div>
+
+  <!-- ========== 人物图鉴 ========== -->
+  <div class="album-backdrop" id="album-backdrop">
+    <div class="album-folder" id="album-folder">
+      <!-- 文件夹 tab -->
+      <div class="folder-tab">📖 人物图鉴</div>
+
+      <!-- 图鉴头部 -->
+      <div class="album-head">
+        <div class="album-head-left">
+          <span class="album-emblem">衡</span>
+          <div class="album-head-info">
+            <div class="album-title">衡江高中 · 人物图鉴</div>
+            <div class="album-subtitle">Character Index · 2024-2025</div>
           </div>
         </div>
-        <div class="char-list" id="social-list"></div>
+        <div class="album-head-right">
+          <button class="album-search-btn" id="album-search-btn" title="搜索">🔍</button>
+          <button class="album-close-btn" id="album-close-btn" title="关闭">✕</button>
+        </div>
+      </div>
+
+      <!-- 搜索栏 -->
+      <div class="album-search-area" id="album-search-area" style="display:none">
+        <input type="text" class="album-search-input" id="album-search-input" placeholder="输入角色名称搜索...">
+        <button class="album-search-x" id="album-search-x">✕</button>
+      </div>
+
+      <!-- 筛选栏 -->
+      <div class="album-filter-area">
+        <div class="af-group">
+          <span class="af-label">学院</span>
+          <div class="af-chips" id="af-academy"></div>
+        </div>
+        <div class="af-group">
+          <span class="af-label">关系</span>
+          <div class="af-chips" id="af-relation"></div>
+        </div>
+      </div>
+
+      <!-- 统计行 -->
+      <div class="album-stats-row">
+        <div class="as-item">
+          <span class="as-num" id="as-met">0</span>
+          <span class="as-label">已相遇</span>
+        </div>
+        <div class="as-divider"></div>
+        <div class="as-item">
+          <span class="as-num" id="as-total">0</span>
+          <span class="as-label">总角色</span>
+        </div>
+      </div>
+
+      <!-- 角色卡片网格 -->
+      <div class="album-grid" id="album-grid"></div>
+      <div class="album-empty" id="album-empty" style="display:none">
+        <div class="ae-icon">📭</div>
+        <div class="ae-text">暂无符合条件的人物</div>
+        <div class="ae-hint">或许该去校园里走走？</div>
+      </div>
+
+      <!-- 分页 -->
+      <div class="album-page-row">
+        <button class="page-btn" id="album-prev">◀</button>
+        <span class="page-cur"><em id="album-cur">1</em> / <em id="album-total">1</em></span>
+        <button class="page-btn" id="album-next">▶</button>
       </div>
     </div>
   </div>
 
-  <div class="modal-overlay" id="char-modal">
-    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-name">
-      <div class="modal-header">
-        <button class="modal-close" id="modal-close">✕</button>
-        <div class="modal-avatar" id="modal-avatar">?</div>
-        <div class="modal-name" id="modal-name">角色名称</div>
-        <span class="modal-relation" id="modal-relation">关系</span>
-      </div>
-      <div class="modal-body">
-        <div class="modal-affection">
-          <div class="modal-affection-label">好感度</div>
-          <div class="modal-affection-value" id="modal-affection-value">0 <span>/ 100</span></div>
+  <!-- ========== 角色详情抽屉 ========== -->
+  <div class="detail-backdrop" id="detail-backdrop">
+    <div class="detail-panel" id="detail-panel">
+      <div class="dp-handle" id="dp-handle"></div>
+      <button class="dp-close" id="dp-close">✕</button>
+
+      <div class="dp-header">
+        <div class="dp-avatar" id="dp-avatar">?</div>
+        <div class="dp-identity">
+          <div class="dp-name" id="dp-name">角色名称</div>
+          <div class="dp-academy" id="dp-academy">学院</div>
         </div>
-        <div class="modal-bar"><div class="modal-bar-fill" id="modal-bar-fill" style="width: 0%"></div></div>
-        <div class="modal-level" id="modal-levels"></div>
+        <div class="dp-badge" id="dp-badge">未相遇</div>
+      </div>
+
+      <div class="dp-body">
+        <div class="dp-section">
+          <div class="dp-section-title">■ 基础档案</div>
+          <div class="dp-info-table" id="dp-info-table"></div>
+        </div>
+
+        <div class="dp-section">
+          <div class="dp-section-title">■ 关系状态</div>
+          <div class="dp-rel-panel">
+            <div class="dp-rel-row">
+              <span class="dp-rel-label">当前关系</span>
+              <span class="dp-rel-val" id="dp-relation">陌生人</span>
+            </div>
+            <div class="dp-aff-section">
+              <div class="dp-aff-label">好感度</div>
+              <div class="dp-aff-row">
+                <div class="dp-aff-bar"><div class="dp-aff-fill" id="dp-aff-fill"></div></div>
+                <span class="dp-aff-num" id="dp-aff-num">0</span>
+              </div>
+            </div>
+          </div>
+          <div class="dp-levels" id="dp-levels"></div>
+        </div>
+
+        <div class="dp-section">
+          <div class="dp-section-title">■ 相遇记录</div>
+          <div class="dp-log" id="dp-log">
+            <div class="dp-log-empty">暂无相遇记录</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -699,9 +1176,20 @@ export function waitMvu() {
 }
 
 
-/* ===== 工具 ===== */
-function pad(num) {
-  return num < 10 ? '0' + num : num;
+/* ===== 工具函数 ===== */
+function pad(n) { return n < 10 ? '0' + n : String(n) }
+function setEl(id, txt) { const e = document.getElementById(id); if (e) e.textContent = txt }
+
+/* ===== 主题管理 ===== */
+function loadTheme() {
+  try {
+    const saved = localStorage.getItem('status-bar-theme');
+    if (saved === 'light') document.documentElement.classList.remove('dark');
+    else document.documentElement.classList.add('dark');
+  } catch {}
+}
+function saveTheme(isDark) {
+  try { localStorage.setItem('status-bar-theme', isDark ? 'dark' : 'light') } catch {}
 }
 
 /* ===== 数据填充 ===== */
@@ -711,262 +1199,425 @@ function populateData() {
   const sysEnv = get(vars, 'stat_data.系统.环境', {});
   const player = get(vars, 'stat_data.主角', {});
 
-  const dateStr = `${sysTime.年 || '---'}年${sysTime.月 || '-'}月${sysTime.日 || '-'}日`;
-  const timeStr = `${pad(sysTime.时 || 0)}:${pad(sysTime.分 || 0)}`;
-  setText('sys-date', dateStr);
-  setText('sys-time', `${sysTime.星期 || '---'} ${timeStr}`);
-  setText('env-date', dateStr);
-  setText('sys-env', `${sysEnv.季节 || '-'}季 / ${sysEnv.天气 || '-'}`);
-  setText('sys-festival', sysEnv.特殊节日 && sysEnv.特殊节日 !== '无' ? sysEnv.特殊节日 : '日常');
+  const y = sysTime.年 || '---', m = sysTime.月 || '--', d = sysTime.日 || '--';
+  setEl('sys-date', `${y}年${m}月${d}日`);
+  setEl('sys-time', `${pad(sysTime.时 || 0)}:${pad(sysTime.分 || 0)}`);
 
-  const weather = sysEnv.天气 || '晴';
-  document.querySelectorAll('.env-item').forEach(item => {
-    item.classList.remove('weather-sunny', 'weather-rainy');
-    if (weather === '晴' || weather === '多云') item.classList.add('weather-sunny');
-    else if (weather === '小雨' || weather === '雷阵雨') item.classList.add('weather-rainy');
+  setEl('env-season', sysEnv.季节 || '--');
+  setEl('env-weather', sysEnv.天气 || '--');
+  setEl('env-festival', sysEnv.特殊节日 && sysEnv.特殊节日 !== '无' ? sysEnv.特殊节日 : '日常');
+
+  setEl('player-class', player.当前班级 || '未分班');
+  setEl('player-money', `¥${player.金钱 ?? 0}`);
+  setEl('player-action', player.当前行为 || '无');
+  setEl('player-course', player.当前课程或活动 && player.当前课程或活动 !== '无' ? player.当前课程或活动 : '课间/休息');
+
+  const stamina = player.体力 ?? 0;
+  setEl('player-stamina-val', `${stamina}/100`);
+  const bar = document.getElementById('player-stamina-bar');
+  const fill = bar?.querySelector('.stamina-fill');
+  if (fill) fill.style.width = `${stamina}%`;
+
+  const sv = document.getElementById('player-stamina-val');
+  [sv, bar, fill].forEach(el => el?.classList.remove('warn', 'danger'));
+  if (stamina < 30) [sv, bar, fill].forEach(el => el?.classList.add('danger'));
+  else if (stamina < 50) [sv, bar, fill].forEach(el => el?.classList.add('warn'));
+
+  syncSummary();
+  renderCharRoster();
+  updateAlbumStats();
+}
+
+function syncSummary() {
+  const gt = id => document.getElementById(id)?.textContent || '--';
+  setEl('summary-loc', gt('player-loc') || '未知');
+  setEl('summary-action', gt('player-action') || '无');
+  setEl('summary-stamina', gt('player-stamina-val') || '0/100');
+  setEl('summary-social', gt('social-count') || '0');
+}
+
+/* ===== 社交列表 ===== */
+let curFilter = 'all', curSearch = '';
+
+function renderCharRoster() {
+  const chars = get(getMvuData(), 'stat_data.角色', {});
+  let count = 0, html = '';
+
+  const filtered = Object.keys(chars).filter(name => {
+    const c = chars[name];
+    if (c.已相遇 !== true) return false;
+    if (curFilter !== 'all' && c.学院 !== curFilter) return false;
+    if (curSearch && !name.includes(curSearch)) return false;
+    return true;
   });
 
-  setText('player-class', player.当前班级 || '未分班');
-  setText('player-loc', player.当前位置 || '未知');
-  setText('player-action', player.当前行为 || '无');
-  setText('player-money', `¥${player.金钱 || 0}`);
-  setText('player-course', player.当前课程或活动 && player.当前课程或活动 !== '无' ? player.当前课程或活动 : '课间/休息');
-
-  const stamina = player.体力 || 0;
-  const staminaVal = document.getElementById('player-stamina-val');
-  const staminaBar = document.getElementById('player-stamina-bar');
-  if (staminaVal) staminaVal.textContent = `${stamina}/100`;
-  if (staminaBar) staminaBar.style.width = `${stamina}%`;
-
-  if (staminaVal) staminaVal.classList.remove('warning', 'danger');
-  if (staminaBar) staminaBar.classList.remove('warning', 'danger');
-  if (stamina < 30) {
-    if (staminaVal) staminaVal.classList.add('danger');
-    if (staminaBar) staminaBar.classList.add('danger');
-  } else if (stamina < 50) {
-    if (staminaVal) staminaVal.classList.add('warning');
-    if (staminaBar) staminaBar.classList.add('warning');
-  }
-
-  /* 社交 */
-  const charsData = get(vars, 'stat_data.角色', {});
-  let charHtml = '';
-  let metCount = 0;
-
-  Object.keys(charsData).forEach(charName => {
-    const charInfo = charsData[charName];
-    if (charInfo && charInfo.已相遇 === true) {
-      metCount++;
-      const affection = charInfo.好感度 || 0;
-      const relation = charInfo.关系状态 || '陌生人';
-      const initial = charName.charAt(0);
-      charHtml += `
-        <div class="char-card" data-char="${charName}" data-affection="${affection}" data-relation="${relation}" role="button" tabindex="0">
-          <div class="char-header">
-            <span class="char-name"><span class="char-avatar">${initial}</span>${charName}</span>
-            <span class="char-relation">${relation}</span>
-          </div>
-          <div class="char-affection">
-            <span class="char-affection-label">好感度</span>
-            <span class="char-affection-value">${affection}/100</span>
-          </div>
-          <div class="char-bar"><div class="char-bar-fill" style="width: ${affection}%"></div></div>
-        </div>`;
-    }
+  filtered.forEach(name => {
+    count++;
+    const c = chars[name];
+    const aff = c.好感度 ?? 0;
+    const rel = c.关系状态 || '陌生人';
+    const aca = c.学院 || '';
+    const initial = name.charAt(0);
+    html += `
+      <div class="char-row" data-char="${name}">
+        <div class="char-row-avatar">${initial}</div>
+        <div class="char-row-info">
+          <div class="char-row-name">${name}</div>
+          <div class="char-row-academy">${aca}</div>
+        </div>
+        <span class="char-row-rel">${rel}</span>
+        <div class="char-row-aff">
+          <span class="char-row-aff-label">好感</span>
+          <div class="char-row-bar"><div class="char-row-bar-fill" style="width:${aff}%"></div></div>
+          <span class="char-row-num">${aff}</span>
+        </div>
+      </div>`;
   });
 
-  setText('social-count', String(metCount));
-  setText('social-desc', metCount > 0 ? '已相遇的角色' : '等待相遇...');
+  setEl('social-count', String(count));
+  const roster = document.getElementById('char-roster');
+  if (roster) roster.innerHTML = count === 0 ? '<div class="empty-roster">茫茫人海中，你还在等待那场注定的相遇...</div>' : html;
+}
 
-  const socialList = document.getElementById('social-list');
-  if (socialList) {
-    socialList.innerHTML = metCount === 0
-      ? '<div class="empty-state">茫茫人海中，你还在等待那场注定的相遇...</div>'
-      : charHtml;
+/* ===== 人物图鉴 ===== */
+let albumAll = [], albumFiltered = [], albumPage = 1;
+const ALBUM_PG = 12;
+let af = { academy: null, relation: null, search: '' };
+
+function getAffLevel(v) {
+  if (v >= 90) return '家人';
+  if (v >= 75) return '恋人';
+  if (v >= 60) return '在意';
+  if (v >= 40) return '朋友';
+  if (v >= 20) return '已相识';
+  return '陌生人';
+}
+
+function buildAlbumCard(c) {
+  const isMet = c.已相遇 === true;
+  const name = c.名称 || '?';
+  const aca = c.学院 || '?';
+  const aff = c.好感度 ?? 0;
+  const rel = c.关系状态 || (isMet ? '陌生人' : '未相遇');
+  return `
+    <div class="album-card ${isMet ? '' : 'unmet'}" data-name="${name}">
+      <div class="ac-stamp ${isMet ? 'met' : 'unmet'}">${isMet ? '已相遇' : '未相遇'}</div>
+      <div class="ac-header">
+        <div class="ac-avatar">${name.charAt(0)}</div>
+        <div class="ac-info">
+          <div class="ac-name">${name}</div>
+          <div class="ac-academy">${aca}</div>
+        </div>
+      </div>
+      <div class="ac-body">
+        <div class="ac-rel-row">
+          <span class="ac-rel-label">关系</span>
+          <span class="ac-rel-val">${rel}</span>
+        </div>
+        <div class="ac-aff-row">
+          <span class="ac-aff-label">好感度</span>
+          <div class="ac-bar"><div class="ac-bar-fill" style="width:${aff}%"></div></div>
+          <span class="ac-aff-num">${aff}</span>
+        </div>
+      </div>
+    </div>`;
+}
+
+function getAllCharsFlat() {
+  const c = get(getMvuData(), 'stat_data.角色', {});
+  return Object.keys(c).map(k => ({ 名称: k, ...c[k] }));
+}
+
+function applyAlbumFilters() {
+  albumAll = getAllCharsFlat();
+  albumFiltered = albumAll.filter(c => {
+    if (af.search && !c.名称.includes(af.search)) return false;
+    if (af.academy && c.学院 !== af.academy) return false;
+    if (af.relation && c.关系状态 !== af.relation) return false;
+    return true;
+  });
+  albumPage = 1;
+  renderAlbumGrid();
+  updateAlbumStats();
+  updateAlbumChips();
+}
+
+function renderAlbumGrid() {
+  const grid = document.getElementById('album-grid');
+  const empty = document.getElementById('album-empty');
+  if (!grid) return;
+
+  if (albumFiltered.length === 0) {
+    grid.innerHTML = '';
+    if (empty) empty.style.display = 'block';
+    return;
+  }
+  if (empty) empty.style.display = 'none';
+
+  const s = (albumPage - 1) * ALBUM_PG;
+  grid.innerHTML = albumFiltered.slice(s, s + ALBUM_PG).map(buildAlbumCard).join('');
+  updateAlbumPagination();
+}
+
+function updateAlbumStats() {
+  const c = get(getMvuData(), 'stat_data.角色', {});
+  const met = Object.values(c).filter(v => v.已相遇 === true).length;
+  setEl('as-met', String(met));
+  setEl('as-total', String(albumAll.length || 0));
+  setEl('summary-social', String(met));
+  setEl('social-count', String(met));
+}
+
+function updateAlbumPagination() {
+  const total = Math.max(1, Math.ceil(albumFiltered.length / ALBUM_PG));
+  setEl('album-cur', String(albumPage));
+  setEl('album-total', String(total));
+  const prev = document.getElementById('album-prev');
+  const next = document.getElementById('album-next');
+  if (prev) prev.disabled = albumPage <= 1;
+  if (next) next.disabled = albumPage >= total;
+}
+
+function buildAlbumChips() {
+  const c = get(getMvuData(), 'stat_data.角色', {});
+  const acas = [...new Set(Object.values(c).map(v => v.学院).filter(Boolean))];
+  const rels = [...new Set(Object.values(c).map(v => v.关系状态).filter(Boolean))];
+
+  const acaEl = document.getElementById('af-academy');
+  const relEl = document.getElementById('af-relation');
+  if (acaEl) acaEl.innerHTML = acas.map(a => `<span class="af-chip" data-type="academy" data-v="${a}">${a}</span>`).join('');
+  if (relEl) relEl.innerHTML = rels.map(r => `<span class="af-chip" data-type="relation" data-v="${r}">${r}</span>`).join('');
+}
+
+function updateAlbumChips() {
+  document.querySelectorAll('.af-chip').forEach(chip => {
+    const t = chip.dataset.type, v = chip.dataset.v;
+    chip.classList.toggle('active', t === 'academy' ? af.academy === v : af.relation === v);
+  });
+}
+
+function openAlbum() {
+  buildAlbumChips();
+  applyAlbumFilters();
+  document.getElementById('album-backdrop')?.classList.add('active');
+}
+function closeAlbum() {
+  document.getElementById('album-backdrop')?.classList.remove('active');
+}
+
+/* ===== 详情抽屉 ===== */
+function showDetail(name) {
+  const chars = get(getMvuData(), 'stat_data.角色', {});
+  const c = chars[name];
+  if (!c) return;
+
+  const isMet = c.已相遇 === true;
+  const aff = c.好感度 ?? 0;
+  const level = getAffLevel(aff);
+  const aca = c.学院 || '?';
+
+  setEl('dp-name', name);
+  setEl('dp-academy', aca);
+  setEl('dp-avatar', name.charAt(0));
+
+  const badge = document.getElementById('dp-badge');
+  if (badge) { badge.textContent = isMet ? '已相遇' : '未相遇'; badge.className = `dp-badge ${isMet ? 'met' : 'unmet'}`; }
+
+  setEl('dp-relation', c.关系状态 || '陌生人');
+  setEl('dp-aff-num', String(aff));
+  const fill = document.getElementById('dp-aff-fill');
+  if (fill) fill.style.width = `${aff}%`;
+
+  const levels = ['陌生人', '已相识', '朋友', '在意', '恋人', '家人'];
+  const lvEl = document.getElementById('dp-levels');
+  if (lvEl) lvEl.innerHTML = levels.map(l => `<span class="dp-level ${l === level ? 'on' : ''}">${l}</span>`).join('');
+
+  const infoTable = document.getElementById('dp-info-table');
+  if (infoTable) {
+    const infos = [
+      { k: '姓名', v: name },
+      { k: '学院', v: aca },
+      { k: '班级', v: c.班级 || '?' },
+      { k: '身份', v: c.身份 || '学生' },
+      { k: '位置', v: c.当前位置 || '?' },
+    ];
+    infoTable.innerHTML = infos.map(r => `<div class="dp-info-row"><span class="dp-info-key">${r.k}</span><span class="dp-info-val">${r.v}</span></div>`).join('');
   }
 
-  syncCompactSummary();
+  const logEl = document.getElementById('dp-log');
+  if (logEl) {
+    const logs = c.相遇记录 || [];
+    if (logs.length === 0) logEl.innerHTML = '<div class="dp-log-empty">暂无相遇记录</div>';
+    else logEl.innerHTML = logs.slice(-5).reverse().map(l =>
+      `<div class="dp-log-item"><span class="dp-log-time">${l.时间 || ''}</span><span class="dp-log-text">${l.描述 || ''}</span></div>`
+    ).join('');
+  }
+
+  document.getElementById('detail-backdrop')?.classList.add('active');
+}
+function closeDetail() {
+  document.getElementById('detail-backdrop')?.classList.remove('active');
 }
 
-function setText(id, text) {
-  const el = document.getElementById(id);
-  if (el) el.textContent = text;
-}
-
-function syncCompactSummary() {
-  const getText = (id) => document.getElementById(id)?.textContent || '未知';
-  setText('summary-loc', getText('player-loc'));
-  setText('summary-action', getText('player-action'));
-  setText('summary-stamina', getText('player-stamina-val'));
-  setText('summary-social', getText('social-count'));
-}
-
-/* ===== 主题管理 ===== */
-function loadTheme() {
+/* ===== 折叠状态 ===== */
+function loadCollapseState() {
   try {
-    const saved = localStorage.getItem('status-bar-theme');
-    if (saved === 'light') {
-      document.documentElement.classList.remove('dark');
-      document.getElementById('toggle-theme').textContent = '☀️';
-    } else {
-      document.documentElement.classList.add('dark');
-      document.getElementById('toggle-theme').textContent = '🌙';
-    }
-  } catch {}
-}
-
-function saveTheme(isDark) {
-  try { localStorage.setItem('status-bar-theme', isDark ? 'dark' : 'light') } catch {}
-}
-
-/* ===== 折叠管理 ===== */
-function toggleCardCollapse(card) {
-  const isCollapsed = card.classList.toggle('collapsed');
-  const header = card.querySelector('.card-header');
-  if (header) header.setAttribute('aria-expanded', String(!isCollapsed));
-  saveCollapseState(card.id, isCollapsed);
-}
-
-function toggleExpand() {
-  const dashboard = document.querySelector('.dashboard');
-  const isExpanded = dashboard.classList.toggle('expanded');
-  try { localStorage.setItem('status-bar-expanded', String(isExpanded)) } catch {}
-  updateExpandIndicator();
-}
-
-function updateExpandIndicator() {
-  const isExpanded = document.querySelector('.dashboard')?.classList.contains('expanded');
-  document.querySelector('.expand-label').textContent = isExpanded ? '收起' : '展开';
-  document.getElementById('header-toggle')?.setAttribute('aria-expanded', String(isExpanded));
-  document.querySelector('.expand-arrow').textContent = isExpanded ? '⌃' : '⌄';
-}
-
-function loadCollapseStates() {
-  try {
-    const isExpanded = localStorage.getItem('status-bar-expanded') === 'true';
-    if (isExpanded) document.querySelector('.dashboard')?.classList.add('expanded');
-    const states = JSON.parse(localStorage.getItem('status-bar-collapse') || '{}');
+    const v = localStorage.getItem('terminal-collapsed');
+    if (v === '1') document.getElementById('terminal')?.classList.add('collapsed');
+    const states = JSON.parse(localStorage.getItem('terminal-sections') || '{}');
     Object.keys(states).forEach(id => {
       if (states[id]) document.getElementById(id)?.classList.add('collapsed');
     });
   } catch {}
 }
-
-function saveCollapseState(id, isCollapsed) {
+function toggleSection(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const collapsed = el.classList.toggle('collapsed');
   try {
-    const states = JSON.parse(localStorage.getItem('status-bar-collapse') || '{}');
-    states[id] = isCollapsed;
-    localStorage.setItem('status-bar-collapse', JSON.stringify(states));
+    const states = JSON.parse(localStorage.getItem('terminal-sections') || '{}');
+    states[id] = collapsed;
+    localStorage.setItem('terminal-sections', JSON.stringify(states));
   } catch {}
 }
-
-/* ===== 好感度等级 ===== */
-function getAffectionLevel(affection) {
-  if (affection >= 90) return { level: '家人', color: 'var(--danger-color)' };
-  if (affection >= 75) return { level: '恋人', color: 'var(--accent-color)' };
-  if (affection >= 60) return { level: '在意', color: 'var(--success-color)' };
-  if (affection >= 40) return { level: '朋友', color: 'var(--primary-color)' };
-  if (affection >= 20) return { level: '已相识', color: 'var(--text-sub)' };
-  return { level: '陌生人', color: 'var(--text-muted)' };
-}
-
-/* ===== 模态框 ===== */
-function showCharModal(charName, affection, relation) {
-  const initial = charName.charAt(0);
-  const levelInfo = getAffectionLevel(affection);
-
-  setText('modal-avatar', initial);
-  setText('modal-name', charName);
-  setText('modal-relation', relation);
-  const affVal = document.getElementById('modal-affection-value');
-  if (affVal) affVal.innerHTML = `${affection} <span>/ 100</span>`;
-  const barFill = document.getElementById('modal-bar-fill');
-  if (barFill) barFill.style.width = `${affection}%`;
-
-  const levels = ['陌生人', '已相识', '朋友', '在意', '恋人', '家人'];
-  const modalLevels = document.getElementById('modal-levels');
-  if (modalLevels) {
-    modalLevels.innerHTML = levels.map(lv =>
-      `<span class="level-badge ${lv === levelInfo.level ? 'active' : ''}">${lv}</span>`
-    ).join('');
-  }
-
-  document.getElementById('char-modal')?.classList.add('active');
-}
-
-function closeCharModal() {
-  document.getElementById('char-modal')?.classList.remove('active');
-  document.getElementById('header-toggle')?.focus();
+function toggleAll() {
+  const t = document.getElementById('terminal');
+  const collapsed = t.classList.toggle('collapsed');
+  try { localStorage.setItem('terminal-collapsed', collapsed ? '1' : '0') } catch {}
+  document.getElementById('btn-collapse').textContent = collapsed ? '⌄' : '⌃';
 }
 
 /* ===== 初始化 ===== */
 async function init() {
   loadTheme();
-  loadCollapseStates();
-  updateExpandIndicator();
+  loadCollapseState();
 
   await waitMvu();
   populateData();
 
-  /* MVU 监听 */
   if (window.Mvu?.events?.VARIABLE_UPDATE_ENDED) {
-    eventOn(Mvu.events.VARIABLE_UPDATE_ENDED, () => {
-      populateData();
-      enhanceDynamicCards();
-    });
+    eventOn(Mvu.events.VARIABLE_UPDATE_ENDED, () => populateData());
   }
 
-  /* 交互事件 */
-  document.getElementById('header-toggle')?.addEventListener('click', function(e) {
-    if (e.target.closest('#toggle-theme')) return;
-    toggleExpand();
-  });
-
-  document.querySelectorAll('.card-header').forEach(header => {
-    header.addEventListener('click', () => toggleCardCollapse(header.closest('.card')));
-  });
-
-  document.getElementById('social-list')?.addEventListener('click', e => {
-    const card = e.target.closest('.char-card');
-    if (card) {
-      showCharModal(card.dataset.char, Number(card.dataset.affection), card.dataset.relation);
-    }
-  });
-
-  document.getElementById('modal-close')?.addEventListener('click', closeCharModal);
-  document.getElementById('char-modal')?.addEventListener('click', e => {
-    if (e.target === e.currentTarget) closeCharModal();
-  });
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && document.getElementById('char-modal')?.classList.contains('active')) {
-      closeCharModal();
-    }
-  });
-
-  document.getElementById('toggle-theme')?.addEventListener('click', function(e) {
+  /* 主题切换 */
+  document.getElementById('btn-theme')?.addEventListener('click', e => {
     e.stopPropagation();
     const isDark = document.documentElement.classList.toggle('dark');
-    this.textContent = isDark ? '🌙' : '☀️';
+    document.getElementById('btn-theme').textContent = isDark ? '🌙' : '☀️';
     saveTheme(isDark);
   });
 
-  document.getElementById('quick-rest')?.addEventListener('click', function() {
-    if (window.Mvu) {
-      Mvu.setVariable('stat_data.主角.体力', 100);
-      Mvu.commit();
+  /* 折叠 */
+  document.getElementById('btn-collapse')?.addEventListener('click', e => {
+    e.stopPropagation();
+    toggleAll();
+  });
+
+  /* 休息 */
+  document.getElementById('btn-rest')?.addEventListener('click', () => {
+    if (window.Mvu) { Mvu.setVariable('stat_data.主角.体力', 100); Mvu.commit(); }
+  });
+
+  /* 社交筛选 */
+  document.getElementById('filter-pills')?.addEventListener('click', e => {
+    const pill = e.target.closest('.pill');
+    if (!pill) return;
+    curFilter = pill.dataset.filter;
+    document.querySelectorAll('#filter-pills .pill').forEach(p => p.classList.remove('active'));
+    pill.classList.add('active');
+    renderCharRoster();
+  });
+
+  /* 社交搜索 */
+  document.getElementById('char-search')?.addEventListener('input', function() {
+    curSearch = this.value.trim();
+    const clearBtn = document.getElementById('search-clear');
+    if (clearBtn) clearBtn.style.display = curSearch ? 'block' : 'none';
+    renderCharRoster();
+  });
+  document.getElementById('search-clear')?.addEventListener('click', () => {
+    curSearch = '';
+    const inp = document.getElementById('char-search');
+    if (inp) inp.value = '';
+    document.getElementById('search-clear').style.display = 'none';
+    renderCharRoster();
+  });
+
+  /* 社交列表点击 */
+  document.getElementById('char-roster')?.addEventListener('click', e => {
+    const row = e.target.closest('.char-row');
+    if (row) showDetail(row.dataset.char);
+  });
+
+  /* 打开图鉴 */
+  document.getElementById('btn-open-album')?.addEventListener('click', openAlbum);
+  document.getElementById('chip-social')?.addEventListener('click', openAlbum);
+  document.getElementById('btn-album')?.addEventListener('click', openAlbum);
+
+  /* 关闭图鉴 */
+  document.getElementById('album-close-btn')?.addEventListener('click', closeAlbum);
+  document.getElementById('album-backdrop')?.addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeAlbum();
+  });
+
+  /* 图鉴搜索 */
+  document.getElementById('album-search-btn')?.addEventListener('click', () => {
+    const bar = document.getElementById('album-search-area');
+    if (bar) bar.style.display = bar.style.display !== 'none' ? 'block' : 'none';
+    if (bar?.style.display !== 'none') document.getElementById('album-search-input')?.focus();
+  });
+  document.getElementById('album-search-input')?.addEventListener('input', function() {
+    af.search = this.value.trim();
+    applyAlbumFilters();
+  });
+  document.getElementById('album-search-x')?.addEventListener('click', () => {
+    af.search = '';
+    const inp = document.getElementById('album-search-input');
+    if (inp) inp.value = '';
+    applyAlbumFilters();
+  });
+
+  /* 图鉴筛选 */
+  document.getElementById('af-academy')?.addEventListener('click', e => {
+    const chip = e.target.closest('.af-chip');
+    if (chip) { af.academy = af.academy === chip.dataset.v ? null : chip.dataset.v; applyAlbumFilters(); }
+  });
+  document.getElementById('af-relation')?.addEventListener('click', e => {
+    const chip = e.target.closest('.af-chip');
+    if (chip) { af.relation = af.relation === chip.dataset.v ? null : chip.dataset.v; applyAlbumFilters(); }
+  });
+
+  /* 图鉴分页 */
+  document.getElementById('album-prev')?.addEventListener('click', () => { if (albumPage > 1) { albumPage--; renderAlbumGrid(); } });
+  document.getElementById('album-next')?.addEventListener('click', () => {
+    const total = Math.ceil(albumFiltered.length / ALBUM_PG);
+    if (albumPage < total) { albumPage++; renderAlbumGrid(); }
+  });
+
+  /* 图鉴卡片点击 */
+  document.getElementById('album-grid')?.addEventListener('click', e => {
+    const card = e.target.closest('.album-card');
+    if (card) { closeAlbum(); setTimeout(() => showDetail(card.dataset.name), 150); }
+  });
+
+  /* 详情抽屉 */
+  document.getElementById('dp-close')?.addEventListener('click', closeDetail);
+  document.getElementById('dp-handle')?.addEventListener('click', closeDetail);
+  document.getElementById('detail-backdrop')?.addEventListener('click', e => { if (e.target === e.currentTarget) closeDetail(); });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      if (document.getElementById('detail-backdrop')?.classList.contains('active')) closeDetail();
+      else if (document.getElementById('album-backdrop')?.classList.contains('active')) closeAlbum();
     }
   });
-}
 
-function enhanceDynamicCards() {
-  document.querySelectorAll('.char-card').forEach(el => {
-    el.setAttribute('tabindex', '0');
-    el.setAttribute('role', 'button');
+  /* 分区折叠 */
+  document.querySelectorAll('.section-header').forEach(h => {
+    h.addEventListener('click', () => toggleSection(h.closest('.term-section')?.id));
   });
 }
 
 document.addEventListener('DOMContentLoaded', init);
-
 
 </script>
 </body>
