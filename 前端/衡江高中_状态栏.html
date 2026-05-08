@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>衡江高中 - 学生终端</title>
-  
   <style>
 /* ===== 主题系统 - CSS 自定义属性 ===== */
 .theme-default {
@@ -187,7 +186,7 @@ html, body {
 .header-date { font-size: 13px; font-weight: 600; }
 .header-time { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
 
-.header-right { flex-shrink: 0; }
+.header-right { display: flex; gap: 6px; flex-shrink: 0; }
 .header-btn {
   width: 32px; height: 32px; border: 1px solid var(--border-color);
   background: var(--card-bg); border-radius: 50%; cursor: pointer;
@@ -195,6 +194,7 @@ html, body {
   transition: all 0.2s;
 }
 .header-btn:hover { background: var(--card-bg-hover); transform: scale(1.1); }
+.header-btn.active { background: var(--primary-color); border-color: var(--primary-color); }
 
 .header-summary {
   display: flex; gap: 8px; flex-wrap: wrap;
@@ -400,168 +400,109 @@ html, body {
 }
 .level-badge.active { background: var(--accent-color); color: #fff; font-weight: 600; }
 
+/* --- 人物图鉴模态框 --- */
+.guide-modal-content {
+  max-width: 520px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.guide-header {
+  padding: 16px 20px 12px;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: #fff;
+  position: relative;
+}
+.guide-title { font-size: 16px; font-weight: 700; margin-bottom: 12px; text-align: center; }
+.guide-close {
+  position: absolute; top: 12px; right: 12px;
+  background: rgba(255,255,255,0.2); border: none; color: #fff;
+  width: 28px; height: 28px; border-radius: 50%; cursor: pointer;
+  font-size: 16px; display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+}
+.guide-close:hover { background: rgba(255,255,255,0.35); }
+
+.guide-tabs {
+  display: flex; gap: 6px; justify-content: center;
+}
+.guide-tab {
+  padding: 5px 14px; border: 1px solid rgba(255,255,255,0.3);
+  background: transparent; color: #fff; border-radius: 16px;
+  font-size: 12px; cursor: pointer; transition: all 0.2s;
+}
+.guide-tab:hover { background: rgba(255,255,255,0.15); }
+.guide-tab.active { background: rgba(255,255,255,0.9); color: var(--primary-dark); font-weight: 600; }
+
+.guide-search {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-color);
+}
+.guide-search-input {
+  width: 100%; padding: 8px 12px;
+  background: var(--card-bg); border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm); color: var(--text-main);
+  font-size: 13px; outline: none;
+  transition: border-color 0.2s;
+}
+.guide-search-input:focus { border-color: var(--primary-color); }
+.guide-search-input::placeholder { color: var(--text-muted); }
+
+.guide-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+}
+
+.guide-char-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 10px;
+}
+
+.guide-char-card {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 14px 10px; background: var(--card-bg);
+  border: 1px solid var(--border-color); border-radius: var(--radius-md);
+  cursor: pointer; transition: all 0.2s;
+  text-align: center;
+}
+.guide-char-card:hover { background: var(--card-bg-hover); border-color: var(--primary-color); transform: translateY(-2px); }
+.guide-char-card.unmet { opacity: 0.6; }
+
+.guide-char-avatar {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; font-weight: 700; color: #fff;
+  margin-bottom: 8px;
+}
+.guide-char-card.unmet .guide-char-avatar { background: linear-gradient(135deg, var(--text-muted), var(--text-sub)); }
+
+.guide-char-name { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+.guide-char-identity { font-size: 10px; color: var(--text-muted); margin-bottom: 6px; line-height: 1.3; }
+.guide-char-relation {
+  font-size: 10px; padding: 2px 8px; border-radius: 10px;
+  background: var(--border-color); color: var(--text-sub);
+}
+.guide-char-card.met .guide-char-relation { background: var(--accent-color); color: #fff; }
+
+.guide-empty {
+  text-align: center; padding: 40px 20px;
+}
+.guide-empty-icon { font-size: 36px; margin-bottom: 12px; }
+.guide-empty-text { color: var(--text-muted); font-size: 13px; }
+
 /* --- 动画 --- */
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-/* --- 自定义扩展 --- */
-.header-chip-clickable { cursor: pointer; }
-.header-chip-clickable:hover { background: var(--card-bg-hover); border-color: var(--primary-color); }
-
-.album-btn {
-  display: block; width: 100%; margin-top: 10px;
-  padding: 9px; cursor: pointer;
-  background: var(--card-bg);
-  border: 1px dashed var(--border-color);
-  border-radius: var(--radius-sm);
-  color: var(--text-muted);
-  font-size: 12px; font-family: inherit;
-  transition: all 0.2s;
-}
-.album-btn:hover { background: var(--card-bg-hover); border-color: var(--primary-color); color: var(--primary-color); }
-
-/* ===== 人物图鉴模态框 ===== */
-.album-overlay {
-  display: none; position: fixed; inset: 0; z-index: 9998;
-  background: rgba(0, 0, 0, 0.65);
-  justify-content: center; align-items: center;
-  padding: 20px;
-}
-.album-overlay.active { display: flex; }
-
-.album-dialog {
-  width: 100%; max-width: 780px; max-height: 88vh;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-lg);
-  overflow: hidden;
-  display: flex; flex-direction: column;
-}
-
-.album-top {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 16px 20px;
-  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-  color: #fff;
-  flex-shrink: 0;
-}
-.album-top-left { display: flex; align-items: center; gap: 12px; }
-.album-emblem {
-  width: 36px; height: 36px;
-  background: rgba(255,255,255,0.2);
-  border-radius: var(--radius-sm);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 18px; font-weight: 900;
-}
-.album-title { font-size: 16px; font-weight: 700; }
-.album-sub { font-size: 11px; opacity: 0.8; }
-.album-close {
-  width: 30px; height: 30px; border-radius: 50%;
-  background: rgba(255,255,255,0.2); border: none;
-  color: #fff; font-size: 16px; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-}
-.album-close:hover { background: rgba(255,255,255,0.35); }
-
-.album-toolbar {
-  padding: 10px 20px;
-  background: var(--card-bg);
-  border-bottom: 1px solid var(--border-color);
-  flex-shrink: 0;
-}
-.album-filter-group { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-.album-filter-label { font-size: 11px; color: var(--text-muted); font-weight: 600; }
-.album-filter-chips { display: flex; gap: 6px; flex-wrap: wrap; }
-.album-filter-chip {
-  padding: 3px 10px; font-size: 11px; cursor: pointer;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  color: var(--text-muted);
-  transition: all 0.2s;
-}
-.album-filter-chip:hover { border-color: var(--primary-color); color: var(--text-main); }
-.album-filter-chip.active { background: var(--primary-color); border-color: var(--primary-color); color: #fff; }
-
-.album-stats {
-  display: flex; align-items: center; gap: 12px;
-  padding: 8px 20px;
-  background: var(--card-bg);
-  border-bottom: 1px solid var(--border-color);
-  font-size: 12px; color: var(--text-muted);
-  flex-shrink: 0;
-}
-.album-stat em { font-style: normal; font-weight: 700; color: var(--accent-color); }
-.album-divider { color: var(--border-color); }
-
-.album-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 10px;
-  padding: 16px 20px;
-  overflow-y: auto;
-  flex: 1;
-  min-height: 200px;
-}
-
-.album-empty {
-  text-align: center;
-  padding: 40px 20px;
-  color: var(--text-muted);
-  font-size: 13px;
-}
-
-.al-card {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  padding: 12px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.al-card:hover { background: var(--card-bg-hover); border-color: var(--primary-color); transform: translateY(-2px); }
-.al-card.unmet { opacity: 0.55; }
-
-.al-avatar {
-  width: 36px; height: 36px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-  display: flex; align-items: center; justify-content: center;
-  font-size: 14px; font-weight: 700; color: #fff;
-  margin-bottom: 8px;
-}
-.al-name { font-size: 13px; font-weight: 700; }
-.al-academy { font-size: 10px; color: var(--text-muted); margin-bottom: 6px; }
-.al-row { display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 2px; }
-.al-row-label { color: var(--text-muted); }
-.al-row-val { font-weight: 600; color: var(--accent-color); }
-.al-bar { height: 3px; background: var(--border-color); border-radius: 2px; overflow: hidden; margin-top: 4px; }
-.al-bar-fill { height: 100%; background: linear-gradient(90deg, var(--primary-color), var(--accent-color)); border-radius: 2px; }
-
-.album-footer {
-  display: flex; align-items: center; justify-content: center; gap: 12px;
-  padding: 10px 20px;
-  border-top: 1px solid var(--border-color);
-  flex-shrink: 0;
-}
-.album-page-btn {
-  padding: 4px 12px; font-size: 12px; cursor: pointer;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm);
-  color: var(--text-main);
-  transition: all 0.2s;
-}
-.album-page-btn:hover:not(:disabled) { background: var(--primary-color); border-color: var(--primary-color); color: #fff; }
-.album-page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-.album-page-info { font-size: 12px; color: var(--text-muted); }
-.album-page-info em { font-style: normal; color: var(--text-main); font-weight: 600; }
-
 </style>
 </head>
 <body>
   <div class="dashboard">
-    <div class="header-card" id="header-toggle" role="button" tabindex="0" aria-expanded="false" aria-controls="card-env card-status card-social">
+    <!-- 顶部卡片 -->
+    <div class="header-card" id="header-toggle" role="button" tabindex="0" aria-expanded="false" aria-controls="card-env card-status card-social card-guide">
       <div class="header-left">
         <div class="school-logo">衡</div>
         <div class="header-info">
@@ -574,8 +515,8 @@ html, body {
         <div class="header-time" id="sys-time">---- --:--</div>
       </div>
       <div class="header-right">
+        <button class="header-btn" id="btn-guide" title="人物图鉴" aria-label="人物图鉴">📖</button>
         <button class="header-btn" id="toggle-theme" title="切换主题" aria-label="切换主题">🌙</button>
-        <button class="header-btn" id="btn-album" title="人物图鉴" aria-label="人物图鉴">📖</button>
       </div>
       <div class="header-summary" aria-label="快速状态概览">
         <div class="header-chip">
@@ -596,7 +537,7 @@ html, body {
             <span class="header-chip-value" id="summary-stamina">0/100</span>
           </span>
         </div>
-        <div class="header-chip header-chip-clickable" id="chip-social">
+        <div class="header-chip">
           <span class="header-chip-text">
             <span class="header-chip-label">相遇</span>
             <span class="header-chip-value" id="summary-social">0</span>
@@ -609,6 +550,7 @@ html, body {
       </div>
     </div>
 
+    <!-- 环境卡片 -->
     <div class="card" id="card-env">
       <div class="card-header" role="button" tabindex="0" aria-expanded="true">
         <div class="card-title">
@@ -627,6 +569,7 @@ html, body {
       </div>
     </div>
 
+    <!-- 状态卡片 -->
     <div class="card" id="card-status">
       <div class="card-header" role="button" tabindex="0" aria-expanded="true">
         <div class="card-title">
@@ -657,6 +600,7 @@ html, body {
       </div>
     </div>
 
+    <!-- 社交卡片 -->
     <div class="card" id="card-social">
       <div class="card-header" role="button" tabindex="0" aria-expanded="true">
         <div class="card-title">
@@ -674,12 +618,11 @@ html, body {
           </div>
         </div>
         <div class="char-list" id="social-list"></div>
-        <button class="album-btn" id="btn-open-album">📖 查看完整图鉴</button>
       </div>
     </div>
   </div>
 
-  <!-- 角色详情模态框（原） -->
+  <!-- 角色详情模态框 -->
   <div class="modal-overlay" id="char-modal">
     <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-name">
       <div class="modal-header">
@@ -700,39 +643,26 @@ html, body {
   </div>
 
   <!-- 人物图鉴模态框 -->
-  <div class="album-overlay" id="album-overlay">
-    <div class="album-dialog">
-      <div class="album-top">
-        <div class="album-top-left">
-          <span class="album-emblem">衡</span>
-          <div>
-            <div class="album-title">人物图鉴</div>
-            <div class="album-sub">Character Index</div>
-          </div>
-        </div>
-        <button class="album-close" id="album-close">✕</button>
-      </div>
-
-      <div class="album-toolbar">
-        <div class="album-filter-group">
-          <span class="album-filter-label">学院</span>
-          <div class="album-filter-chips" id="album-filter"></div>
+  <div class="modal-overlay" id="guide-modal">
+    <div class="modal-content guide-modal-content" role="dialog" aria-modal="true" aria-labelledby="guide-title">
+      <div class="guide-header">
+        <button class="modal-close" id="guide-close">✕</button>
+        <h2 class="guide-title" id="guide-title">📖 人物图鉴</h2>
+        <div class="guide-tabs">
+          <button class="guide-tab active" data-filter="all">全部</button>
+          <button class="guide-tab" data-filter="met">已相遇</button>
+          <button class="guide-tab" data-filter="unmet">未相遇</button>
         </div>
       </div>
-
-      <div class="album-stats">
-        <span class="album-stat">已相遇 <em id="album-met">0</em></span>
-        <span class="album-divider">|</span>
-        <span class="album-stat">总角色 <em id="album-total">0</em></span>
+      <div class="guide-search">
+        <input type="text" class="guide-search-input" id="guide-search" placeholder="搜索角色名称...">
       </div>
-
-      <div class="album-grid" id="album-grid"></div>
-      <div class="album-empty" id="album-empty" style="display:none">暂无可显示的角色</div>
-
-      <div class="album-footer">
-        <button class="album-page-btn" id="album-prev" disabled>◀</button>
-        <span class="album-page-info"><em id="album-cur">1</em>/<em id="album-max">1</em></span>
-        <button class="album-page-btn" id="album-next">▶</button>
+      <div class="guide-body" id="guide-body">
+        <div class="guide-char-grid" id="guide-char-grid"></div>
+        <div class="guide-empty" id="guide-empty" style="display:none;">
+          <div class="guide-empty-icon">🔍</div>
+          <div class="guide-empty-text">暂无匹配角色</div>
+        </div>
       </div>
     </div>
   </div>
@@ -838,7 +768,7 @@ export function waitMvu() {
 }
 
 
-/* ===== 工具 ===== */
+/* ===== 工具函数 ===== */
 function pad(num) {
   return num < 10 ? '0' + num : num;
 }
@@ -857,13 +787,6 @@ function populateData() {
   setText('env-date', dateStr);
   setText('sys-env', `${sysEnv.季节 || '-'}季 / ${sysEnv.天气 || '-'}`);
   setText('sys-festival', sysEnv.特殊节日 && sysEnv.特殊节日 !== '无' ? sysEnv.特殊节日 : '日常');
-
-  const weather = sysEnv.天气 || '晴';
-  document.querySelectorAll('.env-item').forEach(item => {
-    item.classList.remove('weather-sunny', 'weather-rainy');
-    if (weather === '晴' || weather === '多云') item.classList.add('weather-sunny');
-    else if (weather === '小雨' || weather === '雷阵雨') item.classList.add('weather-rainy');
-  });
 
   setText('player-class', player.当前班级 || '未分班');
   setText('player-loc', player.当前位置 || '未知');
@@ -887,7 +810,12 @@ function populateData() {
     if (staminaBar) staminaBar.classList.add('warning');
   }
 
-  /* 社交 */
+  populateSocialList(vars);
+  syncCompactSummary();
+  updateGuideData(vars);
+}
+
+function populateSocialList(vars) {
   const charsData = get(vars, 'stat_data.角色', {});
   let charHtml = '';
   let metCount = 0;
@@ -923,9 +851,6 @@ function populateData() {
       ? '<div class="empty-state">茫茫人海中，你还在等待那场注定的相遇...</div>'
       : charHtml;
   }
-
-  syncCompactSummary();
-  updateAlbumStats();
 }
 
 function setText(id, text) {
@@ -941,63 +866,115 @@ function syncCompactSummary() {
   setText('summary-social', getText('social-count'));
 }
 
-/* ===== 主题管理 ===== */
-function loadTheme() {
-  try {
-    const saved = localStorage.getItem('status-bar-theme');
-    if (saved === 'light') {
-      document.documentElement.classList.remove('dark');
-      document.getElementById('toggle-theme').textContent = '☀️';
-    } else {
-      document.documentElement.classList.add('dark');
-      document.getElementById('toggle-theme').textContent = '🌙';
-    }
-  } catch {}
+/* ===== 人物图鉴 ===== */
+const allCharacters = [
+  { name: '顾朝阳', identity: '体育学院·体(1)班' },
+  { name: '沈清越', identity: '数学老师·班主任' },
+  { name: '陈默', identity: '文科学院·文(2)班' },
+  { name: '林何', identity: '理科学院·理(3)班' },
+  { name: '叶辞', identity: '文科学院' },
+  { name: '顾盼', identity: '体育学院' },
+  { name: '林宇', identity: '理科学院' },
+  { name: '陆屿', identity: '体育学院' },
+  { name: '陆时', identity: '文科学院' },
+  { name: '江晏', identity: '副校长' },
+  { name: '厉渊', identity: '警察' },
+  { name: '周野', identity: '体育学院' },
+  { name: '凌曜', identity: '体育学院' },
+  { name: '秦放', identity: '理科学院' },
+  { name: '石磊', identity: '体育学院' },
+  { name: '温景辞', identity: '校医院' },
+  { name: '萧立', identity: '理科学院' },
+  { name: '谢书砚', identity: '文科学院·年级第一' },
+  { name: '许知言', identity: '音乐学院' },
+  { name: '时年', identity: '美术学院' },
+  { name: '苏沐辰', identity: '物理老师' },
+  { name: '季川', identity: '图书馆管理员' },
+  { name: '方屿', identity: '美术老师' },
+  { name: '裴烬', identity: '理科学院·年级第一' },
+  { name: '纪淮', identity: '文科学院·班长' },
+  { name: '白鹿', identity: '理科学院·跳级新生' },
+  { name: '向南', identity: '体育学院·短跑特长生' },
+  { name: '王铁柱', identity: '食堂' },
+  { name: '杰克', identity: '交换生·橄榄球' },
+  { name: '布雷迪', identity: '交换生·摔跤' },
+  { name: '迪伦', identity: '交换生' },
+  { name: '小野健太', identity: '交换生·棒球' },
+  { name: '陆沉', identity: '教导主任' },
+  { name: '顾衍', identity: '田径教练' },
+  { name: '沈知远', identity: '校长' },
+  { name: '柳善宇', identity: '体育学院·游泳' },
+];
+
+let guideData = [];
+let currentFilter = 'all';
+let currentSearch = '';
+
+function updateGuideData(vars) {
+  const charsData = get(vars, 'stat_data.角色', {});
+  guideData = allCharacters.map(char => {
+    const charInfo = charsData[char.name] || {};
+    return {
+      name: char.name,
+      identity: char.identity,
+      met: charInfo.已相遇 === true,
+      affection: charInfo.好感度 || 0,
+      relation: charInfo.关系状态 || '陌生人',
+    };
+  });
 }
 
-function saveTheme(isDark) {
-  try { localStorage.setItem('status-bar-theme', isDark ? 'dark' : 'light') } catch {}
+function openGuideModal() {
+  const modal = document.getElementById('guide-modal');
+  if (modal) {
+    modal.classList.add('active');
+    renderGuideGrid();
+    document.getElementById('guide-search')?.focus();
+  }
 }
 
-/* ===== 折叠管理 ===== */
-function toggleCardCollapse(card) {
-  const isCollapsed = card.classList.toggle('collapsed');
-  const header = card.querySelector('.card-header');
-  if (header) header.setAttribute('aria-expanded', String(!isCollapsed));
-  saveCollapseState(card.id, isCollapsed);
+function closeGuideModal() {
+  document.getElementById('guide-modal')?.classList.remove('active');
+  document.getElementById('header-toggle')?.focus();
 }
 
-function toggleExpand() {
-  const dashboard = document.querySelector('.dashboard');
-  const isExpanded = dashboard.classList.toggle('expanded');
-  try { localStorage.setItem('status-bar-expanded', String(isExpanded)) } catch {}
-  updateExpandIndicator();
-}
+function renderGuideGrid() {
+  const grid = document.getElementById('guide-char-grid');
+  const empty = document.getElementById('guide-empty');
+  if (!grid) return;
 
-function updateExpandIndicator() {
-  const isExpanded = document.querySelector('.dashboard')?.classList.contains('expanded');
-  document.querySelector('.expand-label').textContent = isExpanded ? '收起' : '展开';
-  document.getElementById('header-toggle')?.setAttribute('aria-expanded', String(isExpanded));
-  document.querySelector('.expand-arrow').textContent = isExpanded ? '⌃' : '⌄';
-}
+  let filtered = guideData;
 
-function loadCollapseStates() {
-  try {
-    const isExpanded = localStorage.getItem('status-bar-expanded') === 'true';
-    if (isExpanded) document.querySelector('.dashboard')?.classList.add('expanded');
-    const states = JSON.parse(localStorage.getItem('status-bar-collapse') || '{}');
-    Object.keys(states).forEach(id => {
-      if (states[id]) document.getElementById(id)?.classList.add('collapsed');
-    });
-  } catch {}
-}
+  if (currentFilter === 'met') {
+    filtered = filtered.filter(c => c.met);
+  } else if (currentFilter === 'unmet') {
+    filtered = filtered.filter(c => !c.met);
+  }
 
-function saveCollapseState(id, isCollapsed) {
-  try {
-    const states = JSON.parse(localStorage.getItem('status-bar-collapse') || '{}');
-    states[id] = isCollapsed;
-    localStorage.setItem('status-bar-collapse', JSON.stringify(states));
-  } catch {}
+  if (currentSearch) {
+    const q = currentSearch.toLowerCase();
+    filtered = filtered.filter(c => c.name.toLowerCase().includes(q) || c.identity.toLowerCase().includes(q));
+  }
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '';
+    if (empty) empty.style.display = 'block';
+    return;
+  }
+
+  if (empty) empty.style.display = 'none';
+
+  grid.innerHTML = filtered.map(char => {
+    const initial = char.name.charAt(0);
+    const metClass = char.met ? 'met' : 'unmet';
+    return `
+      <div class="guide-char-card ${metClass}" data-name="${char.name}" data-affection="${char.affection}" data-relation="${char.relation}" role="button" tabindex="0">
+        <div class="guide-char-avatar">${initial}</div>
+        <div class="guide-char-name">${char.name}</div>
+        <div class="guide-char-identity">${char.identity}</div>
+        <div class="guide-char-relation">${char.met ? char.relation : '未相遇'}</div>
+      </div>`;
+  }).join('');
 }
 
 /* ===== 好感度等级 ===== */
@@ -1010,7 +987,7 @@ function getAffectionLevel(affection) {
   return { level: '陌生人', color: 'var(--text-muted)' };
 }
 
-/* ===== 模态框 ===== */
+/* ===== 角色详情模态框 ===== */
 function showCharModal(charName, affection, relation) {
   const initial = charName.charAt(0);
   const levelInfo = getAffectionLevel(affection);
@@ -1039,6 +1016,65 @@ function closeCharModal() {
   document.getElementById('header-toggle')?.focus();
 }
 
+/* ===== 主题管理 ===== */
+function loadTheme() {
+  try {
+    const saved = localStorage.getItem('hengjiang-theme');
+    if (saved === 'light') {
+      document.documentElement.classList.remove('dark');
+      document.getElementById('toggle-theme').textContent = '☀️';
+    } else {
+      document.documentElement.classList.add('dark');
+      document.getElementById('toggle-theme').textContent = '🌙';
+    }
+  } catch {}
+}
+
+function saveTheme(isDark) {
+  try { localStorage.setItem('hengjiang-theme', isDark ? 'dark' : 'light') } catch {}
+}
+
+/* ===== 折叠管理 ===== */
+function toggleCardCollapse(card) {
+  const isCollapsed = card.classList.toggle('collapsed');
+  const header = card.querySelector('.card-header');
+  if (header) header.setAttribute('aria-expanded', String(!isCollapsed));
+  saveCollapseState(card.id, isCollapsed);
+}
+
+function toggleExpand() {
+  const dashboard = document.querySelector('.dashboard');
+  const isExpanded = dashboard.classList.toggle('expanded');
+  try { localStorage.setItem('hengjiang-expanded', String(isExpanded)) } catch {}
+  updateExpandIndicator();
+}
+
+function updateExpandIndicator() {
+  const isExpanded = document.querySelector('.dashboard')?.classList.contains('expanded');
+  document.querySelector('.expand-label').textContent = isExpanded ? '收起' : '展开';
+  document.getElementById('header-toggle')?.setAttribute('aria-expanded', String(isExpanded));
+  document.querySelector('.expand-arrow').textContent = isExpanded ? '⌃' : '⌄';
+}
+
+function loadCollapseStates() {
+  try {
+    const isExpanded = localStorage.getItem('hengjiang-expanded') === 'true';
+    if (isExpanded) document.querySelector('.dashboard')?.classList.add('expanded');
+    const states = JSON.parse(localStorage.getItem('hengjiang-collapse') || '{}');
+    Object.keys(states).forEach(id => {
+      if (states[id]) document.getElementById(id)?.classList.add('collapsed');
+    });
+  } catch {}
+}
+
+function saveCollapseState(id, isCollapsed) {
+  try {
+    const states = JSON.parse(localStorage.getItem('hengjiang-collapse') || '{}');
+    states[id] = isCollapsed;
+    localStorage.setItem('hengjiang-collapse', JSON.stringify(states));
+  } catch {}
+}
+
 /* ===== 初始化 ===== */
 async function init() {
   loadTheme();
@@ -1048,18 +1084,15 @@ async function init() {
   await waitMvu();
   populateData();
 
-  /* MVU 监听 */
   if (window.Mvu?.events?.VARIABLE_UPDATE_ENDED) {
     eventOn(Mvu.events.VARIABLE_UPDATE_ENDED, () => {
       populateData();
-      updateAlbumStats();
       enhanceDynamicCards();
     });
   }
 
-  /* 交互事件 */
   document.getElementById('header-toggle')?.addEventListener('click', function(e) {
-    if (e.target.closest('#toggle-theme')) return;
+    if (e.target.closest('#toggle-theme') || e.target.closest('#btn-guide')) return;
     toggleExpand();
   });
 
@@ -1079,8 +1112,9 @@ async function init() {
     if (e.target === e.currentTarget) closeCharModal();
   });
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && document.getElementById('char-modal')?.classList.contains('active')) {
-      closeCharModal();
+    if (e.key === 'Escape') {
+      if (document.getElementById('char-modal')?.classList.contains('active')) closeCharModal();
+      if (document.getElementById('guide-modal')?.classList.contains('active')) closeGuideModal();
     }
   });
 
@@ -1091,152 +1125,56 @@ async function init() {
     saveTheme(isDark);
   });
 
+  document.getElementById('btn-guide')?.addEventListener('click', function(e) {
+    e.stopPropagation();
+    openGuideModal();
+  });
+
+  document.getElementById('guide-close')?.addEventListener('click', closeGuideModal);
+  document.getElementById('guide-modal')?.addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeGuideModal();
+  });
+
+  document.querySelectorAll('.guide-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.guide-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      currentFilter = tab.dataset.filter;
+      renderGuideGrid();
+    });
+  });
+
+  document.getElementById('guide-search')?.addEventListener('input', e => {
+    currentSearch = e.target.value.trim();
+    renderGuideGrid();
+  });
+
+  document.getElementById('guide-char-grid')?.addEventListener('click', e => {
+    const card = e.target.closest('.guide-char-card');
+    if (card && card.classList.contains('met')) {
+      closeGuideModal();
+      setTimeout(() => {
+        showCharModal(card.dataset.name, Number(card.dataset.affection), card.dataset.relation);
+      }, 150);
+    }
+  });
+
   document.getElementById('quick-rest')?.addEventListener('click', function() {
     if (window.Mvu) {
       Mvu.setVariable('stat_data.主角.体力', 100);
       Mvu.commit();
     }
   });
-
-  /* 图鉴 */
-  document.getElementById('btn-album')?.addEventListener('click', e => { e.stopPropagation(); openAlbum(); });
-  document.getElementById('btn-open-album')?.addEventListener('click', openAlbum);
-  document.getElementById('chip-social')?.addEventListener('click', openAlbum);
-  document.getElementById('album-close')?.addEventListener('click', closeAlbum);
-  document.getElementById('album-overlay')?.addEventListener('click', e => {
-    if (e.target === e.currentTarget) closeAlbum();
-  });
-
-  document.getElementById('album-filter')?.addEventListener('click', e => {
-    const chip = e.target.closest('.album-filter-chip');
-    if (!chip) return;
-    const aca = chip.dataset.academy;
-    albumAcademyFilter = albumAcademyFilter === aca ? null : aca;
-    document.querySelectorAll('.album-filter-chip').forEach(c => c.classList.toggle('active', c.dataset.academy === albumAcademyFilter));
-    applyAlbumFilter();
-  });
-
-  document.getElementById('album-prev')?.addEventListener('click', () => {
-    if (albumPage > 1) { albumPage--; renderAlbumGrid(); }
-  });
-  document.getElementById('album-next')?.addEventListener('click', () => {
-    const total = Math.ceil(albumFiltered.length / ALBUM_PAGE_SIZE);
-    if (albumPage < total) { albumPage++; renderAlbumGrid(); }
-  });
-
-  document.getElementById('album-grid')?.addEventListener('click', e => {
-    const card = e.target.closest('.al-card');
-    if (card) {
-      showCharModal(card.dataset.char, Number(card.dataset.affection), card.dataset.relation);
-    }
-  });
 }
 
 function enhanceDynamicCards() {
-  document.querySelectorAll('.char-card').forEach(el => {
+  document.querySelectorAll('.char-card, .guide-char-card').forEach(el => {
     el.setAttribute('tabindex', '0');
     el.setAttribute('role', 'button');
   });
 }
 
-/* ===== 人物图鉴 ===== */
-let albumAllChars = [];
-let albumFiltered = [];
-let albumPage = 1;
-const ALBUM_PAGE_SIZE = 12;
-let albumAcademyFilter = null;
-
-function getAllChars() {
-  return get(getMvuData(), 'stat_data.角色', {});
-}
-
-function buildAlbumData() {
-  const chars = getAllChars();
-  albumAllChars = Object.keys(chars).map(k => ({ 名称: k, ...chars[k] }));
-}
-
-function applyAlbumFilter() {
-  buildAlbumData();
-  albumFiltered = albumAllChars.filter(c => {
-    if (albumAcademyFilter && c.学院 !== albumAcademyFilter) return false;
-    return true;
-  });
-  albumPage = 1;
-  renderAlbumGrid();
-  updateAlbumStats();
-}
-
-function renderAlbumGrid() {
-  const grid = document.getElementById('album-grid');
-  const empty = document.getElementById('album-empty');
-  if (!grid) return;
-
-  if (albumFiltered.length === 0) {
-    grid.innerHTML = '';
-    if (empty) empty.style.display = 'block';
-    return;
-  }
-  if (empty) empty.style.display = 'none';
-
-  const start = (albumPage - 1) * ALBUM_PAGE_SIZE;
-  const items = albumFiltered.slice(start, start + ALBUM_PAGE_SIZE);
-
-  grid.innerHTML = items.map(c => {
-    const isMet = c.已相遇 === true;
-    const aff = c.好感度 ?? 0;
-    const rel = c.关系状态 || (isMet ? '陌生人' : '未相遇');
-    return `<div class="al-card ${isMet ? '' : 'unmet'}" data-char="${c.名称}" data-affection="${aff}" data-relation="${rel}">
-      <div class="al-avatar">${c.名称.charAt(0)}</div>
-      <div class="al-name">${c.名称}</div>
-      <div class="al-academy">${c.学院 || '未知'}</div>
-      <div class="al-row"><span class="al-row-label">关系</span><span class="al-row-val">${rel}</span></div>
-      <div class="al-row"><span class="al-row-label">好感</span><span class="al-row-val">${aff}</span></div>
-      <div class="al-bar"><div class="al-bar-fill" style="width:${aff}%"></div></div>
-    </div>`;
-  }).join('');
-
-  updatePagination();
-}
-
-function updateAlbumStats() {
-  const chars = getAllChars();
-  const met = Object.values(chars).filter(c => c.已相遇 === true).length;
-  setText('album-met', String(met));
-  setText('album-total', String(albumAllChars.length));
-  setText('summary-social', String(met));
-  setText('social-count', String(met));
-}
-
-function updatePagination() {
-  const total = Math.max(1, Math.ceil(albumFiltered.length / ALBUM_PAGE_SIZE));
-  setText('album-cur', String(albumPage));
-  setText('album-max', String(total));
-  document.getElementById('album-prev').disabled = albumPage <= 1;
-  document.getElementById('album-next').disabled = albumPage >= total;
-}
-
-function buildFilterChips() {
-  const chars = getAllChars();
-  const academies = [...new Set(Object.values(chars).map(c => c.学院).filter(Boolean))];
-  const container = document.getElementById('album-filter');
-  if (!container) return;
-  container.innerHTML = academies.map(a =>
-    `<span class="album-filter-chip" data-academy="${a}">${a}</span>`
-  ).join('');
-}
-
-function openAlbum() {
-  buildFilterChips();
-  applyAlbumFilter();
-  document.getElementById('album-overlay')?.classList.add('active');
-}
-
-function closeAlbum() {
-  document.getElementById('album-overlay')?.classList.remove('active');
-}
-
-document.addEventListener('DOMContentLoaded', init);
-
+$(() => { init(); });
 
 </script>
 </body>
