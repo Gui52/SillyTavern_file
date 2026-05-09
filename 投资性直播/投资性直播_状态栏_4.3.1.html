@@ -2574,7 +2574,7 @@
           : '<span style="color:var(--text-muted);font-size:0.78em;">无</span>';
 
         // 平台认知指示器
-        const cog = _.get(s, '运营号.主播认知', {});
+        const cog = _.get(host, '主播认知', {});
         const isKnown = _.get(cog, '是否知情', false);
         const cogTime = _.get(cog, '认知突破时间', '');
         const cogEl = q('#cognition-indicator');
