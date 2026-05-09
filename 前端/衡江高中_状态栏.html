@@ -177,27 +177,51 @@ html, body {
 
 /* --- 滚动条美化 --- */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
-  border-radius: 3px;
+  border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--border-color);
-  border-radius: 3px;
-  transition: background 0.3s ease;
+  background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
+  border-radius: 10px;
+  transition: all 0.3s ease;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--primary-color);
+  background: linear-gradient(180deg, var(--primary-light), var(--secondary-light));
+  box-shadow: 0 0 8px var(--primary-color);
+}
+::-webkit-scrollbar-thumb:active {
+  background: linear-gradient(180deg, var(--accent-color), var(--warning-color));
 }
 ::-webkit-scrollbar-corner {
   background: transparent;
 }
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--border-color) transparent;
+  scrollbar-color: var(--primary-color) transparent;
+}
+
+/* 暗色主题滚动条 */
+.theme-campus.dark ::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(56, 178, 232, 0.6), rgba(159, 122, 234, 0.6));
+}
+.theme-campus.dark ::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
+  box-shadow: 0 0 12px rgba(56, 178, 232, 0.5);
+}
+
+/* 亮色主题滚动条 */
+.theme-campus:not(.dark) ::-webkit-scrollbar-thumb,
+.theme-campus.light ::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(56, 178, 232, 0.5), rgba(159, 122, 234, 0.5));
+}
+.theme-campus:not(.dark) ::-webkit-scrollbar-thumb:hover,
+.theme-campus.light ::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
+  box-shadow: 0 0 10px rgba(56, 178, 232, 0.4);
 }
 
 /* --- 仪表板 --- */
