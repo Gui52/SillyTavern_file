@@ -227,8 +227,7 @@ html, body {
 /* --- 仪表板 --- */
 .dashboard {
   width: 100%;
-  aspect-ratio: 16 / 10;
-  max-height: 620px;
+  min-height: 200px;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -236,7 +235,8 @@ html, body {
   background: var(--bg-gradient);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
-  overflow: hidden;
+  overflow-y: auto;
+  max-height: 90vh;
 }
 
 /* --- 顶部卡片 --- */
@@ -386,6 +386,7 @@ html, body {
   overflow: hidden;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   animation: cardIn 0.5s ease backwards;
+  flex-shrink: 0;
 }
 #card-env { animation-delay: 0.1s; }
 #card-status { animation-delay: 0.2s; }

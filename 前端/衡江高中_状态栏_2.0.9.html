@@ -177,34 +177,57 @@ html, body {
 
 /* --- 滚动条美化 --- */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
-  border-radius: 3px;
+  border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--border-color);
-  border-radius: 3px;
-  transition: background 0.3s ease;
+  background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
+  border-radius: 10px;
+  transition: all 0.3s ease;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--primary-color);
+  background: linear-gradient(180deg, var(--primary-light), var(--secondary-light));
+  box-shadow: 0 0 8px var(--primary-color);
+}
+::-webkit-scrollbar-thumb:active {
+  background: linear-gradient(180deg, var(--accent-color), var(--warning-color));
 }
 ::-webkit-scrollbar-corner {
   background: transparent;
 }
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--border-color) transparent;
+  scrollbar-color: var(--primary-color) transparent;
+}
+
+/* 暗色主题滚动条 */
+.theme-campus.dark ::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(56, 178, 232, 0.6), rgba(159, 122, 234, 0.6));
+}
+.theme-campus.dark ::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
+  box-shadow: 0 0 12px rgba(56, 178, 232, 0.5);
+}
+
+/* 亮色主题滚动条 */
+.theme-campus:not(.dark) ::-webkit-scrollbar-thumb,
+.theme-campus.light ::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(56, 178, 232, 0.5), rgba(159, 122, 234, 0.5));
+}
+.theme-campus:not(.dark) ::-webkit-scrollbar-thumb:hover,
+.theme-campus.light ::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
+  box-shadow: 0 0 10px rgba(56, 178, 232, 0.4);
 }
 
 /* --- 仪表板 --- */
 .dashboard {
   width: 100%;
-  aspect-ratio: 16 / 10;
-  max-height: 620px;
+  min-height: 200px;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -212,7 +235,8 @@ html, body {
   background: var(--bg-gradient);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
-  overflow: hidden;
+  overflow-y: auto;
+  max-height: 90vh;
 }
 
 /* --- 顶部卡片 --- */
@@ -362,6 +386,7 @@ html, body {
   overflow: hidden;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   animation: cardIn 0.5s ease backwards;
+  flex-shrink: 0;
 }
 #card-env { animation-delay: 0.1s; }
 #card-status { animation-delay: 0.2s; }
@@ -369,6 +394,10 @@ html, body {
 @keyframes cardIn {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
+}
+@keyframes cardExpand {
+  from { opacity: 0; transform: scaleY(0.8); transform-origin: top; }
+  to { opacity: 1; transform: scaleY(1); transform-origin: top; }
 }
 .card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-2px); }
 .card::after {
@@ -399,12 +428,19 @@ html, body {
 .toggle-btn { background: none; border: none; cursor: pointer; padding: 4px; color: var(--text-muted); font-size: 12px; transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
 .card.collapsed .toggle-btn .toggle-arrow { transform: rotate(-90deg); display: inline-block; }
 
-.card-body { padding: 0 16px 16px; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); max-height: 500px; opacity: 1; animation: cardBodyIn 0.5s ease backwards; animation-delay: 0.1s; }
-@keyframes cardBodyIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+.card-body {
+  padding: 0 16px 16px;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, padding 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  max-height: 500px;
+  opacity: 1;
+  overflow: hidden;
 }
-.card.collapsed .card-body { display: none; }
+.card.collapsed .card-body {
+  max-height: 0;
+  opacity: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
 
 /* --- 环境网格 --- */
 .env-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
@@ -1600,6 +1636,22 @@ function toggleCardCollapse(card) {
   const header = card.querySelector('.card-header');
   if (header) header.setAttribute('aria-expanded', String(!isCollapsed));
   saveCollapseState(card.id, isCollapsed);
+
+  if (!isCollapsed) {
+    const body = card.querySelector('.card-body');
+    if (body) {
+      body.style.animation = 'none';
+      body.offsetHeight;
+      body.style.animation = 'cardExpand 0.4s ease';
+    }
+    const envItems = card.querySelectorAll('.env-item');
+    envItems.forEach((item, i) => {
+      item.style.animation = 'none';
+      item.offsetHeight;
+      item.style.animation = `envItemIn 0.4s ease backwards`;
+      item.style.animationDelay = `${i * 0.05}s`;
+    });
+  }
 }
 
 function toggleExpand() {
