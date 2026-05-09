@@ -1,5 +1,4 @@
 import { getMvuData, get, waitMvu } from '../../公共/utils.js';
-import { initMap } from '../地图/script.js';
 
 /* ===== 工具函数 ===== */
 function pad(num) {
@@ -380,7 +379,6 @@ async function init() {
 
   await waitMvu();
   populateData();
-  initMap();
 
   (() => {
     try {
@@ -469,11 +467,6 @@ async function init() {
         showCharModal(card.dataset.name, Number(card.dataset.affection), card.dataset.relation);
       }, 150);
     }
-  });
-
-  window.addEventListener('map-marker-click', e => {
-    const { charName, affection, relation } = e.detail;
-    showCharModal(charName, affection, relation);
   });
 
   document.getElementById('quick-rest')?.addEventListener('click', function() {
