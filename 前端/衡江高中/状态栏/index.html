@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="theme-campus dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>衡江高中 - 学生终端</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Gui52/SillyTavern_file@main/前端/衡江高中/状态栏/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Gui52/SillyTavern_file@main/前端/衡江高中/地图/style.css">
+  <svg style="display:none">
+    <symbol id="svg-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+      <line x1="16" y1="2" x2="16" y2="6"></line>
+      <line x1="8" y1="2" x2="8" y2="6"></line>
+      <line x1="3" y1="10" x2="21" y2="10"></line>
+    </symbol>
+    <symbol id="svg-weather-sunny" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </symbol>
+    <symbol id="svg-weather-cloudy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path>
+    </symbol>
+    <symbol id="svg-weather-rain" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="16" y1="13" x2="16" y2="21"></line>
+      <line x1="8" y1="13" x2="8" y2="21"></line>
+      <line x1="12" y1="15" x2="12" y2="23"></line>
+      <path d="M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25"></path>
+    </symbol>
+    <symbol id="svg-weather-snow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 17.58A5 5 0 0 0 18 8h-1.26A8 8 0 1 0 4 16.25"></path>
+      <line x1="8" y1="16" x2="8.01" y2="16"></line>
+      <line x1="8" y1="20" x2="8.01" y2="20"></line>
+      <line x1="12" y1="18" x2="12.01" y2="18"></line>
+      <line x1="12" y1="22" x2="12.01" y2="22"></line>
+      <line x1="16" y1="16" x2="16.01" y2="16"></line>
+      <line x1="16" y1="20" x2="16.01" y2="20"></line>
+    </symbol>
+    <symbol id="svg-event" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+    </symbol>
+    <symbol id="svg-location" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+      <circle cx="12" cy="10" r="3"></circle>
+    </symbol>
+    <symbol id="svg-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+      <circle cx="12" cy="7" r="4"></circle>
+    </symbol>
+    <symbol id="svg-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+    </symbol>
+    <symbol id="svg-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+      <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+    </symbol>
+    <symbol id="svg-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    </symbol>
+    <symbol id="svg-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </symbol>
+    <symbol id="svg-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+      <polyline points="9 22 9 12 15 12 15 22"></polyline>
+    </symbol>
+    <symbol id="svg-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="18" y1="6" x2="6" y2="18"></line>
+      <line x1="6" y1="6" x2="18" y2="18"></line>
+    </symbol>
+    <symbol id="svg-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="8"></circle>
+      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </symbol>
+    <symbol id="svg-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </symbol>
+    <symbol id="svg-chevron-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </symbol>
+    <symbol id="svg-bolt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+    </symbol>
+    <symbol id="svg-money" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="1" x2="12" y2="23"></line>
+      <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+    </symbol>
+    <symbol id="svg-school" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+      <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+    </symbol>
+    <symbol id="svg-activity" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+    </symbol>
+    <symbol id="svg-trend-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+      <polyline points="17 6 23 6 23 12"></polyline>
+    </symbol>
+  </svg>
+</head>
+<body>
+  <div class="dashboard">
+    <div class="header-card" id="header-toggle" role="button" tabindex="0" aria-expanded="false" aria-controls="card-env card-status card-social card-guide">
+      <div class="header-left">
+        <div class="school-logo">
+          <svg class="svg-icon"><use href="#svg-school"></use></svg>
+        </div>
+        <div class="header-info">
+          <h1>衡江高中</h1>
+          <span>Student Terminal</span>
+        </div>
+      </div>
+      <div class="header-center">
+        <div class="header-date" id="sys-date">----年-月-日</div>
+        <div class="header-time" id="sys-time">---- --:--</div>
+      </div>
+      <div class="header-right">
+        <button class="header-btn" id="btn-guide" title="人物图鉴" aria-label="人物图鉴">
+          <svg class="svg-icon"><use href="#svg-book"></use></svg>
+        </button>
+        <button class="header-btn" id="toggle-theme" title="切换主题" aria-label="切换主题">
+          <svg class="svg-icon svg-theme"><use href="#svg-moon"></use></svg>
+        </button>
+      </div>
+      <div class="header-summary" aria-label="快速状态概览">
+        <div class="header-chip">
+          <span class="header-chip-text">
+            <span class="header-chip-label">位置</span>
+            <span class="header-chip-value" id="summary-loc">未知</span>
+          </span>
+        </div>
+        <div class="header-chip">
+          <span class="header-chip-text">
+            <span class="header-chip-label">行为</span>
+            <span class="header-chip-value" id="summary-action">无</span>
+          </span>
+        </div>
+        <div class="header-chip">
+          <span class="header-chip-text">
+            <span class="header-chip-label">体力</span>
+            <span class="header-chip-value" id="summary-stamina">0/100</span>
+          </span>
+        </div>
+        <div class="header-chip">
+          <span class="header-chip-text">
+            <span class="header-chip-label">相遇</span>
+            <span class="header-chip-value" id="summary-social">0</span>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" id="card-env">
+      <div class="card-header" role="button" tabindex="0" aria-expanded="true">
+        <div class="card-title">
+          <div class="card-icon" style="background: linear-gradient(135deg, #38b2e8, #81d4f0);">
+            <svg class="svg-icon"><use href="#svg-weather-sunny"></use></svg>
+          </div>
+          校园环境
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="env-grid">
+          <div class="env-item">
+            <div class="env-icon"><svg class="svg-icon"><use href="#svg-calendar"></use></svg></div>
+            <div class="env-label">日期</div>
+            <div class="env-value" id="env-date">----</div>
+          </div>
+          <div class="env-item">
+            <div class="env-icon"><svg class="svg-icon svg-weather" id="env-weather-icon"><use href="#svg-weather-sunny"></use></svg></div>
+            <div class="env-label">气候</div>
+            <div class="env-value" id="sys-env">----</div>
+          </div>
+          <div class="env-item">
+            <div class="env-icon"><svg class="svg-icon"><use href="#svg-event"></use></svg></div>
+            <div class="env-label">事件</div>
+            <div class="env-value" id="sys-festival">----</div>
+          </div>
+          <div class="env-item">
+            <div class="env-icon"><svg class="svg-icon"><use href="#svg-location"></use></svg></div>
+            <div class="env-label">位置</div>
+            <div class="env-value" id="player-loc">----</div>
+          </div>
+        </div>
+        <div class="map-container" id="map-container">
+          <div class="map-svg-wrapper" id="map-svg-wrapper"></div>
+          <div class="map-controls">
+            <button class="map-btn map-btn-zoomin" id="map-zoom-in" title="放大">+</button>
+            <button class="map-btn map-btn-zoomout" id="map-zoom-out" title="缩小">−</button>
+            <button class="map-btn map-btn-reset" id="map-zoom-reset" title="重置">↺</button>
+          </div>
+          <div class="map-legend">
+            <div class="map-legend-item">
+              <div class="map-legend-dot" style="background:#2196F3;"></div>
+              <span>玩家</span>
+            </div>
+            <div class="map-legend-item">
+              <div class="map-legend-dot" style="background:#ed8936;"></div>
+              <span>角色</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" id="card-status">
+      <div class="card-header" role="button" tabindex="0" aria-expanded="true">
+        <div class="card-title">
+          <div class="card-icon" style="background: linear-gradient(135deg, #48bb78, #9ae6b4);">
+            <svg class="svg-icon"><use href="#svg-user"></use></svg>
+          </div>
+          当前状态
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="status-grid">
+          <div class="status-item">
+            <div class="status-label">班级</div>
+            <div class="status-value" id="player-class">----</div>
+          </div>
+          <div class="status-item">
+            <div class="status-label">余额</div>
+            <div class="status-value highlight" id="player-money">----</div>
+          </div>
+          <div class="status-item full">
+            <div class="status-label">当前行为</div>
+            <div class="status-value" id="player-action">----</div>
+          </div>
+          <div class="status-item full">
+            <div class="status-label">课程/活动</div>
+            <div class="status-value highlight" id="player-course">----</div>
+          </div>
+        </div>
+        <div class="stamina-section">
+          <div class="stamina-header">
+            <span class="stamina-label"><svg class="svg-icon svg-bolt"><use href="#svg-bolt"></use></svg> 体力状态</span>
+            <span class="stamina-value" id="player-stamina-val">0/100</span>
+          </div>
+          <div class="stamina-bar">
+            <div class="stamina-fill" id="player-stamina-bar" style="width: 0%"></div>
+          </div>
+        </div>
+        <div class="quick-actions">
+          <button class="quick-btn" id="quick-rest">
+            <svg class="svg-icon"><use href="#svg-home"></use></svg> 休息恢复
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" id="card-social">
+      <div class="card-header" role="button" tabindex="0" aria-expanded="true">
+        <div class="card-title">
+          <div class="card-icon" style="background: linear-gradient(135deg, #ed8936, #fbd38d);">
+            <svg class="svg-icon"><use href="#svg-heart"></use></svg>
+          </div>
+          社交关系
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="social-summary">
+          <div class="social-count" id="social-count">0</div>
+          <div class="social-info">
+            <div class="social-title">已相遇角色</div>
+            <div class="social-desc" id="social-desc">等待相遇...</div>
+          </div>
+        </div>
+        <div class="char-list" id="social-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="char-modal">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-name">
+      <div class="modal-header">
+        <button class="modal-close" id="modal-close">
+          <svg class="svg-icon"><use href="#svg-close"></use></svg>
+        </button>
+        <div class="modal-avatar" id="modal-avatar">?</div>
+        <div class="modal-name" id="modal-name">角色名称</div>
+        <span class="modal-relation" id="modal-relation">关系</span>
+      </div>
+      <div class="modal-body">
+        <div class="modal-affection">
+          <div class="modal-affection-label">好感度</div>
+          <div class="modal-affection-value" id="modal-affection-value">0 <span>/ 100</span></div>
+        </div>
+        <div class="modal-bar"><div class="modal-bar-fill" id="modal-bar-fill" style="width: 0%"></div></div>
+        <div class="modal-level" id="modal-levels"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="guide-modal">
+    <div class="modal-content guide-modal-content" role="dialog" aria-modal="true" aria-labelledby="guide-title">
+      <div class="guide-header">
+        <button class="modal-close" id="guide-close">
+          <svg class="svg-icon"><use href="#svg-close"></use></svg>
+        </button>
+        <h2 class="guide-title" id="guide-title">
+          <svg class="svg-icon"><use href="#svg-book"></use></svg> 人物图鉴
+        </h2>
+        <div class="guide-tabs">
+          <button class="guide-tab active" data-filter="all">全部</button>
+          <button class="guide-tab" data-filter="met">已相遇</button>
+          <button class="guide-tab" data-filter="unmet">未相遇</button>
+        </div>
+      </div>
+      <div class="guide-search">
+        <svg class="svg-icon search-icon"><use href="#svg-search"></use></svg>
+        <input type="text" class="guide-search-input" id="guide-search" placeholder="搜索角色名称...">
+      </div>
+      <div class="guide-body" id="guide-body">
+        <div class="guide-char-grid" id="guide-char-grid"></div>
+        <div class="guide-empty" id="guide-empty" style="display:none;">
+          <div class="guide-empty-icon">
+            <svg class="svg-icon"><use href="#svg-search"></use></svg>
+          </div>
+          <div class="guide-empty-text">暂无匹配角色</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="https://cdn.jsdelivr.net/gh/Gui52/SillyTavern_file@main/前端/衡江高中/状态栏/script.js"></script>
+</body>
+</html>
