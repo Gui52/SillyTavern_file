@@ -942,6 +942,12 @@
       max-height: 320px;
       overflow-y: auto;
     }
+    .host-dropdown::-webkit-scrollbar { width: 4px; }
+    .host-dropdown::-webkit-scrollbar-thumb {
+      background: var(--scroll-thumb);
+      border-radius: 4px;
+    }
+    .host-dropdown::-webkit-scrollbar-track { background: transparent; }
     .host-dropdown.show { display: block; }
     .host-dropdown-item {
       padding: 10px 14px;
@@ -982,12 +988,76 @@
       z-index: 1;
     }
 
-    .sbc-body::-webkit-scrollbar { width: 4px; }
+    /* ═══════════════════════════════════════════════════════════════
+       Beautified Scrollbar — 每个主题定制渐变滑块
+       ═══════════════════════════════════════════════════════════════ */
+    .sbc-body {
+      scrollbar-width: thin;
+      scrollbar-color: var(--scroll-thumb) transparent;
+    }
+    .sbc-body::-webkit-scrollbar { width: 6px; }
+    .sbc-body::-webkit-scrollbar-track {
+      background: transparent;
+      border-radius: 4px;
+      margin: 4px 0;
+    }
     .sbc-body::-webkit-scrollbar-thumb {
       background: var(--scroll-thumb);
-      border-radius: 4px;
+      border-radius: 8px;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid transparent;
+      background-clip: content-box;
+      min-height: 40px;
     }
-    .sbc-body::-webkit-scrollbar-track { background: transparent; }
+    .sbc-body::-webkit-scrollbar-thumb:hover {
+      width: 10px;
+      border-width: 0;
+      box-shadow: 0 0 12px var(--accent-glow);
+    }
+    .sbc-body::-webkit-scrollbar-thumb:active {
+      background: var(--accent) !important;
+      box-shadow: 0 0 20px var(--accent-glow), 0 0 40px var(--accent-glow);
+    }
+    .sbc-body::-webkit-scrollbar-button { display: none; }
+    /* 悬停时展开滚动条宽度 */
+    .sbc-body:hover::-webkit-scrollbar { width: 10px; }
+    .sbc-body:hover::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, var(--accent) 0%, var(--accent-secondary) 100%);
+      border: none;
+      box-shadow: 0 0 10px var(--accent-glow);
+    }
+    /* 各主题滚动条定制 gradient */
+    .theme-glass .sbc-body::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, rgba(136,96,255,0.5) 0%, rgba(85,187,255,0.4) 100%);
+    }
+    .theme-glass .sbc-body:hover::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, rgba(136,96,255,0.8) 0%, rgba(85,187,255,0.6) 100%);
+    }
+    .theme-ink .sbc-body::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, rgba(152,72,72,0.5) 0%, rgba(184,122,32,0.4) 100%);
+    }
+    .theme-ink .sbc-body:hover::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, rgba(152,72,72,0.8) 0%, rgba(184,122,32,0.6) 100%);
+    }
+    .theme-medieval .sbc-body::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, rgba(168,122,80,0.5) 0%, rgba(224,176,80,0.4) 100%);
+    }
+    .theme-medieval .sbc-body:hover::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, rgba(168,122,80,0.8) 0%, rgba(224,176,80,0.6) 100%);
+    }
+    .theme-metro .sbc-body::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, rgba(37,99,235,0.5) 0%, rgba(8,145,178,0.4) 100%);
+    }
+    .theme-metro .sbc-body:hover::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, rgba(37,99,235,0.8) 0%, rgba(8,145,178,0.6) 100%);
+    }
+    .theme-neon .sbc-body::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, rgba(0,255,200,0.5) 0%, rgba(255,0,170,0.3) 100%);
+    }
+    .theme-neon .sbc-body:hover::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, rgba(0,255,200,0.8) 0%, rgba(255,0,170,0.5) 100%);
+      box-shadow: 0 0 16px rgba(0,255,200,0.5), 0 0 30px rgba(255,0,170,0.2);
+    }
 
     /* ═══════════════════════════════════════════════════════════════
        Shared Animations
