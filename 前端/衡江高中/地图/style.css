@@ -1,5 +1,5 @@
 /* ===== 地图嵌入样式 ===== */
-.env-card .map-container {
+.map-container {
   position: relative;
   margin-top: 12px;
   border-radius: var(--radius-md);
@@ -9,7 +9,7 @@
   cursor: grab;
   user-select: none;
 }
-.env-card .map-container:active { cursor: grabbing; }
+.map-container:active { cursor: grabbing; }
 
 .map-svg-wrapper {
   width: 100%;
@@ -106,6 +106,7 @@
   align-items: center;
   gap: 10px;
   z-index: 10;
+  pointer-events: none;
 }
 .map-legend-item {
   display: flex;
@@ -120,15 +121,15 @@
 }
 
 /* ===== 暗色主题适配 ===== */
-.theme-campus.dark .env-card .map-container { background: #1a2332; }
-.theme-campus.dark .env-card .map-legend {
+.theme-campus.dark .map-container { background: #1a2332; }
+.theme-campus.dark .map-legend {
   background: rgba(30, 38, 52, 0.92);
   color: var(--text-sub);
 }
-.theme-campus.dark .env-card .map-btn { background: rgba(30, 38, 52, 0.9); }
+.theme-campus.dark .map-btn { background: rgba(30, 38, 52, 0.9); }
 
 /* ===== 亮色主题适配 ===== */
-.theme-campus:not(.dark) .env-card .map-btn,
-.theme-campus.light .env-card .map-btn {
+.theme-campus:not(.dark) .map-btn,
+.theme-campus.light .map-btn {
   background: rgba(255, 255, 255, 0.9);
 }

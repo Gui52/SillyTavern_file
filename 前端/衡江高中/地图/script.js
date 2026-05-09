@@ -92,7 +92,6 @@ function zoomAt(clientX, clientY, delta, container) {
   const svgX = viewBox.x + (clientX - rect.left) * viewBox.w / rect.width;
   const svgY = viewBox.y + (clientY - rect.top) * viewBox.h / rect.height;
 
-  const scale = viewBox.w / 800;
   let newW = viewBox.w * (1 + delta * 0.3);
   newW = Math.max(800 / MAX_ZOOM, Math.min(800 / MIN_ZOOM, newW));
   const ratio = newW / viewBox.w;
@@ -194,7 +193,7 @@ function updateMarkers() {
         }
       }
       if (charMarkerEls[charName]) {
-        charMarkerEls[charName].style.display = (loc && loc !== '未在校') ? 'block' : 'none';
+        charMarkerEls[charName].style.display = (loc && loc !== '未在校') ? '' : 'none';
       }
     } else {
       if (charMarkerEls[charName]) {
@@ -206,12 +205,6 @@ function updateMarkers() {
 
 function positionPlayerMarker(coord) {
   if (!playerMarker || !svgEl) return;
-  const vb = svgEl.viewBox.baseVal;
-  const scaleX = vb.width / 800;
-  const scaleY = vb.height / 600;
-  const cx = (coord.x - vb.x) / scaleX;
-  const cy = (coord.y - vb.y) / scaleY;
-
   playerMarker.setAttribute('transform', `translate(${coord.x}, ${coord.y})`);
   playerMarker.style.visibility = 'visible';
 }
@@ -277,7 +270,7 @@ function positionCharMarker(el, coord, charName) {
   el.setAttribute('transform', `translate(${coord.x}, ${coord.y})`);
   const label = el.querySelector('.marker-label');
   if (label) label.textContent = charName;
-  el.style.display = 'block';
+  el.style.display = '';
 }
 
 /* ===== 复用状态栏的角色详情弹窗 ===== */
