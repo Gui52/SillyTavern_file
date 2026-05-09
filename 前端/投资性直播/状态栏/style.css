@@ -712,6 +712,7 @@
       background: transparent;
       font-family: var(--font-family-base, 'Inter', 'Noto Sans SC', sans-serif);
       -webkit-font-smoothing: antialiased;
+      overflow: hidden;
     }
 
     .sbc {
