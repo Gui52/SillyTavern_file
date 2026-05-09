@@ -1745,7 +1745,7 @@ html, body {
             updateWorldbookWith(WORLDBOOK_NAME, worldbook => {
               const entry = worldbook.find(e => e.name === charName);
               if (entry) {
-                entry.enabled = !!isDisabled;
+                entry.enabled = isDisabled;
                 const action = isDisabled ? '启用' : '禁用';
                 showToast(`「${charName}」${action}，世界书「${entry.name}」已${action}`, 'success');
               } else {
@@ -1855,7 +1855,7 @@ html, body {
             updateWorldbookWith(WORLDBOOK_NAME, worldbook => {
               const entry = worldbook.find(e => e.name === charName);
               if (entry) {
-                entry.enabled = !!isDisabled;
+                entry.enabled = isDisabled;
                 const action = isDisabled ? '启用' : '禁用';
                 showToast(`「${charName}」${action}，世界书「${entry.name}」已${action}`, 'success');
               } else {
