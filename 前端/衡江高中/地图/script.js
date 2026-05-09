@@ -38,37 +38,30 @@ export async function initMap() {
   const container = document.getElementById('map-svg-wrapper');
   if (!container) return;
 
-  try {
-    const res = await fetch('./overview.svg');
-    const txt = await res.text();
-    container.innerHTML = txt;
-    svgEl = container.querySelector('svg');
-    if (!svgEl) return;
+  svgEl = container.querySelector('svg');
+  if (!svgEl) return;
 
-    markersGroup = svgEl.querySelector('#map-markers') || svgEl;
-    playerMarker = svgEl.querySelector('#marker-player');
+  markersGroup = svgEl.querySelector('#map-markers') || svgEl;
+  playerMarker = svgEl.querySelector('#marker-player');
 
-    setupZoom();
-    setupPan();
-    await waitMvu();
-    updateMarkers();
+  setupZoom();
+  setupPan();
+  await waitMvu();
+  updateMarkers();
 
-    (() => {
-      try {
-        if (window.Mvu?.events?.VARIABLE_UPDATE_ENDED) {
-          SillyTavern.getContext().eventOn(Mvu.events.VARIABLE_UPDATE_ENDED, updateMarkers);
-        }
-      } catch (e) {
-        try {
-          Mvu?.events?.on?.(Mvu.events.VARIABLE_UPDATE_ENDED, updateMarkers);
-        } catch (e2) {
-          console.warn('Map: cannot subscribe to VARIABLE_UPDATE_ENDED');
-        }
+  (() => {
+    try {
+      if (window.Mvu?.events?.VARIABLE_UPDATE_ENDED) {
+        SillyTavern.getContext().eventOn(Mvu.events.VARIABLE_UPDATE_ENDED, updateMarkers);
       }
-    })();
-  } catch (e) {
-    console.error('[地图] 加载失败', e);
-  }
+    } catch (e) {
+      try {
+        Mvu?.events?.on?.(Mvu.events.VARIABLE_UPDATE_ENDED, updateMarkers);
+      } catch (e2) {
+        console.warn('Map: cannot subscribe to VARIABLE_UPDATE_ENDED');
+      }
+    }
+  })();
 }
 
 /* ===== 缩放 ===== */

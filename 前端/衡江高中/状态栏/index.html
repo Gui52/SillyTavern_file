@@ -197,7 +197,136 @@
           </div>
         </div>
         <div class="map-container" id="map-container">
-          <div class="map-svg-wrapper" id="map-svg-wrapper"></div>
+          <div class="map-svg-wrapper" id="map-svg-wrapper"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" id="campus-map">
+  <defs>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="1" dy="2" stdDeviation="3" flood-opacity="0.3"/>
+    </filter>
+    <linearGradient id="lakeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a8d8ea"/>
+      <stop offset="100%" stop-color="#6bb3d9"/>
+    </linearGradient>
+    <linearGradient id="grassGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#90c695"/>
+      <stop offset="100%" stop-color="#6baa6b"/>
+    </linearGradient>
+    <linearGradient id="buildingGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#d0c8be"/>
+      <stop offset="100%" stop-color="#b8b0a6"/>
+    </linearGradient>
+    <pattern id="gridPattern" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#e8e0d8" stroke-width="0.3" opacity="0.4"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="600" fill="#f0ebe3"/>
+  <rect width="800" height="600" fill="url(#gridPattern)"/>
+  <ellipse cx="400" cy="45" rx="340" ry="35" fill="#4a7c4e" opacity="0.7"/>
+  <text x="400" y="50" text-anchor="middle" font-size="10" fill="#fff" font-weight="bold" opacity="0.8">森林公园</text>
+  <rect x="10" y="120" width="100" height="180" rx="8" fill="#5c8a4a" opacity="0.6"/>
+  <text x="60" y="210" text-anchor="middle" font-size="10" fill="#fff" font-weight="bold" opacity="0.8" transform="rotate(-90, 60, 210)">竹林</text>
+  <g stroke="#3d6b35" stroke-width="1" opacity="0.5">
+    <line x1="25" y1="130" x2="25" y2="290"/><line x1="35" y1="130" x2="35" y2="290"/>
+    <line x1="45" y1="130" x2="45" y2="290"/><line x1="55" y1="130" x2="55" y2="290"/>
+    <line x1="65" y1="130" x2="65" y2="290"/><line x1="75" y1="130" x2="75" y2="290"/>
+    <line x1="85" y1="130" x2="85" y2="290"/><line x1="95" y1="130" x2="95" y2="290"/>
+  </g>
+  <ellipse cx="400" cy="300" rx="110" ry="75" fill="url(#lakeGrad)" filter="url(#shadow)"/>
+  <ellipse cx="400" cy="290" rx="22" ry="15" fill="#5c8a4a"/>
+  <polygon points="400,278 410,288 390,288" fill="#c0392b" opacity="0.8"/>
+  <rect x="395" y="285" width="10" height="8" fill="#8b4513" opacity="0.6"/>
+  <path d="M 360 320 Q 400 295 440 320" fill="none" stroke="#8b4513" stroke-width="3"/>
+  <text x="400" y="310" text-anchor="middle" font-size="11" fill="#2c5f7c" font-weight="bold" opacity="0.85">静心湖</text>
+  <rect x="360" y="95" width="80" height="50" rx="4" fill="url(#buildingGrad)" filter="url(#shadow)"/>
+  <rect x="360" y="95" width="80" height="12" rx="4" fill="#8b7355" opacity="0.6"/>
+  <text x="400" y="126" text-anchor="middle" font-size="9" fill="#5a4a3a" font-weight="bold">行政楼</text>
+  <rect x="560" y="170" width="100" height="180" rx="4" fill="url(#buildingGrad)" filter="url(#shadow)"/>
+  <rect x="560" y="170" width="100" height="15" rx="4" fill="#9b8b7b" opacity="0.7"/>
+  <text x="610" y="265" text-anchor="middle" font-size="10" fill="#5a4a3a" font-weight="bold">教学楼</text>
+  <text x="610" y="280" text-anchor="middle" font-size="8" fill="#7a6a5a">7F</text>
+  <g stroke="#a09080" stroke-width="0.5" opacity="0.6">
+    <line x1="562" y1="200" x2="658" y2="200"/>
+    <line x1="562" y1="228" x2="658" y2="228"/>
+    <line x1="562" y1="256" x2="658" y2="256"/>
+    <line x1="562" y1="284" x2="658" y2="284"/>
+    <line x1="562" y1="312" x2="658" y2="312"/>
+    <line x1="562" y1="340" x2="658" y2="340"/>
+  </g>
+  <rect x="545" y="95" width="90" height="65" rx="4" fill="url(#buildingGrad)" filter="url(#shadow)"/>
+  <rect x="545" y="95" width="90" height="12" rx="4" fill="#8a7a6a" opacity="0.6"/>
+  <text x="590" y="135" text-anchor="middle" font-size="10" fill="#5a4a3a" font-weight="bold">图书馆</text>
+  <rect x="145" y="100" width="90" height="65" rx="4" fill="url(#buildingGrad)" filter="url(#shadow)"/>
+  <rect x="145" y="100" width="90" height="12" rx="4" fill="#7a9a7a" opacity="0.6"/>
+  <text x="190" y="125" text-anchor="middle" font-size="10" fill="#2d4a2d" font-weight="bold">理科学院</text>
+  <text x="190" y="140" text-anchor="middle" font-size="8" fill="#3a5a3a">L Building</text>
+  <rect x="130" y="320" width="90" height="120" rx="4" fill="url(#buildingGrad)" filter="url(#shadow)"/>
+  <rect x="130" y="320" width="90" height="15" rx="4" fill="#7a8aaa" opacity="0.6"/>
+  <text x="175" y="385" text-anchor="middle" font-size="10" fill="#2d3a5a" font-weight="bold">文科学院</text>
+  <text x="175" y="400" text-anchor="middle" font-size="8" fill="#3a4a6a">W Building</text>
+  <g stroke="#a090a0" stroke-width="0.5" opacity="0.5">
+    <line x1="132" y1="345" x2="218" y2="345"/>
+    <line x1="132" y1="370" x2="218" y2="370"/>
+    <line x1="132" y1="395" x2="218" y2="395"/>
+  </g>
+  <rect x="290" y="465" width="120" height="70" rx="4" fill="url(#buildingGrad)" filter="url(#shadow)"/>
+  <rect x="290" y="465" width="120" height="12" rx="4" fill="#8a7a5a" opacity="0.6"/>
+  <text x="350" y="507" text-anchor="middle" font-size="10" fill="#5a4a3a" font-weight="bold">体育学院</text>
+  <text x="350" y="522" text-anchor="middle" font-size="8" fill="#6a5a4a">T Building</text>
+  <rect x="560" y="400" width="95" height="90" rx="4" fill="url(#buildingGrad)" filter="url(#shadow)"/>
+  <rect x="560" y="400" width="95" height="12" rx="4" fill="#8a6a8a" opacity="0.6"/>
+  <text x="607" y="450" text-anchor="middle" font-size="10" fill="#4a3a5a" font-weight="bold">音乐学院</text>
+  <text x="607" y="465" text-anchor="middle" font-size="8" fill="#5a4a6a">Y Building</text>
+  <rect x="130" y="465" width="95" height="75" rx="4" fill="url(#buildingGrad)" filter="url(#shadow)"/>
+  <rect x="130" y="465" width="95" height="12" rx="4" fill="#7a6a5a" opacity="0.6"/>
+  <text x="177" y="508" text-anchor="middle" font-size="10" fill="#4a3a2a" font-weight="bold">美术学院</text>
+  <text x="177" y="523" text-anchor="middle" font-size="8" fill="#5a4a3a">M Building</text>
+  <rect x="530" y="275" width="110" height="90" rx="4" fill="url(#buildingGrad)" filter="url(#shadow)"/>
+  <rect x="530" y="275" width="110" height="12" rx="4" fill="#9a7a5a" opacity="0.6"/>
+  <text x="585" y="315" text-anchor="middle" font-size="10" fill="#5a4a3a" font-weight="bold">食堂</text>
+  <text x="585" y="330" text-anchor="middle" font-size="8" fill="#6a5a4a">1-3F · 4F咖啡厅</text>
+  <g stroke="#a09070" stroke-width="0.5" opacity="0.5">
+    <line x1="532" y1="300" x2="638" y2="300"/>
+    <line x1="532" y1="325" x2="638" y2="325"/>
+  </g>
+  <rect x="240" y="190" width="130" height="90" rx="4" fill="url(#buildingGrad)" filter="url(#shadow)"/>
+  <rect x="240" y="190" width="130" height="12" rx="4" fill="#8a7a8a" opacity="0.6"/>
+  <text x="305" y="228" text-anchor="middle" font-size="10" fill="#4a3a4a" font-weight="bold">宿舍楼</text>
+  <text x="305" y="243" text-anchor="middle" font-size="8" fill="#5a4a5a">7F · 地下一层</text>
+  <g stroke="#a090a0" stroke-width="0.5" opacity="0.5">
+    <line x1="242" y1="215" x2="368" y2="215"/>
+    <line x1="242" y1="240" x2="368" y2="240"/>
+  </g>
+  <rect x="490" y="180" width="55" height="40" rx="3" fill="#c8b89a" filter="url(#shadow)"/>
+  <text x="517" y="204" text-anchor="middle" font-size="9" fill="#5a4a3a" font-weight="bold">小卖部</text>
+  <ellipse cx="350" cy="555" rx="230" ry="30" fill="url(#grassGrad)" opacity="0.8"/>
+  <ellipse cx="350" cy="555" rx="200" ry="20" fill="none" stroke="#fff" stroke-width="2" stroke-dasharray="8,4" opacity="0.5"/>
+  <text x="350" y="560" text-anchor="middle" font-size="10" fill="#2d4a2d" font-weight="bold" opacity="0.7">操场</text>
+  <g stroke="#c8b89a" stroke-width="4" fill="none" stroke-linecap="round">
+    <path d="M 20 300 Q 200 295 400 298 Q 600 301 780 298"/>
+    <path d="M 200 165 L 200 95 Q 400 85 600 95 L 600 160"/>
+    <path d="M 200 280 L 200 465 L 500 465"/>
+  </g>
+  <g id="map-markers" font-family="system-ui, sans-serif">
+    <g id="marker-player" visibility="hidden">
+      <circle r="8" fill="#2196F3" opacity="0.3">
+        <animate attributeName="r" values="6;12;6" dur="2s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.4;0.1;0.4" dur="2s" repeatCount="indefinite"/>
+      </circle>
+      <circle r="5" fill="#2196F3" stroke="#fff" stroke-width="1.5"/>
+      <text id="marker-player-label" font-size="9" fill="#1a3a5a" font-weight="bold" text-anchor="middle" dy="-14">玩家</text>
+    </g>
+  </g>
+  <g id="map-legend" transform="translate(20, 540)">
+    <rect width="140" height="45" rx="6" fill="rgba(240,235,227,0.9)" stroke="#c8b89a" stroke-width="0.5"/>
+    <circle cx="18" cy="16" r="5" fill="#2196F3"/>
+    <text x="30" y="20" font-size="8" fill="#444">玩家位置</text>
+    <circle cx="18" cy="34" r="5" fill="#ed8936"/>
+    <text x="30" y="38" font-size="8" fill="#444">角色位置</text>
+  </g>
+</svg></div>
           <div class="map-controls">
             <button class="map-btn map-btn-zoomin" id="map-zoom-in" title="放大">+</button>
             <button class="map-btn map-btn-zoomout" id="map-zoom-out" title="缩小">−</button>
