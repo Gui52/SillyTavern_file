@@ -1,0 +1,1581 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="theme-campus dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>衡江高中 - 学生终端</title>
+  <style>
+/* ===== 衡江高中 - 学生终端 样式 ===== */
+
+/* --- 主题变量 --- */
+:root, .theme-campus.dark {
+  --bg-gradient: linear-gradient(135deg, #0f1419 0%, #1a2332 30%, #1f2b3f 60%, #182232 100%);
+  --card-bg: rgba(30, 38, 52, 0.95);
+  --card-bg-hover: rgba(35, 44, 60, 0.98);
+  --text-main: #e2e8f0;
+  --text-sub: #cbd5e0;
+  --text-muted: #718096;
+  --border-color: rgba(255, 255, 255, 0.08);
+  --primary-color: #38b2e8;
+  --primary-light: #81d4f0;
+  --primary-dark: #2980b9;
+  --secondary-color: #9f7aea;
+  --secondary-light: #c3a5f0;
+  --accent-color: #f6ad55;
+  --accent-light: #fcd5a0;
+  --success-color: #48bb78;
+  --success-light: #9ae6b4;
+  --danger-color: #f56565;
+  --danger-light: #feb2b2;
+  --warning-color: #ed8936;
+  --shadow-sm: 0 2px 8px rgba(56, 178, 232, 0.08);
+  --shadow-md: 0 4px 16px rgba(56, 178, 232, 0.12);
+  --shadow-lg: 0 8px 32px rgba(56, 178, 232, 0.16);
+  --shadow-card: 0 2px 12px rgba(56, 178, 232, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-card-hover: 0 12px 32px rgba(56, 178, 232, 0.18), 0 4px 8px rgba(0, 0, 0, 0.08);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --safe-area-top: env(safe-area-inset-top, 0px);
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.theme-campus:not(.dark),
+.theme-campus.light {
+  --bg-gradient: linear-gradient(135deg, #e8f5f9 0%, #f0f4f8 25%, #f5f0e6 50%, #faf5f0 75%, #e8f0f4 100%);
+  --card-bg: rgba(255, 255, 255, 0.94);
+  --card-bg-hover: rgba(255, 255, 255, 0.98);
+  --text-main: #2d3748;
+  --text-sub: #4a5568;
+  --text-muted: #a0aec0;
+  --border-color: rgba(255, 255, 255, 0.7);
+  --primary-color: #38b2e8;
+  --primary-light: #81d4f0;
+  --primary-dark: #2980b9;
+  --secondary-color: #9f7aea;
+  --secondary-light: #c3a5f0;
+  --accent-color: #f6ad55;
+  --accent-light: #fcd5a0;
+  --success-color: #48bb78;
+  --success-light: #9ae6b4;
+  --danger-color: #f56565;
+  --danger-light: #feb2b2;
+  --warning-color: #ed8936;
+  --shadow-sm: 0 2px 8px rgba(56, 178, 232, 0.08);
+  --shadow-md: 0 4px 16px rgba(56, 178, 232, 0.12);
+  --shadow-lg: 0 8px 32px rgba(56, 178, 232, 0.16);
+  --shadow-card: 0 2px 12px rgba(56, 178, 232, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-card-hover: 0 12px 32px rgba(56, 178, 232, 0.18), 0 4px 8px rgba(0, 0, 0, 0.08);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --safe-area-top: env(safe-area-inset-top, 0px);
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* --- 基础 --- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  background: transparent;
+  color: var(--text-main);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- SVG图标 --- */
+.svg-icon {
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  vertical-align: middle;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.3s ease;
+}
+.svg-icon.svg-bolt { color: var(--warning-color); }
+.svg-weather { transition: transform 0.3s ease, opacity 0.3s ease; }
+
+/* 亮色主题图标颜色 */
+.theme-campus:not(.dark) .svg-icon,
+.theme-campus.light .svg-icon {
+  stroke: var(--primary-dark);
+}
+.theme-campus:not(.dark) .svg-icon.svg-bolt,
+.theme-campus.light .svg-icon.svg-bolt {
+  color: var(--warning-color);
+}
+.theme-campus:not(.dark) .svg-theme,
+.theme-campus.light .svg-theme {
+  stroke: var(--accent-color);
+}
+.theme-campus:not(.dark) .svg-weather,
+.theme-campus.light .svg-weather {
+  stroke: var(--primary-color);
+}
+
+/* --- 滚动条美化 --- */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--primary-light), var(--secondary-light));
+  box-shadow: 0 0 8px var(--primary-color);
+}
+::-webkit-scrollbar-thumb:active {
+  background: linear-gradient(180deg, var(--accent-color), var(--warning-color));
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-color) transparent;
+}
+
+/* 暗色主题滚动条 */
+.theme-campus.dark ::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(56, 178, 232, 0.6), rgba(159, 122, 234, 0.6));
+}
+.theme-campus.dark ::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
+  box-shadow: 0 0 12px rgba(56, 178, 232, 0.5);
+}
+
+/* 亮色主题滚动条 */
+.theme-campus:not(.dark) ::-webkit-scrollbar-thumb,
+.theme-campus.light ::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(56, 178, 232, 0.5), rgba(159, 122, 234, 0.5));
+}
+.theme-campus:not(.dark) ::-webkit-scrollbar-thumb:hover,
+.theme-campus.light ::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
+  box-shadow: 0 0 10px rgba(56, 178, 232, 0.4);
+}
+
+/* --- 仪表板 --- */
+.dashboard {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px;
+  background: var(--bg-gradient);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+/* --- 顶部卡片 --- */
+.header-card {
+  display: flex; align-items: center; gap: 12px;
+  padding: 18px 20px;
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-wrap: wrap;
+  position: relative;
+  animation: headerSlideIn 0.5s ease;
+  overflow: hidden;
+}
+.header-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(135deg, transparent 0%, rgba(56, 178, 232, 0.03) 100%);
+  pointer-events: none;
+}
+@keyframes headerSlideIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.header-card:hover { background: var(--card-bg-hover); box-shadow: var(--shadow-card-hover); transform: translateY(-2px); }
+.header-card:active { transform: translateY(0) scale(0.99); }
+
+.header-left { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.school-logo {
+  width: 40px; height: 40px;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; font-weight: 700; color: #fff;
+  transition: transform 0.3s ease;
+  animation: logoIn 0.5s ease;
+}
+@keyframes logoIn {
+  from { opacity: 0; transform: rotateY(90deg); }
+  to { opacity: 1; transform: rotateY(0); }
+}
+.header-card:hover .school-logo { transform: scale(1.1) rotate(5deg); }
+.header-info h1 { font-size: 20px; font-weight: 700; line-height: 1.2; }
+.header-info span { font-size: 12px; color: var(--text-muted); }
+
+.header-center { flex: 1; text-align: center; min-width: 140px; animation: centerIn 0.5s ease backwards; animation-delay: 0.05s; }
+@keyframes centerIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.header-date { font-size: 16px; font-weight: 600; transition: color 0.3s; }
+.header-time { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+
+.header-right { display: flex; gap: 8px; flex-shrink: 0; }
+.header-btn {
+  width: 40px; height: 40px; border: 1px solid var(--border-color);
+  background: var(--card-bg); border-radius: 50%; cursor: pointer;
+  font-size: 18px; display: flex; align-items: center; justify-content: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: btnIn 0.4s ease backwards;
+  animation-delay: 0.1s;
+}
+@keyframes btnIn {
+  from { opacity: 0; transform: scale(0.5); }
+  to { opacity: 1; transform: scale(1); }
+}
+.header-btn:hover { background: var(--card-bg-hover); transform: scale(1.15) rotate(10deg); box-shadow: var(--shadow-md); }
+.header-btn:active { transform: scale(0.95); }
+.header-btn.active { background: var(--primary-color); border-color: var(--primary-color); }
+@keyframes themeSwitch {
+  0% { transform: scale(1) rotate(0); }
+  25% { transform: scale(0.8) rotate(-20deg); }
+  50% { transform: scale(0.8) rotate(20deg); }
+  75% { transform: scale(1.1) rotate(-10deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+@keyframes btnPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); box-shadow: 0 0 15px var(--primary-color); }
+  100% { transform: scale(1); }
+}
+
+.header-chip {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--card-bg); padding: 6px 14px; border-radius: 20px;
+  border: 1px solid var(--border-color); font-size: 13px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: chipIn 0.4s ease backwards;
+}
+.header-chip:nth-child(1) { animation-delay: 0.15s; }
+.header-chip:nth-child(2) { animation-delay: 0.2s; }
+.header-chip:nth-child(3) { animation-delay: 0.25s; }
+.header-chip:nth-child(4) { animation-delay: 0.3s; }
+@keyframes chipIn {
+  from { opacity: 0; transform: translateY(-10px) scale(0.8); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.header-chip:hover { transform: translateY(-2px) scale(1.05); border-color: var(--primary-color); box-shadow: var(--shadow-sm); }
+.header-chip:active { transform: translateY(0) scale(0.98); }
+.header-chip-icon { font-size: 12px; }
+.header-chip-text { display: flex; flex-direction: column; line-height: 1.2; }
+.header-chip-label { font-size: 11px; color: var(--text-muted); }
+.header-chip-value { font-weight: 600; font-size: 14px; transition: color 0.3s; }
+.header-chip:hover .header-chip-value { color: var(--primary-color); }
+
+.header-summary {
+  display: flex; gap: 10px; flex-wrap: wrap;
+  width: 100%; margin-top: 4px; padding-top: 10px;
+  border-top: 1px solid var(--border-color);
+}
+
+/* --- 折叠卡片 --- */
+.card {
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: cardIn 0.5s ease backwards;
+  flex-shrink: 0;
+}
+#card-env { animation-delay: 0.1s; }
+#card-status { animation-delay: 0.2s; }
+#card-social { animation-delay: 0.3s; }
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-2px); }
+.card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%; right: 0; bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(56, 178, 232, 0.1), transparent);
+  transition: left 0.5s ease;
+  pointer-events: none;
+}
+.card:hover::after { left: 100%; }
+
+.card-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 20px; cursor: pointer;
+  transition: background 0.2s;
+}
+.card-header:hover { background: var(--card-bg-hover); }
+
+.card-title { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 16px; }
+.card-icon {
+  width: 36px; height: 36px; border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center; font-size: 18px;
+  transition: transform 0.3s ease;
+}
+.card:hover .card-icon { transform: scale(1.1) rotate(5deg); }
+
+.card-body {
+  padding: 0 20px 20px;
+  transition: opacity 0.3s ease, padding 0.3s ease;
+  opacity: 1;
+}
+.card.collapsed .card-body {
+  display: none;
+}
+
+/* --- 环境网格 --- */
+.env-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.env-item {
+  padding: 16px 12px; background: var(--card-bg);
+  border: 1px solid var(--border-color); border-radius: var(--radius-md);
+  text-align: center; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: envItemIn 0.5s ease backwards;
+}
+.env-item:nth-child(1) { animation-delay: 0.1s; }
+.env-item:nth-child(2) { animation-delay: 0.15s; }
+.env-item:nth-child(3) { animation-delay: 0.2s; }
+.env-item:nth-child(4) { animation-delay: 0.25s; }
+@keyframes envItemIn {
+  from { opacity: 0; transform: scale(0.9) rotate(-2deg); }
+  to { opacity: 1; transform: scale(1) rotate(0); }
+}
+.env-item:hover { transform: translateY(-3px) scale(1.05); box-shadow: var(--shadow-md); border-color: var(--primary-color); }
+.env-item:active { transform: translateY(0) scale(0.98); }
+.env-icon { font-size: 28px; margin-bottom: 6px; transition: transform 0.3s; }
+.env-item:hover .env-icon { transform: scale(1.2) rotate(5deg); }
+.env-label { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+.env-value { font-size: 15px; font-weight: 600; transition: color 0.3s; }
+.env-item:hover .env-value { color: var(--primary-color); }
+
+/* --- 状态 --- */
+.status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.status-item {
+  padding: 16px; background: var(--card-bg);
+  border: 1px solid var(--border-color); border-radius: var(--radius-md);
+  display: flex; flex-direction: column; gap: 4px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: statusItemIn 0.4s ease backwards;
+}
+.status-item:nth-child(1) { animation-delay: 0.1s; }
+.status-item:nth-child(2) { animation-delay: 0.15s; }
+.status-item:nth-child(3) { animation-delay: 0.2s; }
+.status-item:nth-child(4) { animation-delay: 0.25s; }
+@keyframes statusItemIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.status-item:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); border-color: var(--primary-light); }
+.status-item.full { grid-column: 1 / -1; }
+.status-label { font-size: 12px; color: var(--text-muted); }
+.status-value { font-size: 16px; font-weight: 600; transition: color 0.3s; }
+.status-value.highlight { color: var(--primary-color); }
+.status-item:hover .status-value.highlight { color: var(--accent-color); }
+
+.stamina-section { margin-top: 12px; animation: sectionIn 0.5s ease backwards; animation-delay: 0.25s; }
+@keyframes sectionIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.stamina-header { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 12px; }
+.stamina-label { font-weight: 600; }
+.stamina-value { color: var(--text-muted); transition: color 0.3s, transform 0.3s; }
+.stamina-value.warning { color: var(--warning-color); }
+.stamina-value.danger { color: var(--danger-color); animation: dangerPulse 1s ease infinite; }
+@keyframes dangerPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.quick-actions { display: flex; gap: 8px; margin-top: 12px; animation: quickActionsIn 0.5s ease backwards; animation-delay: 0.35s; }
+@keyframes quickActionsIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.quick-btn {
+  flex: 1; padding: 12px; border: 1px solid var(--border-color);
+  background: var(--card-bg); border-radius: var(--radius-md);
+  color: var(--text-main); font-size: 14px; cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: quickBtnIn 0.5s ease backwards;
+  animation-delay: 0.3s;
+}
+@keyframes quickBtnIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.quick-btn:hover { background: var(--card-bg-hover); border-color: var(--primary-color); transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+.quick-btn:active { transform: translateY(0) scale(0.98); }
+@keyframes btnClick {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.95); background: var(--success-color); }
+  100% { transform: scale(1); }
+}
+
+/* --- 社交 --- */
+.social-summary {
+  display: flex; align-items: center; gap: 14px;
+  padding: 16px; background: var(--card-bg);
+  border: 1px solid var(--border-color); border-radius: var(--radius-md);
+  margin-bottom: 10px;
+  animation: socialSummaryIn 0.5s ease;
+}
+@keyframes socialSummaryIn {
+  from { opacity: 0; transform: translateY(-10px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.social-count {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent-color), var(--accent-light));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; font-weight: 700; color: #fff; flex-shrink: 0;
+  transition: transform 0.3s ease;
+  animation: countPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+@keyframes countPop {
+  0% { transform: scale(0); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+.social-summary:hover .social-count { transform: scale(1.1) rotate(5deg); }
+.social-title { font-weight: 600; font-size: 16px; }
+.social-desc { font-size: 13px; color: var(--text-muted); }
+
+.char-list { display: flex; flex-direction: column; gap: 8px; animation: listIn 0.4s ease backwards; animation-delay: 0.1s; }
+@keyframes listIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.char-card {
+  display: flex; flex-direction: column; gap: 8px;
+  padding: 14px 16px; background: var(--card-bg);
+  border: 1px solid var(--border-color); border-radius: var(--radius-md);
+  cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: charCardIn 0.4s ease backwards;
+}
+@keyframes charCardIn {
+  from { opacity: 0; transform: translateX(-10px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.char-card:hover { background: var(--card-bg-hover); border-color: var(--primary-color); transform: translateX(4px) scale(1.02); box-shadow: var(--shadow-md); }
+.char-card:active { transform: translateX(2px) scale(0.99); }
+
+.char-header { display: flex; justify-content: space-between; align-items: center; }
+.char-name { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 15px; }
+.char-avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; color: #fff; font-weight: 700; flex-shrink: 0;
+}
+.char-relation { font-size: 12px; color: var(--text-muted); padding: 3px 10px; background: var(--border-color); border-radius: 12px; }
+.char-affection { display: flex; justify-content: space-between; font-size: 13px; transition: color 0.3s; }
+.char-card:hover .char-affection { color: var(--primary-color); }
+.char-affection-label { color: var(--text-muted); }
+.char-affection-value { font-weight: 600; transition: color 0.3s; }
+.char-card:hover .char-affection-value { color: var(--accent-color); }
+.char-bar { height: 6px; background: var(--border-color); border-radius: 3px; overflow: hidden; }
+.char-bar-fill { height: 100%; background: linear-gradient(90deg, var(--primary-color), var(--accent-color)); border-radius: 2px; transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; }
+.char-bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%; right: 0; bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  animation: shimmer 2.5s infinite;
+}
+
+.empty-state { text-align: center; padding: 20px; color: var(--text-muted); font-size: 13px; font-style: italic; animation: emptyIn 0.5s ease; }
+@keyframes emptyIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* --- 模态框 --- */
+.modal-overlay {
+  display: none; position: fixed; inset: 0; z-index: 9999;
+  background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px);
+  justify-content: center; align-items: center;
+  padding: 20px; animation: fadeIn 0.3s ease;
+}
+.modal-overlay.active { display: flex; animation: fadeIn 0.3s ease; }
+
+.modal-content {
+  background: var(--card-bg); border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl); width: 100%; max-width: 340px;
+  box-shadow: var(--shadow-lg); overflow: hidden; position: relative;
+  animation: modalSlideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+@keyframes modalSlideUp {
+  from { opacity: 0; transform: translateY(30px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.modal-header {
+  text-align: center; padding: 24px 20px 16px;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: #fff; position: relative;
+}
+.modal-close {
+  position: absolute; top: 8px; right: 12px;
+  background: rgba(255,255,255,0.2); border: none; color: #fff;
+  width: 28px; height: 28px; border-radius: 50%; cursor: pointer;
+  font-size: 16px; display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s, transform 0.3s;
+}
+.modal-close:hover { background: rgba(255,255,255,0.35); transform: rotate(90deg) scale(1.1); }
+
+.modal-avatar {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: rgba(255,255,255,0.25); margin: 0 auto 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; font-weight: 700;
+  transition: transform 0.3s ease;
+}
+.modal-content:hover .modal-avatar { transform: scale(1.05) rotate(3deg); }
+.modal-name { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+.modal-relation { font-size: 12px; opacity: 0.85; display: inline-block; background: rgba(255,255,255,0.15); padding: 2px 10px; border-radius: 10px; }
+
+.modal-body { padding: 20px; }
+
+.modal-affection { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; animation: affectionIn 0.5s ease backwards; animation-delay: 0.2s; }
+@keyframes affectionIn {
+  from { opacity: 0; transform: translateX(-10px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.modal-affection-label { font-size: 12px; color: var(--text-muted); }
+.modal-affection-value { font-size: 22px; font-weight: 700; color: var(--accent-color); transition: transform 0.3s ease; }
+.modal-affection-value span { font-size: 13px; color: var(--text-muted); font-weight: 400; }
+
+.modal-bar { height: 8px; background: var(--border-color); border-radius: 4px; overflow: hidden; margin-bottom: 16px; animation: barIn 0.5s ease backwards; animation-delay: 0.25s; }
+@keyframes barIn {
+  from { opacity: 0; transform: scaleX(0); }
+  to { opacity: 1; transform: scaleX(1); }
+}
+.modal-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent-color), var(--danger-color)); border-radius: 4px; transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; }
+.modal-bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%; right: 0; bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+  animation: shimmer 1.5s infinite;
+}
+
+.modal-level { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; animation: levelsIn 0.5s ease backwards; animation-delay: 0.3s; }
+@keyframes levelsIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.level-badge {
+  padding: 4px 12px; border-radius: 12px; font-size: 11px;
+  background: var(--border-color); color: var(--text-muted);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: badgeIn 0.3s ease backwards;
+}
+.level-badge:nth-child(1) { animation-delay: 0.1s; }
+.level-badge:nth-child(2) { animation-delay: 0.15s; }
+.level-badge:nth-child(3) { animation-delay: 0.2s; }
+.level-badge:nth-child(4) { animation-delay: 0.25s; }
+.level-badge:nth-child(5) { animation-delay: 0.3s; }
+.level-badge:nth-child(6) { animation-delay: 0.35s; }
+@keyframes badgeIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+.level-badge.active { background: var(--accent-color); color: #fff; font-weight: 600; transform: scale(1.1); box-shadow: 0 2px 8px rgba(246, 173, 85, 0.4); }
+.level-badge:hover:not(.active) { transform: scale(1.05); }
+
+/* --- 人物图鉴模态框 --- */
+.guide-modal-content {
+  max-width: 520px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  animation: modalSlideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.guide-header {
+  padding: 16px 20px 12px;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: #fff;
+  position: relative;
+  animation: headerFadeIn 0.5s ease;
+}
+@keyframes headerFadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+.guide-title { font-size: 16px; font-weight: 700; margin-bottom: 12px; text-align: center; }
+.guide-close {
+  position: absolute; top: 12px; right: 12px;
+  background: rgba(255,255,255,0.2); border: none; color: #fff;
+  width: 28px; height: 28px; border-radius: 50%; cursor: pointer;
+  font-size: 16px; display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s, transform 0.3s;
+}
+.guide-close:hover { background: rgba(255,255,255,0.35); transform: rotate(90deg); }
+
+.guide-tabs {
+  display: flex; gap: 6px; justify-content: center;
+}
+.guide-tab {
+  padding: 5px 14px; border: 1px solid rgba(255,255,255,0.3);
+  background: transparent; color: #fff; border-radius: 16px;
+  font-size: 12px; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: tabIn 0.3s ease backwards;
+}
+.guide-tab:nth-child(1) { animation-delay: 0.05s; }
+.guide-tab:nth-child(2) { animation-delay: 0.1s; }
+.guide-tab:nth-child(3) { animation-delay: 0.15s; }
+@keyframes tabIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.guide-tab:hover { background: rgba(255,255,255,0.15); transform: translateY(-2px); }
+.guide-tab.active { background: rgba(255,255,255,0.9); color: var(--primary-dark); font-weight: 600; transform: scale(1.05); }
+
+.guide-search {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-color);
+  animation: searchIn 0.4s ease;
+}
+@keyframes searchIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.guide-search-input {
+  width: 100%; padding: 8px 12px;
+  background: var(--card-bg); border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm); color: var(--text-main);
+  font-size: 13px; outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.guide-search-input:focus { border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(56, 178, 232, 0.2); }
+.guide-search-input::placeholder { color: var(--text-muted); }
+
+.guide-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+  animation: guideBodyIn 0.4s ease;
+}
+@keyframes guideBodyIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.guide-char-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 10px;
+}
+
+.guide-char-card {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 14px 10px; background: var(--card-bg);
+  border: 1px solid var(--border-color); border-radius: var(--radius-md);
+  cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: center;
+  animation: guideCardIn 0.4s ease backwards;
+}
+@keyframes guideCardIn {
+  from { opacity: 0; transform: translateY(15px) scale(0.9); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.guide-char-card:hover { background: var(--card-bg-hover); border-color: var(--primary-color); transform: translateY(-4px) scale(1.03); box-shadow: var(--shadow-md); }
+.guide-char-card:active { transform: translateY(-2px) scale(1.01); }
+.guide-char-card.unmet { opacity: 0.6; }
+
+.guide-char-avatar {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; font-weight: 700; color: #fff;
+  margin-bottom: 8px;
+  transition: transform 0.3s ease;
+}
+.guide-char-card:hover .guide-char-avatar { transform: scale(1.1) rotate(5deg); }
+.guide-char-card.unmet .guide-char-avatar { background: linear-gradient(135deg, var(--text-muted), var(--text-sub)); }
+
+.guide-char-name { font-size: 13px; font-weight: 600; margin-bottom: 4px; transition: color 0.3s; }
+.guide-char-card:hover .guide-char-name { color: var(--primary-color); }
+.guide-char-identity { font-size: 10px; color: var(--text-muted); margin-bottom: 6px; line-height: 1.3; }
+.guide-char-relation {
+  font-size: 10px; padding: 2px 8px; border-radius: 10px;
+  background: var(--border-color); color: var(--text-sub);
+  transition: all 0.3s ease;
+}
+.guide-char-card.met .guide-char-relation { background: var(--accent-color); color: #fff; animation: relationGlow 2s ease infinite; }
+@keyframes relationGlow {
+  0%, 100% { box-shadow: 0 0 2px var(--accent-color); }
+  50% { box-shadow: 0 0 8px var(--accent-color); }
+}
+
+.guide-empty {
+  text-align: center; padding: 40px 20px;
+  animation: emptyIn 0.5s ease;
+}
+.guide-empty-icon { font-size: 36px; margin-bottom: 12px; animation: iconFloat 2s ease infinite; }
+@keyframes iconFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+.guide-empty-text { color: var(--text-muted); font-size: 13px; }
+
+/* --- 动画 --- */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes valueChange {
+  0% { opacity: 0.5; transform: scale(0.95); }
+  50% { color: var(--primary-color); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.value-flash { animation: valueChange 0.3s ease; }
+@keyframes staminaChange {
+  0% { opacity: 0.7; }
+  50% { filter: brightness(1.3); }
+  100% { opacity: 1; filter: brightness(1); }
+}
+@keyframes countUp {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 5px var(--primary-color); }
+  50% { box-shadow: 0 0 20px var(--primary-color), 0 0 30px var(--primary-light); }
+}
+</style>
+  <svg style="display:none">
+    <symbol id="svg-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+      <line x1="16" y1="2" x2="16" y2="6"></line>
+      <line x1="8" y1="2" x2="8" y2="6"></line>
+      <line x1="3" y1="10" x2="21" y2="10"></line>
+    </symbol>
+    <symbol id="svg-weather-sunny" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </symbol>
+    <symbol id="svg-weather-cloudy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path>
+    </symbol>
+    <symbol id="svg-weather-rain" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="16" y1="13" x2="16" y2="21"></line>
+      <line x1="8" y1="13" x2="8" y2="21"></line>
+      <line x1="12" y1="15" x2="12" y2="23"></line>
+      <path d="M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25"></path>
+    </symbol>
+    <symbol id="svg-weather-snow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 17.58A5 5 0 0 0 18 8h-1.26A8 8 0 1 0 4 16.25"></path>
+      <line x1="8" y1="16" x2="8.01" y2="16"></line>
+      <line x1="8" y1="20" x2="8.01" y2="20"></line>
+      <line x1="12" y1="18" x2="12.01" y2="18"></line>
+      <line x1="12" y1="22" x2="12.01" y2="22"></line>
+      <line x1="16" y1="16" x2="16.01" y2="16"></line>
+      <line x1="16" y1="20" x2="16.01" y2="20"></line>
+    </symbol>
+    <symbol id="svg-event" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+    </symbol>
+    <symbol id="svg-location" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+      <circle cx="12" cy="10" r="3"></circle>
+    </symbol>
+    <symbol id="svg-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+      <circle cx="12" cy="7" r="4"></circle>
+    </symbol>
+    <symbol id="svg-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+    </symbol>
+    <symbol id="svg-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+      <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+    </symbol>
+    <symbol id="svg-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    </symbol>
+    <symbol id="svg-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </symbol>
+    <symbol id="svg-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+      <polyline points="9 22 9 12 15 12 15 22"></polyline>
+    </symbol>
+    <symbol id="svg-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="18" y1="6" x2="6" y2="18"></line>
+      <line x1="6" y1="6" x2="18" y2="18"></line>
+    </symbol>
+    <symbol id="svg-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="8"></circle>
+      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </symbol>
+    <symbol id="svg-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </symbol>
+    <symbol id="svg-chevron-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </symbol>
+    <symbol id="svg-bolt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+    </symbol>
+    <symbol id="svg-money" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="1" x2="12" y2="23"></line>
+      <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+    </symbol>
+    <symbol id="svg-school" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+      <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+    </symbol>
+    <symbol id="svg-activity" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+    </symbol>
+    <symbol id="svg-trend-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+      <polyline points="17 6 23 6 23 12"></polyline>
+    </symbol>
+  </svg>
+</head>
+<body>
+  <div class="dashboard">
+    <div class="header-card" id="header-toggle" role="button" tabindex="0" aria-expanded="false" aria-controls="card-env card-status card-social card-guide">
+      <div class="header-left">
+        <div class="school-logo">
+          <svg class="svg-icon"><use href="#svg-school"></use></svg>
+        </div>
+        <div class="header-info">
+          <h1>衡江高中</h1>
+          <span>Student Terminal</span>
+        </div>
+      </div>
+      <div class="header-center">
+        <div class="header-date" id="sys-date">----年-月-日</div>
+        <div class="header-time" id="sys-time">---- --:--</div>
+      </div>
+      <div class="header-right">
+        <button class="header-btn" id="btn-guide" title="人物图鉴" aria-label="人物图鉴">
+          <svg class="svg-icon"><use href="#svg-book"></use></svg>
+        </button>
+        <button class="header-btn" id="toggle-theme" title="切换主题" aria-label="切换主题">
+          <svg class="svg-icon svg-theme"><use href="#svg-moon"></use></svg>
+        </button>
+      </div>
+      <div class="header-summary" aria-label="快速状态概览">
+        <div class="header-chip">
+          <span class="header-chip-text">
+            <span class="header-chip-label">位置</span>
+            <span class="header-chip-value" id="summary-loc">未知</span>
+          </span>
+        </div>
+        <div class="header-chip">
+          <span class="header-chip-text">
+            <span class="header-chip-label">行为</span>
+            <span class="header-chip-value" id="summary-action">无</span>
+          </span>
+        </div>
+        <div class="header-chip">
+          <span class="header-chip-text">
+            <span class="header-chip-label">体力</span>
+            <span class="header-chip-value" id="summary-stamina">0/100</span>
+          </span>
+        </div>
+        <div class="header-chip">
+          <span class="header-chip-text">
+            <span class="header-chip-label">相遇</span>
+            <span class="header-chip-value" id="summary-social">0</span>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" id="card-env">
+      <div class="card-header" role="button" tabindex="0" aria-expanded="true">
+        <div class="card-title">
+          <div class="card-icon" style="background: linear-gradient(135deg, #38b2e8, #81d4f0);">
+            <svg class="svg-icon"><use href="#svg-weather-sunny"></use></svg>
+          </div>
+          校园环境
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="env-grid">
+          <div class="env-item">
+            <div class="env-icon"><svg class="svg-icon"><use href="#svg-calendar"></use></svg></div>
+            <div class="env-label">日期</div>
+            <div class="env-value" id="env-date">----</div>
+          </div>
+          <div class="env-item">
+            <div class="env-icon"><svg class="svg-icon svg-weather" id="env-weather-icon"><use href="#svg-weather-sunny"></use></svg></div>
+            <div class="env-label">气候</div>
+            <div class="env-value" id="sys-env">----</div>
+          </div>
+          <div class="env-item">
+            <div class="env-icon"><svg class="svg-icon"><use href="#svg-event"></use></svg></div>
+            <div class="env-label">事件</div>
+            <div class="env-value" id="sys-festival">----</div>
+          </div>
+          <div class="env-item">
+            <div class="env-icon"><svg class="svg-icon"><use href="#svg-location"></use></svg></div>
+            <div class="env-label">位置</div>
+            <div class="env-value" id="player-loc">----</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" id="card-status">
+      <div class="card-header" role="button" tabindex="0" aria-expanded="true">
+        <div class="card-title">
+          <div class="card-icon" style="background: linear-gradient(135deg, #48bb78, #9ae6b4);">
+            <svg class="svg-icon"><use href="#svg-user"></use></svg>
+          </div>
+          当前状态
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="status-grid">
+          <div class="status-item">
+            <div class="status-label">班级</div>
+            <div class="status-value" id="player-class">----</div>
+          </div>
+          <div class="status-item">
+            <div class="status-label">余额</div>
+            <div class="status-value highlight" id="player-money">----</div>
+          </div>
+          <div class="status-item full">
+            <div class="status-label">当前行为</div>
+            <div class="status-value" id="player-action">----</div>
+          </div>
+          <div class="status-item full">
+            <div class="status-label">课程/活动</div>
+            <div class="status-value highlight" id="player-course">----</div>
+          </div>
+        </div>
+        <div class="stamina-section">
+          <div class="stamina-header">
+            <span class="stamina-label"><svg class="svg-icon svg-bolt"><use href="#svg-bolt"></use></svg> 体力状态</span>
+            <span class="stamina-value" id="player-stamina-val">0/100</span>
+          </div>
+          <div class="stamina-bar">
+            <div class="stamina-fill" id="player-stamina-bar" style="width: 0%"></div>
+          </div>
+        </div>
+        <div class="quick-actions">
+          <button class="quick-btn" id="quick-rest">
+            <svg class="svg-icon"><use href="#svg-home"></use></svg> 休息恢复
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" id="card-social">
+      <div class="card-header" role="button" tabindex="0" aria-expanded="true">
+        <div class="card-title">
+          <div class="card-icon" style="background: linear-gradient(135deg, #ed8936, #fbd38d);">
+            <svg class="svg-icon"><use href="#svg-heart"></use></svg>
+          </div>
+          社交关系
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="social-summary">
+          <div class="social-count" id="social-count">0</div>
+          <div class="social-info">
+            <div class="social-title">已相遇角色</div>
+            <div class="social-desc" id="social-desc">等待相遇...</div>
+          </div>
+        </div>
+        <div class="char-list" id="social-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="char-modal">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-name">
+      <div class="modal-header">
+        <button class="modal-close" id="modal-close">
+          <svg class="svg-icon"><use href="#svg-close"></use></svg>
+        </button>
+        <div class="modal-avatar" id="modal-avatar">?</div>
+        <div class="modal-name" id="modal-name">角色名称</div>
+        <span class="modal-relation" id="modal-relation">关系</span>
+      </div>
+      <div class="modal-body">
+        <div class="modal-affection">
+          <div class="modal-affection-label">好感度</div>
+          <div class="modal-affection-value" id="modal-affection-value">0 <span>/ 100</span></div>
+        </div>
+        <div class="modal-bar"><div class="modal-bar-fill" id="modal-bar-fill" style="width: 0%"></div></div>
+        <div class="modal-level" id="modal-levels"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="guide-modal">
+    <div class="modal-content guide-modal-content" role="dialog" aria-modal="true" aria-labelledby="guide-title">
+      <div class="guide-header">
+        <button class="modal-close" id="guide-close">
+          <svg class="svg-icon"><use href="#svg-close"></use></svg>
+        </button>
+        <h2 class="guide-title" id="guide-title">
+          <svg class="svg-icon"><use href="#svg-book"></use></svg> 人物图鉴
+        </h2>
+        <div class="guide-tabs">
+          <button class="guide-tab active" data-filter="all">全部</button>
+          <button class="guide-tab" data-filter="met">已相遇</button>
+          <button class="guide-tab" data-filter="unmet">未相遇</button>
+        </div>
+      </div>
+      <div class="guide-search">
+        <svg class="svg-icon search-icon"><use href="#svg-search"></use></svg>
+        <input type="text" class="guide-search-input" id="guide-search" placeholder="搜索角色名称...">
+      </div>
+      <div class="guide-body" id="guide-body">
+        <div class="guide-char-grid" id="guide-char-grid"></div>
+        <div class="guide-empty" id="guide-empty" style="display:none;">
+          <div class="guide-empty-icon">
+            <svg class="svg-icon"><use href="#svg-search"></use></svg>
+          </div>
+          <div class="guide-empty-text">暂无匹配角色</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+import { getMvuData, get, waitMvu } from '../公共/utils.js';
+
+/* ===== 工具函数 ===== */
+function pad(num) {
+  return num < 10 ? '0' + num : num;
+}
+
+/* ===== 天气图标映射 ===== */
+const weatherIcons = {
+  '晴': 'svg-weather-sunny',
+  '晴朗': 'svg-weather-sunny',
+  '晴天': 'svg-weather-sunny',
+  '阳光': 'svg-weather-sunny',
+  '多云': 'svg-weather-cloudy',
+  '阴': 'svg-weather-cloudy',
+  '阴天': 'svg-weather-cloudy',
+  '雨': 'svg-weather-rain',
+  '雨天': 'svg-weather-rain',
+  '下雨': 'svg-weather-rain',
+  '暴雨': 'svg-weather-rain',
+  '雪': 'svg-weather-snow',
+  '雪天': 'svg-weather-snow',
+  '下雪': 'svg-weather-snow',
+};
+
+function updateWeatherIcon(weather) {
+  const iconEl = document.getElementById('env-weather-icon');
+  if (!iconEl) return;
+  const iconId = weatherIcons[weather] || 'svg-weather-sunny';
+  iconEl.innerHTML = `<use href="#${iconId}"></use>`;
+}
+
+/* ===== 数据填充 ===== */
+function populateData() {
+  const vars = getMvuData();
+  const sysTime = get(vars, 'stat_data.系统.时间', {});
+  const sysEnv = get(vars, 'stat_data.系统.环境', {});
+  const player = get(vars, 'stat_data.主角', {});
+
+  const dateStr = `${sysTime.年 || '---'}年${sysTime.月 || '-'}月${sysTime.日 || '-'}日`;
+  const timeStr = `${pad(sysTime.时 || 0)}:${pad(sysTime.分 || 0)}`;
+  setText('sys-date', dateStr);
+  setText('sys-time', `${sysTime.星期 || '---'} ${timeStr}`);
+  setText('env-date', dateStr);
+  const season = sysEnv.季节 || '-';
+  const weather = sysEnv.天气 || '-';
+  setText('sys-env', `${season}季 / ${weather}`);
+  updateWeatherIcon(weather);
+  setText('sys-festival', sysEnv.特殊节日 && sysEnv.特殊节日 !== '无' ? sysEnv.特殊节日 : '日常');
+
+  setText('player-class', player.当前班级 || '未分班');
+  setText('player-loc', player.当前位置 || '未知');
+  setText('player-action', player.当前行为 || '无');
+  setText('player-money', `¥${player.金钱 || 0}`);
+  setText('player-course', player.当前课程或活动 && player.当前课程或活动 !== '无' ? player.当前课程或活动 : '课间/休息');
+
+  const stamina = player.体力 || 0;
+  const staminaVal = document.getElementById('player-stamina-val');
+  const staminaBar = document.getElementById('player-stamina-bar');
+  if (staminaVal) {
+    const newText = `${stamina}/100`;
+    if (staminaVal.textContent !== newText) {
+      animateValueChange(staminaVal);
+      staminaVal.textContent = newText;
+    }
+  }
+  if (staminaBar) {
+    const newWidth = `${stamina}%`;
+    if (staminaBar.style.width !== newWidth) {
+      staminaBar.style.animation = 'none';
+      staminaBar.offsetHeight;
+      staminaBar.style.animation = 'staminaChange 0.8s ease';
+      staminaBar.style.width = newWidth;
+    }
+  }
+
+  if (staminaVal) staminaVal.classList.remove('warning', 'danger');
+  if (staminaBar) staminaBar.classList.remove('warning', 'danger');
+  if (stamina < 30) {
+    if (staminaVal) staminaVal.classList.add('danger');
+    if (staminaBar) staminaBar.classList.add('danger');
+  } else if (stamina < 50) {
+    if (staminaVal) staminaVal.classList.add('warning');
+    if (staminaBar) staminaBar.classList.add('warning');
+  }
+
+  populateSocialList(vars);
+  syncCompactSummary();
+  updateGuideData(vars);
+}
+
+function populateSocialList(vars) {
+  const charsData = get(vars, 'stat_data.角色', {});
+  let charHtml = '';
+  let metCount = 0;
+
+  Object.keys(charsData).forEach(charName => {
+    const charInfo = charsData[charName];
+    if (charInfo && charInfo.已相遇 === true) {
+      metCount++;
+      const affection = charInfo.好感度 || 0;
+      const relation = charInfo.关系状态 || '陌生人';
+      const initial = charName.charAt(0);
+      charHtml += `
+        <div class="char-card" data-char="${charName}" data-affection="${affection}" data-relation="${relation}" role="button" tabindex="0" style="animation-delay: ${(metCount - 1) * 0.08}s">
+          <div class="char-header">
+            <span class="char-name"><span class="char-avatar">${initial}</span>${charName}</span>
+            <span class="char-relation">${relation}</span>
+          </div>
+          <div class="char-affection">
+            <span class="char-affection-label">好感度</span>
+            <span class="char-affection-value">${affection}/100</span>
+          </div>
+          <div class="char-bar"><div class="char-bar-fill" style="width: ${affection}%"></div></div>
+        </div>`;
+    }
+  });
+
+  setText('social-count', String(metCount));
+  setText('social-desc', metCount > 0 ? '已相遇的角色' : '等待相遇...');
+
+  const socialList = document.getElementById('social-list');
+  const socialCountEl = document.getElementById('social-count');
+  if (socialCountEl) {
+    socialCountEl.style.animation = 'none';
+    socialCountEl.offsetHeight;
+    socialCountEl.style.animation = 'countPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+  }
+  if (socialList) {
+    socialList.innerHTML = metCount === 0
+      ? '<div class="empty-state">茫茫人海中，你还在等待那场注定的相遇...</div>'
+      : charHtml;
+  }
+}
+
+function setText(id, text) {
+  const el = document.getElementById(id);
+  if (el) {
+    if (el.textContent !== text) {
+      el.classList.remove('value-flash');
+      void el.offsetWidth;
+      el.classList.add('value-flash');
+      el.textContent = text;
+    }
+  }
+}
+
+function animateValueChange(el) {
+  if (!el) return;
+  el.style.animation = 'none';
+  el.offsetHeight;
+  el.style.animation = 'valueChange 0.3s ease';
+}
+
+function syncCompactSummary() {
+  const getText = (id) => document.getElementById(id)?.textContent || '未知';
+  setText('summary-loc', getText('player-loc'));
+  setText('summary-action', getText('player-action'));
+  setText('summary-stamina', getText('player-stamina-val'));
+  setText('summary-social', getText('social-count'));
+}
+
+/* ===== 人物图鉴 ===== */
+const allCharacters = [
+  { name: '顾朝阳', identity: '体育学院·体(1)班' },
+  { name: '沈清越', identity: '数学老师·班主任' },
+  { name: '陈默', identity: '文科学院·文(2)班' },
+  { name: '林何', identity: '理科学院·理(3)班' },
+  { name: '叶辞', identity: '文科学院' },
+  { name: '顾盼', identity: '体育学院' },
+  { name: '林宇', identity: '理科学院' },
+  { name: '陆屿', identity: '体育学院' },
+  { name: '陆时', identity: '文科学院' },
+  { name: '江晏', identity: '副校长' },
+  { name: '厉渊', identity: '警察' },
+  { name: '周野', identity: '体育学院' },
+  { name: '凌曜', identity: '体育学院' },
+  { name: '秦放', identity: '理科学院' },
+  { name: '石磊', identity: '体育学院' },
+  { name: '温景辞', identity: '校医院' },
+  { name: '萧立', identity: '理科学院' },
+  { name: '谢书砚', identity: '文科学院·年级第一' },
+  { name: '许知言', identity: '音乐学院' },
+  { name: '时年', identity: '美术学院' },
+  { name: '苏沐辰', identity: '物理老师' },
+  { name: '季川', identity: '图书馆管理员' },
+  { name: '方屿', identity: '美术老师' },
+  { name: '裴烬', identity: '理科学院·年级第一' },
+  { name: '纪淮', identity: '文科学院·班长' },
+  { name: '白鹿', identity: '理科学院·跳级新生' },
+  { name: '向南', identity: '体育学院·短跑特长生' },
+  { name: '王铁柱', identity: '食堂' },
+  { name: '杰克', identity: '交换生·橄榄球' },
+  { name: '布雷迪', identity: '交换生·摔跤' },
+  { name: '迪伦', identity: '交换生' },
+  { name: '小野健太', identity: '交换生·棒球' },
+  { name: '陆沉', identity: '教导主任' },
+  { name: '顾衍', identity: '田径教练' },
+  { name: '沈知远', identity: '校长' },
+  { name: '柳善宇', identity: '体育学院·游泳' },
+];
+
+let guideData = [];
+let currentFilter = 'all';
+let currentSearch = '';
+
+function updateGuideData(vars) {
+  const charsData = get(vars, 'stat_data.角色', {});
+  guideData = allCharacters.map(char => {
+    const charInfo = charsData[char.name] || {};
+    return {
+      name: char.name,
+      identity: char.identity,
+      met: charInfo.已相遇 === true,
+      affection: charInfo.好感度 || 0,
+      relation: charInfo.关系状态 || '陌生人',
+    };
+  });
+}
+
+function openGuideModal() {
+  const modal = document.getElementById('guide-modal');
+  if (modal) {
+    modal.classList.add('active');
+    renderGuideGrid();
+    document.getElementById('guide-search')?.focus();
+  }
+}
+
+function closeGuideModal() {
+  document.getElementById('guide-modal')?.classList.remove('active');
+  document.getElementById('header-toggle')?.focus();
+}
+
+function renderGuideGrid() {
+  const grid = document.getElementById('guide-char-grid');
+  const empty = document.getElementById('guide-empty');
+  if (!grid) return;
+
+  let filtered = guideData;
+
+  if (currentFilter === 'met') {
+    filtered = filtered.filter(c => c.met);
+  } else if (currentFilter === 'unmet') {
+    filtered = filtered.filter(c => !c.met);
+  }
+
+  if (currentSearch) {
+    const q = currentSearch.toLowerCase();
+    filtered = filtered.filter(c => c.name.toLowerCase().includes(q) || c.identity.toLowerCase().includes(q));
+  }
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '';
+    if (empty) empty.style.display = 'block';
+    return;
+  }
+
+  if (empty) empty.style.display = 'none';
+
+  grid.innerHTML = filtered.map((char, idx) => {
+    const initial = char.name.charAt(0);
+    const metClass = char.met ? 'met' : 'unmet';
+    return `
+      <div class="guide-char-card ${metClass}" data-name="${char.name}" data-affection="${char.affection}" data-relation="${char.relation}" role="button" tabindex="0" style="animation-delay: ${idx * 0.05}s">
+        <div class="guide-char-avatar">${initial}</div>
+        <div class="guide-char-name">${char.name}</div>
+        <div class="guide-char-identity">${char.identity}</div>
+        <div class="guide-char-relation">${char.met ? char.relation : '未相遇'}</div>
+      </div>`;
+  }).join('');
+}
+
+/* ===== 好感度等级 ===== */
+function getAffectionLevel(affection) {
+  if (affection >= 90) return { level: '家人', color: 'var(--danger-color)' };
+  if (affection >= 75) return { level: '恋人', color: 'var(--accent-color)' };
+  if (affection >= 60) return { level: '在意', color: 'var(--success-color)' };
+  if (affection >= 40) return { level: '朋友', color: 'var(--primary-color)' };
+  if (affection >= 20) return { level: '已相识', color: 'var(--text-sub)' };
+  return { level: '陌生人', color: 'var(--text-muted)' };
+}
+
+/* ===== 角色详情模态框 ===== */
+function showCharModal(charName, affection, relation) {
+  const initial = charName.charAt(0);
+  const levelInfo = getAffectionLevel(affection);
+
+  setText('modal-avatar', initial);
+  setText('modal-name', charName);
+  setText('modal-relation', relation);
+  const affVal = document.getElementById('modal-affection-value');
+  if (affVal) {
+    affVal.style.animation = 'none';
+    affVal.offsetHeight;
+    affVal.style.animation = 'valueChange 0.4s ease';
+    affVal.innerHTML = `${affection} <span>/ 100</span>`;
+  }
+  const barFill = document.getElementById('modal-bar-fill');
+  if (barFill) {
+    barFill.style.animation = 'none';
+    barFill.offsetHeight;
+    barFill.style.animation = 'staminaChange 0.8s ease';
+    barFill.style.width = `${affection}%`;
+  }
+
+  const levels = ['陌生人', '已相识', '朋友', '在意', '恋人', '家人'];
+  const modalLevels = document.getElementById('modal-levels');
+  if (modalLevels) {
+    modalLevels.innerHTML = levels.map(lv =>
+      `<span class="level-badge ${lv === levelInfo.level ? 'active' : ''}">${lv}</span>`
+    ).join('');
+  }
+
+  document.getElementById('char-modal')?.classList.add('active');
+}
+
+function closeCharModal() {
+  document.getElementById('char-modal')?.classList.remove('active');
+  document.getElementById('header-toggle')?.focus();
+}
+
+/* ===== 主题管理 ===== */
+function updateThemeIcon(isDark) {
+  const btn = document.getElementById('toggle-theme');
+  if (!btn) return;
+  const useEl = btn.querySelector('use');
+  if (useEl) {
+    useEl.setAttribute('href', isDark ? '#svg-moon' : '#svg-sun');
+  }
+}
+
+function loadTheme() {
+  try {
+    const saved = localStorage.getItem('hengjiang-theme');
+    if (saved === 'light') {
+      document.documentElement.classList.remove('dark');
+      updateThemeIcon(false);
+    } else {
+      document.documentElement.classList.add('dark');
+      updateThemeIcon(true);
+    }
+  } catch {}
+}
+
+function saveTheme(isDark) {
+  try { localStorage.setItem('hengjiang-theme', isDark ? 'dark' : 'light') } catch {}
+}
+
+/* ===== 折叠管理 ===== */
+function toggleCardCollapse(card) {
+  const isCollapsed = card.classList.toggle('collapsed');
+  const header = card.querySelector('.card-header');
+  if (header) header.setAttribute('aria-expanded', String(!isCollapsed));
+  saveCollapseState(card.id, isCollapsed);
+}
+
+function loadCollapseStates() {
+  try {
+    const states = JSON.parse(localStorage.getItem('hengjiang-collapse') || '{}');
+    Object.keys(states).forEach(id => {
+      if (states[id]) document.getElementById(id)?.classList.add('collapsed');
+    });
+  } catch {}
+}
+
+function saveCollapseState(id, isCollapsed) {
+  try {
+    const states = JSON.parse(localStorage.getItem('hengjiang-collapse') || '{}');
+    states[id] = isCollapsed;
+    localStorage.setItem('hengjiang-collapse', JSON.stringify(states));
+  } catch {}
+}
+
+/* ===== 初始化 ===== */
+async function init() {
+  loadTheme();
+  loadCollapseStates();
+
+  await waitMvu();
+  populateData();
+
+  (() => {
+    try {
+      if (window.Mvu?.events?.VARIABLE_UPDATE_ENDED) {
+        SillyTavern.getContext().eventOn(Mvu.events.VARIABLE_UPDATE_ENDED, () => {
+          populateData();
+          enhanceDynamicCards();
+        });
+      }
+    } catch (e) {
+      try {
+        Mvu?.events?.on?.(Mvu.events.VARIABLE_UPDATE_ENDED, () => {
+          populateData();
+          enhanceDynamicCards();
+        });
+      } catch (e2) {
+        console.warn('StatusBar: cannot subscribe to VARIABLE_UPDATE_ENDED');
+      }
+    }
+  })();
+
+  document.querySelectorAll('.card-header').forEach(header => {
+    header.addEventListener('click', () => toggleCardCollapse(header.closest('.card')));
+  });
+
+  document.getElementById('social-list')?.addEventListener('click', e => {
+    const card = e.target.closest('.char-card');
+    if (card) {
+      showCharModal(card.dataset.char, Number(card.dataset.affection), card.dataset.relation);
+    }
+  });
+
+  document.getElementById('modal-close')?.addEventListener('click', closeCharModal);
+  document.getElementById('char-modal')?.addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeCharModal();
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      if (document.getElementById('char-modal')?.classList.contains('active')) closeCharModal();
+      if (document.getElementById('guide-modal')?.classList.contains('active')) closeGuideModal();
+    }
+  });
+
+  document.getElementById('toggle-theme')?.addEventListener('click', function(e) {
+    e.stopPropagation();
+    const isDark = document.documentElement.classList.toggle('dark');
+    this.style.animation = 'none';
+    this.offsetHeight;
+    this.style.animation = 'themeSwitch 0.5s ease';
+    updateThemeIcon(isDark);
+    saveTheme(isDark);
+  });
+
+  document.getElementById('btn-guide')?.addEventListener('click', function(e) {
+    e.stopPropagation();
+    this.style.animation = 'none';
+    this.offsetHeight;
+    this.style.animation = 'btnPulse 0.4s ease';
+    openGuideModal();
+  });
+
+  document.getElementById('guide-close')?.addEventListener('click', closeGuideModal);
+  document.getElementById('guide-modal')?.addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeGuideModal();
+  });
+
+  document.querySelectorAll('.guide-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.guide-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      currentFilter = tab.dataset.filter;
+      renderGuideGrid();
+    });
+  });
+
+  document.getElementById('guide-search')?.addEventListener('input', e => {
+    currentSearch = e.target.value.trim();
+    renderGuideGrid();
+  });
+
+  document.getElementById('guide-char-grid')?.addEventListener('click', e => {
+    const card = e.target.closest('.guide-char-card');
+    if (card && card.classList.contains('met')) {
+      closeGuideModal();
+      setTimeout(() => {
+        showCharModal(card.dataset.name, Number(card.dataset.affection), card.dataset.relation);
+      }, 150);
+    }
+  });
+
+  document.getElementById('quick-rest')?.addEventListener('click', function() {
+    this.style.animation = 'none';
+    this.offsetHeight;
+    this.style.animation = 'btnClick 0.3s ease';
+    if (window.Mvu) {
+      Mvu.setVariable('stat_data.主角.体力', 100);
+      Mvu.commit();
+    }
+  });
+}
+
+function enhanceDynamicCards() {
+  document.querySelectorAll('.char-card, .guide-char-card').forEach(el => {
+    el.setAttribute('tabindex', '0');
+    el.setAttribute('role', 'button');
+  });
+  document.querySelectorAll('.guide-char-card').forEach((el, idx) => {
+    el.style.animationDelay = `${idx * 0.03}s`;
+  });
+}
+
+$(() => { init(); });
+</script>
+</body>
+</html>

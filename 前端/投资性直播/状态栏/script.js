@@ -326,7 +326,7 @@
         if (prevFans !== null && fans !== prevFans) {
           const delta = fans - prevFans;
           const el = q('#val-fans-delta');
-          el.textContent = `+${formatNumber(delta)}`;
+          el.textContent = `${delta >= 0 ? '+' : ''}${formatNumber(delta)}`;
           el.className = 'stat-delta up';
           el.style.display = 'inline';
           clearTimeout(el.__timeout);
@@ -561,7 +561,7 @@
       }
 
       function getCurrentHostId(allData) {
-        return _.get(allData, 'stat_data.全局.当前主播ID', 'host_1');
+        return _.get(allData, 'stat_data.全局.当前主播ID', 'host_0');
       }
 
       function resolveCheatPath(path, hostId) {
@@ -933,7 +933,7 @@
         const modalBody = q('#purchase-modal-body');
         const modalOverlay = q('#purchase-modal');
         if (!modalBody || !modalOverlay) {
-          const identity = prompt('请输入你想要的身份（如"投资公司特派员"）：', '{{user}}');
+          let identity = prompt('请输入你想要的身份（如"投资公司特派员"）：', '{{user}}');
           if (!identity || !identity.trim()) { identity = '{{user}}'; }
           if (!confirm('确定消耗10000性币降临？此操作不可撤销。')) return;
           executeDescent(identity.trim());
@@ -1128,7 +1128,7 @@
         wrap.style.display = 'flex';
 
         const archiveEntries = Object.entries(archive);
-        const currentHostId = _.get(s, '全局.当前主播ID', 'host_1');
+        const currentHostId = _.get(s, '全局.当前主播ID', 'host_0');
         const currentHost = _.get(s, ['主播池', currentHostId], {});
         const currentName = _.get(currentHost, '基本信息.名字', '待定');
         const currentStick = _.get(currentHost, '核心状态.坚守度', 100);
