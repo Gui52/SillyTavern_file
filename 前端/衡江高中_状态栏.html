@@ -229,19 +229,17 @@ html, body {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 6px;
+  gap: 12px;
+  padding: 12px;
   background: var(--bg-gradient);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
-  max-height: none;
-  height: fit-content;
 }
 
 /* --- 顶部卡片 --- */
 .header-card {
-  display: flex; align-items: center; gap: 10px;
-  padding: 14px 16px;
+  display: flex; align-items: center; gap: 12px;
+  padding: 18px 20px;
   background: var(--card-bg);
   backdrop-filter: blur(10px);
   border: 1px solid var(--border-color);
@@ -283,22 +281,22 @@ html, body {
   to { opacity: 1; transform: rotateY(0); }
 }
 .header-card:hover .school-logo { transform: scale(1.1) rotate(5deg); }
-.header-info h1 { font-size: 16px; font-weight: 700; line-height: 1.2; }
-.header-info span { font-size: 11px; color: var(--text-muted); }
+.header-info h1 { font-size: 20px; font-weight: 700; line-height: 1.2; }
+.header-info span { font-size: 12px; color: var(--text-muted); }
 
-.header-center { flex: 1; text-align: center; min-width: 120px; animation: centerIn 0.5s ease backwards; animation-delay: 0.05s; }
+.header-center { flex: 1; text-align: center; min-width: 140px; animation: centerIn 0.5s ease backwards; animation-delay: 0.05s; }
 @keyframes centerIn {
   from { opacity: 0; transform: translateY(-10px); }
   to { opacity: 1; transform: translateY(0); }
 }
-.header-date { font-size: 13px; font-weight: 600; transition: color 0.3s; }
-.header-time { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+.header-date { font-size: 16px; font-weight: 600; transition: color 0.3s; }
+.header-time { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
 
-.header-right { display: flex; gap: 6px; flex-shrink: 0; }
+.header-right { display: flex; gap: 8px; flex-shrink: 0; }
 .header-btn {
-  width: 32px; height: 32px; border: 1px solid var(--border-color);
+  width: 40px; height: 40px; border: 1px solid var(--border-color);
   background: var(--card-bg); border-radius: 50%; cursor: pointer;
-  font-size: 16px; display: flex; align-items: center; justify-content: center;
+  font-size: 18px; display: flex; align-items: center; justify-content: center;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   animation: btnIn 0.4s ease backwards;
   animation-delay: 0.1s;
@@ -324,9 +322,9 @@ html, body {
 }
 
 .header-chip {
-  display: flex; align-items: center; gap: 4px;
-  background: var(--card-bg); padding: 4px 10px; border-radius: 20px;
-  border: 1px solid var(--border-color); font-size: 11px;
+  display: flex; align-items: center; gap: 6px;
+  background: var(--card-bg); padding: 6px 14px; border-radius: 20px;
+  border: 1px solid var(--border-color); font-size: 13px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   animation: chipIn 0.4s ease backwards;
 }
@@ -342,13 +340,13 @@ html, body {
 .header-chip:active { transform: translateY(0) scale(0.98); }
 .header-chip-icon { font-size: 12px; }
 .header-chip-text { display: flex; flex-direction: column; line-height: 1.2; }
-.header-chip-label { font-size: 9px; color: var(--text-muted); }
-.header-chip-value { font-weight: 600; font-size: 11px; transition: color 0.3s; }
+.header-chip-label { font-size: 11px; color: var(--text-muted); }
+.header-chip-value { font-weight: 600; font-size: 14px; transition: color 0.3s; }
 .header-chip:hover .header-chip-value { color: var(--primary-color); }
 
 .header-summary {
-  display: flex; gap: 8px; flex-wrap: wrap;
-  width: 100%; margin-top: 2px; padding-top: 8px;
+  display: flex; gap: 10px; flex-wrap: wrap;
+  width: 100%; margin-top: 4px; padding-top: 10px;
   border-top: 1px solid var(--border-color);
 }
 
@@ -384,21 +382,21 @@ html, body {
 
 .card-header {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 12px 16px; cursor: pointer;
+  padding: 14px 20px; cursor: pointer;
   transition: background 0.2s;
 }
 .card-header:hover { background: var(--card-bg-hover); }
 
-.card-title { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 13px; }
+.card-title { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 16px; }
 .card-icon {
-  width: 28px; height: 28px; border-radius: var(--radius-sm);
-  display: flex; align-items: center; justify-content: center; font-size: 14px;
+  width: 36px; height: 36px; border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center; font-size: 18px;
   transition: transform 0.3s ease;
 }
 .card:hover .card-icon { transform: scale(1.1) rotate(5deg); }
 
 .card-body {
-  padding: 0 16px 16px;
+  padding: 0 20px 20px;
   transition: opacity 0.3s ease, padding 0.3s ease;
   opacity: 1;
 }
@@ -407,10 +405,10 @@ html, body {
 }
 
 /* --- 环境网格 --- */
-.env-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.env-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
 .env-item {
-  padding: 10px; background: var(--card-bg);
-  border: 1px solid var(--border-color); border-radius: var(--radius-sm);
+  padding: 16px 12px; background: var(--card-bg);
+  border: 1px solid var(--border-color); border-radius: var(--radius-md);
   text-align: center; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   animation: envItemIn 0.5s ease backwards;
 }
@@ -424,18 +422,18 @@ html, body {
 }
 .env-item:hover { transform: translateY(-3px) scale(1.05); box-shadow: var(--shadow-md); border-color: var(--primary-color); }
 .env-item:active { transform: translateY(0) scale(0.98); }
-.env-icon { font-size: 20px; margin-bottom: 4px; transition: transform 0.3s; }
+.env-icon { font-size: 28px; margin-bottom: 6px; transition: transform 0.3s; }
 .env-item:hover .env-icon { transform: scale(1.2) rotate(5deg); }
-.env-label { font-size: 10px; color: var(--text-muted); margin-bottom: 2px; }
-.env-value { font-size: 13px; font-weight: 600; transition: color 0.3s; }
+.env-label { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+.env-value { font-size: 15px; font-weight: 600; transition: color 0.3s; }
 .env-item:hover .env-value { color: var(--primary-color); }
 
 /* --- 状态 --- */
-.status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .status-item {
-  padding: 10px; background: var(--card-bg);
-  border: 1px solid var(--border-color); border-radius: var(--radius-sm);
-  display: flex; flex-direction: column; gap: 2px;
+  padding: 16px; background: var(--card-bg);
+  border: 1px solid var(--border-color); border-radius: var(--radius-md);
+  display: flex; flex-direction: column; gap: 4px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   animation: statusItemIn 0.4s ease backwards;
 }
@@ -449,8 +447,8 @@ html, body {
 }
 .status-item:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); border-color: var(--primary-light); }
 .status-item.full { grid-column: 1 / -1; }
-.status-label { font-size: 10px; color: var(--text-muted); }
-.status-value { font-size: 13px; font-weight: 600; transition: color 0.3s; }
+.status-label { font-size: 12px; color: var(--text-muted); }
+.status-value { font-size: 16px; font-weight: 600; transition: color 0.3s; }
 .status-value.highlight { color: var(--primary-color); }
 .status-item:hover .status-value.highlight { color: var(--accent-color); }
 
@@ -475,9 +473,9 @@ html, body {
   to { opacity: 1; transform: translateY(0); }
 }
 .quick-btn {
-  flex: 1; padding: 8px; border: 1px solid var(--border-color);
-  background: var(--card-bg); border-radius: var(--radius-sm);
-  color: var(--text-main); font-size: 12px; cursor: pointer;
+  flex: 1; padding: 12px; border: 1px solid var(--border-color);
+  background: var(--card-bg); border-radius: var(--radius-md);
+  color: var(--text-main); font-size: 14px; cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   animation: quickBtnIn 0.5s ease backwards;
   animation-delay: 0.3s;
@@ -496,10 +494,10 @@ html, body {
 
 /* --- 社交 --- */
 .social-summary {
-  display: flex; align-items: center; gap: 12px;
-  padding: 12px; background: var(--card-bg);
-  border: 1px solid var(--border-color); border-radius: var(--radius-sm);
-  margin-bottom: 8px;
+  display: flex; align-items: center; gap: 14px;
+  padding: 16px; background: var(--card-bg);
+  border: 1px solid var(--border-color); border-radius: var(--radius-md);
+  margin-bottom: 10px;
   animation: socialSummaryIn 0.5s ease;
 }
 @keyframes socialSummaryIn {
@@ -507,10 +505,10 @@ html, body {
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
 .social-count {
-  width: 44px; height: 44px; border-radius: 50%;
+  width: 56px; height: 56px; border-radius: 50%;
   background: linear-gradient(135deg, var(--accent-color), var(--accent-light));
   display: flex; align-items: center; justify-content: center;
-  font-size: 18px; font-weight: 700; color: #fff; flex-shrink: 0;
+  font-size: 22px; font-weight: 700; color: #fff; flex-shrink: 0;
   transition: transform 0.3s ease;
   animation: countPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
@@ -520,19 +518,19 @@ html, body {
   100% { transform: scale(1); }
 }
 .social-summary:hover .social-count { transform: scale(1.1) rotate(5deg); }
-.social-title { font-weight: 600; font-size: 13px; }
-.social-desc { font-size: 11px; color: var(--text-muted); }
+.social-title { font-weight: 600; font-size: 16px; }
+.social-desc { font-size: 13px; color: var(--text-muted); }
 
-.char-list { display: flex; flex-direction: column; gap: 6px; animation: listIn 0.4s ease backwards; animation-delay: 0.1s; }
+.char-list { display: flex; flex-direction: column; gap: 8px; animation: listIn 0.4s ease backwards; animation-delay: 0.1s; }
 @keyframes listIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 .char-card {
-  display: flex; flex-direction: column; gap: 6px;
-  padding: 10px 12px; background: var(--card-bg);
-  border: 1px solid var(--border-color); border-radius: var(--radius-sm);
+  display: flex; flex-direction: column; gap: 8px;
+  padding: 14px 16px; background: var(--card-bg);
+  border: 1px solid var(--border-color); border-radius: var(--radius-md);
   cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   animation: charCardIn 0.4s ease backwards;
 }
@@ -544,20 +542,20 @@ html, body {
 .char-card:active { transform: translateX(2px) scale(0.99); }
 
 .char-header { display: flex; justify-content: space-between; align-items: center; }
-.char-name { display: flex; align-items: center; gap: 6px; font-weight: 600; font-size: 13px; }
+.char-name { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 15px; }
 .char-avatar {
-  width: 24px; height: 24px; border-radius: 50%;
+  width: 32px; height: 32px; border-radius: 50%;
   background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
   display: flex; align-items: center; justify-content: center;
-  font-size: 11px; color: #fff; font-weight: 700; flex-shrink: 0;
+  font-size: 14px; color: #fff; font-weight: 700; flex-shrink: 0;
 }
-.char-relation { font-size: 11px; color: var(--text-muted); padding: 2px 8px; background: var(--border-color); border-radius: 10px; }
-.char-affection { display: flex; justify-content: space-between; font-size: 11px; transition: color 0.3s; }
+.char-relation { font-size: 12px; color: var(--text-muted); padding: 3px 10px; background: var(--border-color); border-radius: 12px; }
+.char-affection { display: flex; justify-content: space-between; font-size: 13px; transition: color 0.3s; }
 .char-card:hover .char-affection { color: var(--primary-color); }
 .char-affection-label { color: var(--text-muted); }
 .char-affection-value { font-weight: 600; transition: color 0.3s; }
 .char-card:hover .char-affection-value { color: var(--accent-color); }
-.char-bar { height: 4px; background: var(--border-color); border-radius: 2px; overflow: hidden; }
+.char-bar { height: 6px; background: var(--border-color); border-radius: 3px; overflow: hidden; }
 .char-bar-fill { height: 100%; background: linear-gradient(90deg, var(--primary-color), var(--accent-color)); border-radius: 2px; transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; }
 .char-bar-fill::after {
   content: '';
