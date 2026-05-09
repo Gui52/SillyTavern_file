@@ -227,7 +227,6 @@ html, body {
 /* --- 仪表板 --- */
 .dashboard {
   width: 100%;
-  min-height: 200px;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -235,8 +234,6 @@ html, body {
   background: var(--bg-gradient);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
-  overflow-y: auto;
-  max-height: 90vh;
 }
 
 /* --- 顶部卡片 --- */
@@ -353,29 +350,6 @@ html, body {
   border-top: 1px solid var(--border-color);
 }
 
-.expand-indicator {
-  position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%);
-  display: flex; align-items: center; gap: 4px;
-  background: var(--card-bg); padding: 2px 12px; border-radius: 10px;
-  border: 1px solid var(--border-color); font-size: 10px; color: var(--text-muted);
-  box-shadow: var(--shadow-sm);
-  transition: all 0.3s ease;
-}
-.expand-indicator:hover { transform: translateX(-50%) scale(1.05); box-shadow: var(--shadow-md); }
-.expand-arrow { font-size: 14px; transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-@keyframes labelPulse {
-  0% { transform: scale(0.8); opacity: 0; }
-  50% { transform: scale(1.1); }
-  100% { transform: scale(1); opacity: 1; }
-}
-@keyframes arrowBounce {
-  0% { transform: rotate(0); }
-  25% { transform: rotate(-10deg); }
-  50% { transform: rotate(10deg); }
-  75% { transform: rotate(-5deg); }
-  100% { transform: rotate(0); }
-}
-
 /* --- 折叠卡片 --- */
 .card {
   background: var(--card-bg);
@@ -394,10 +368,6 @@ html, body {
 @keyframes cardIn {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
-}
-@keyframes cardExpand {
-  from { opacity: 0; transform: scaleY(0.8); transform-origin: top; }
-  to { opacity: 1; transform: scaleY(1); transform-origin: top; }
 }
 .card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-2px); }
 .card::after {
@@ -425,21 +395,13 @@ html, body {
 }
 .card:hover .card-icon { transform: scale(1.1) rotate(5deg); }
 
-.toggle-btn { background: none; border: none; cursor: pointer; padding: 4px; color: var(--text-muted); font-size: 12px; transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-.card.collapsed .toggle-btn .toggle-arrow { transform: rotate(-90deg); display: inline-block; }
-
 .card-body {
   padding: 0 16px 16px;
-  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, padding 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  max-height: 500px;
+  transition: opacity 0.3s ease, padding 0.3s ease;
   opacity: 1;
-  overflow: hidden;
 }
 .card.collapsed .card-body {
-  max-height: 0;
-  opacity: 0;
-  padding-top: 0;
-  padding-bottom: 0;
+  display: none;
 }
 
 /* --- 环境网格 --- */
@@ -1019,10 +981,6 @@ html, body {
           </span>
         </div>
       </div>
-      <div class="expand-indicator">
-        <span class="expand-label">展开</span>
-        <span class="expand-arrow">⌄</span>
-      </div>
     </div>
 
     <div class="card" id="card-env">
@@ -1033,7 +991,6 @@ html, body {
           </div>
           校园环境
         </div>
-        <button class="toggle-btn"><span class="toggle-arrow">▼</span></button>
       </div>
       <div class="card-body">
         <div class="env-grid">
@@ -1069,7 +1026,6 @@ html, body {
           </div>
           当前状态
         </div>
-        <button class="toggle-btn"><span class="toggle-arrow">▼</span></button>
       </div>
       <div class="card-body">
         <div class="status-grid">
@@ -1115,7 +1071,6 @@ html, body {
           </div>
           社交关系
         </div>
-        <button class="toggle-btn"><span class="toggle-arrow">▼</span></button>
       </div>
       <div class="card-body">
         <div class="social-summary">
@@ -1636,55 +1591,10 @@ function toggleCardCollapse(card) {
   const header = card.querySelector('.card-header');
   if (header) header.setAttribute('aria-expanded', String(!isCollapsed));
   saveCollapseState(card.id, isCollapsed);
-
-  if (!isCollapsed) {
-    const body = card.querySelector('.card-body');
-    if (body) {
-      body.style.animation = 'none';
-      body.offsetHeight;
-      body.style.animation = 'cardExpand 0.4s ease';
-    }
-    const envItems = card.querySelectorAll('.env-item');
-    envItems.forEach((item, i) => {
-      item.style.animation = 'none';
-      item.offsetHeight;
-      item.style.animation = `envItemIn 0.4s ease backwards`;
-      item.style.animationDelay = `${i * 0.05}s`;
-    });
-  }
-}
-
-function toggleExpand() {
-  const dashboard = document.querySelector('.dashboard');
-  const isExpanded = dashboard.classList.toggle('expanded');
-  try { localStorage.setItem('hengjiang-expanded', String(isExpanded)) } catch {}
-  updateExpandIndicator();
-}
-
-function updateExpandIndicator() {
-  const isExpanded = document.querySelector('.dashboard')?.classList.contains('expanded');
-  const label = document.querySelector('.expand-label');
-  const arrow = document.getElementById('header-toggle');
-  if (label) {
-    label.style.animation = 'none';
-    label.offsetHeight;
-    label.style.animation = 'labelPulse 0.3s ease';
-    label.textContent = isExpanded ? '收起' : '展开';
-  }
-  arrow?.setAttribute('aria-expanded', String(isExpanded));
-  const arrowEl = document.querySelector('.expand-arrow');
-  if (arrowEl) {
-    arrowEl.style.animation = 'none';
-    arrowEl.offsetHeight;
-    arrowEl.style.animation = 'arrowBounce 0.4s ease';
-    arrowEl.textContent = isExpanded ? '⌃' : '⌄';
-  }
 }
 
 function loadCollapseStates() {
   try {
-    const isExpanded = localStorage.getItem('hengjiang-expanded') === 'true';
-    if (isExpanded) document.querySelector('.dashboard')?.classList.add('expanded');
     const states = JSON.parse(localStorage.getItem('hengjiang-collapse') || '{}');
     Object.keys(states).forEach(id => {
       if (states[id]) document.getElementById(id)?.classList.add('collapsed');
@@ -1704,7 +1614,6 @@ function saveCollapseState(id, isCollapsed) {
 async function init() {
   loadTheme();
   loadCollapseStates();
-  updateExpandIndicator();
 
   await waitMvu();
   populateData();
@@ -1715,11 +1624,6 @@ async function init() {
       enhanceDynamicCards();
     });
   }
-
-  document.getElementById('header-toggle')?.addEventListener('click', function(e) {
-    if (e.target.closest('#toggle-theme') || e.target.closest('#btn-guide')) return;
-    toggleExpand();
-  });
 
   document.querySelectorAll('.card-header').forEach(header => {
     header.addEventListener('click', () => toggleCardCollapse(header.closest('.card')));
