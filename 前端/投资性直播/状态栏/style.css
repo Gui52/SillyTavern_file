@@ -716,8 +716,8 @@
 
     .sbc {
       width: 100%;
-      aspect-ratio: 16 / 10;
-      max-height: 620px;
+      aspect-ratio: 16 / 7;
+      max-height: 440px;
       font-size: 13px;
       line-height: 1.5;
       border-radius: var(--radius-lg);
