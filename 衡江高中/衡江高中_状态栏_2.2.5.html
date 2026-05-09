@@ -1110,6 +1110,22 @@ html, body {
     </div>
   </div>
 
+  <div class="modal-overlay" id="confirm-modal">
+    <div class="modal-content confirm-modal-content" role="dialog" aria-modal="true">
+      <div class="confirm-icon" id="confirm-icon">
+        <svg class="svg-icon"><use href="#svg-ban"></use></svg>
+      </div>
+      <div class="confirm-title" id="confirm-title">提示</div>
+      <div class="confirm-message" id="confirm-message">确定要执行此操作吗？</div>
+      <div class="confirm-actions">
+        <button class="confirm-btn confirm-btn-cancel" id="confirm-cancel">取消</button>
+        <button class="confirm-btn confirm-btn-ok" id="confirm-ok">确定</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toast-container"></div>
+
   <script type="module">
 (() => {
   'use strict';
@@ -1341,6 +1357,8 @@ html, body {
   const FAV_KEY = 'hengjiang-favorites';
   const DISABLED_KEY = 'hengjiang-disabled';
 
+  let confirmCallback = null;
+
   function loadFavorites() {
     try { return new Set(JSON.parse(localStorage.getItem(FAV_KEY) || '[]')) } catch { return new Set() }
   }
@@ -1352,6 +1370,39 @@ html, body {
   }
   function saveDisabled(set) {
     try { localStorage.setItem(DISABLED_KEY, JSON.stringify([...set])) } catch {}
+  }
+
+  function showConfirmModal(title, message, onOk, iconType = 'ban') {
+    const modal = document.getElementById('confirm-modal');
+    const titleEl = document.getElementById('confirm-title');
+    const msgEl = document.getElementById('confirm-message');
+    const iconEl = document.getElementById('confirm-icon');
+    if (!modal) return;
+    if (titleEl) titleEl.textContent = title;
+    if (msgEl) msgEl.textContent = message;
+    if (iconEl) iconEl.innerHTML = `<svg class="svg-icon"><use href="#svg-${iconType}"></use></svg>`;
+    confirmCallback = onOk;
+    modal.classList.add('active');
+  }
+
+  function closeConfirmModal() {
+    document.getElementById('confirm-modal')?.classList.remove('active');
+    confirmCallback = null;
+  }
+
+  function showToast(message, type = 'info') {
+    const container = document.getElementById('toast-container');
+    if (!container) return;
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+    const icons = { success: 'svg-check', error: 'svg-close', info: 'svg-bolt', warning: 'svg-event' };
+    toast.innerHTML = `<svg class="svg-icon"><use href="#${icons[type] || icons.info}"></use></svg><span>${message}</span>`;
+    container.appendChild(toast);
+    requestAnimationFrame(() => toast.classList.add('show'));
+    setTimeout(() => {
+      toast.classList.remove('show');
+      setTimeout(() => toast.remove(), 400);
+    }, 2500);
   }
 
   function updateGuideData(s) {
@@ -1589,28 +1640,32 @@ html, body {
       const charName = card.dataset.char;
       const disabledSet = loadDisabled();
       const isDisabled = disabledSet.has(charName);
-      if (window.confirm(`确定要${isDisabled ? '启用' : '禁用'}角色「${charName}」吗？${isDisabled ? '' : '（将同步禁用对应世界书条目）'}`)) {
-        if (isDisabled) {
-          disabledSet.delete(charName);
-        } else {
-          disabledSet.add(charName);
+      showConfirmModal(
+        isDisabled ? '启用角色' : '禁用角色',
+        `确定要${isDisabled ? '启用' : '禁用'}角色「${charName}」吗？${isDisabled ? '' : '（将同步禁用对应世界书条目）'}`,
+        () => {
+          if (isDisabled) {
+            disabledSet.delete(charName);
+          } else {
+            disabledSet.add(charName);
+          }
+          saveDisabled(disabledSet);
+          if (window.updateWorldbookWith) {
+            updateWorldbookWith(WORLDBOOK_NAME, worldbook => {
+              const entry = worldbook.find(e => e.name === charName);
+              if (entry) entry.enabled = !isDisabled;
+              return worldbook;
+            }).then(() => {
+              showToast(`角色「${charName}」已${isDisabled ? '启用' : '禁用'}`, 'success');
+            }).catch(err => {
+              showToast('世界书同步失败: ' + err.message, 'error');
+            });
+          } else {
+            showToast(`角色「${charName}」已${isDisabled ? '启用' : '禁用'}`, 'success');
+          }
+          populateData();
         }
-        saveDisabled(disabledSet);
-        if (window.updateWorldbookWith) {
-          updateWorldbookWith(WORLDBOOK_NAME, worldbook => {
-            const entry = worldbook.find(e => e.name === charName);
-            if (entry) entry.enabled = !isDisabled;
-            return worldbook;
-          }).then(() => {
-            toastr.success(`角色「${charName}」已${isDisabled ? '启用' : '禁用'}`);
-          }).catch(err => {
-            toastr.error('世界书同步失败: ' + err);
-          });
-        } else {
-          toastr.success(`角色「${charName}」已${isDisabled ? '启用' : '禁用'}`);
-        }
-        populateData();
-      }
+      );
     });
 
     document.getElementById('modal-close')?.addEventListener('click', closeCharModal);
@@ -1691,30 +1746,34 @@ html, body {
       const charName = card.dataset.name;
       const disabledSet = loadDisabled();
       const isDisabled = disabledSet.has(charName);
-      if (window.confirm(`确定要${isDisabled ? '启用' : '禁用'}角色「${charName}」吗？${isDisabled ? '' : '（将同步禁用对应世界书条目）'}`)) {
-        if (isDisabled) {
-          disabledSet.delete(charName);
-        } else {
-          disabledSet.add(charName);
+      showConfirmModal(
+        isDisabled ? '启用角色' : '禁用角色',
+        `确定要${isDisabled ? '启用' : '禁用'}角色「${charName}」吗？${isDisabled ? '' : '（将同步禁用对应世界书条目）'}`,
+        () => {
+          if (isDisabled) {
+            disabledSet.delete(charName);
+          } else {
+            disabledSet.add(charName);
+          }
+          saveDisabled(disabledSet);
+          if (window.updateWorldbookWith) {
+            updateWorldbookWith(WORLDBOOK_NAME, worldbook => {
+              const entry = worldbook.find(e => e.name === charName);
+              if (entry) entry.enabled = !isDisabled;
+              return worldbook;
+            }).then(() => {
+              showToast(`角色「${charName}」已${isDisabled ? '启用' : '禁用'}`, 'success');
+            }).catch(err => {
+              showToast('世界书同步失败: ' + err.message, 'error');
+            });
+          } else {
+            showToast(`角色「${charName}」已${isDisabled ? '启用' : '禁用'}`, 'success');
+          }
+          updateGuideData(getStatData());
+          renderGuideGrid();
+          populateData();
         }
-        saveDisabled(disabledSet);
-        if (window.updateWorldbookWith) {
-          updateWorldbookWith(WORLDBOOK_NAME, worldbook => {
-            const entry = worldbook.find(e => e.name === charName);
-            if (entry) entry.enabled = !isDisabled;
-            return worldbook;
-          }).then(() => {
-            toastr.success(`角色「${charName}」已${isDisabled ? '启用' : '禁用'}`);
-          }).catch(err => {
-            toastr.error('世界书同步失败: ' + err);
-          });
-        } else {
-          toastr.success(`角色「${charName}」已${isDisabled ? '启用' : '禁用'}`);
-        }
-        updateGuideData(getStatData());
-        renderGuideGrid();
-        populateData();
-      }
+      );
     });
 
     document.getElementById('quick-rest')?.addEventListener('click', function() {
