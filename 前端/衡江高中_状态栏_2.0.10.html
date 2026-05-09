@@ -227,8 +227,6 @@ html, body {
 /* --- 仪表板 --- */
 .dashboard {
   width: 100%;
-  aspect-ratio: 16 / 10;
-  max-height: 620px;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -236,7 +234,6 @@ html, body {
   background: var(--bg-gradient);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
-  overflow: hidden;
 }
 
 /* --- 顶部卡片 --- */
@@ -386,6 +383,7 @@ html, body {
   overflow: hidden;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   animation: cardIn 0.5s ease backwards;
+  flex-shrink: 0;
 }
 #card-env { animation-delay: 0.1s; }
 #card-status { animation-delay: 0.2s; }
@@ -429,16 +427,11 @@ html, body {
 
 .card-body {
   padding: 0 16px 16px;
-  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, padding 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  max-height: 500px;
+  transition: opacity 0.3s ease, padding 0.3s ease;
   opacity: 1;
-  overflow: hidden;
 }
 .card.collapsed .card-body {
-  max-height: 0;
-  opacity: 0;
-  padding-top: 0;
-  padding-bottom: 0;
+  display: none;
 }
 
 /* --- 环境网格 --- */
