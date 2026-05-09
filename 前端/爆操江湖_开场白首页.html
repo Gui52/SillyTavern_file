@@ -1,0 +1,1964 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>爆操江湖 - 开场选择</title>
+  <style>
+/* ===== 主题系统 - CSS 自定义属性 ===== */
+.theme-default {
+  --bg-base: #0d0d1a;
+  --bg-surface: #16162a;
+  --bg-elevated: #1e1e3a;
+  --bg-glass: rgba(22, 22, 42, 0.7);
+  --border-subtle: #2a2a4a;
+  --border-moderate: #3a3a5a;
+  --text-primary: #e8e6f0;
+  --text-secondary: #a8a0c8;
+  --text-muted: #6a6478;
+  --accent: #7c5cfc;
+  --accent-glow: rgba(124, 92, 252, 0.4);
+  --accent-secondary: #5ce0c8;
+  --gold: #f0b840;
+  --gold-glow: rgba(240, 184, 64, 0.4);
+  --danger: #e8465e;
+  --danger-glow: rgba(232, 70, 94, 0.4);
+  --success: #3cc878;
+  --scroll-thumb: #3a3a5a;
+  --pbar-bg: #2a2a4a;
+  --tag-accent-bg: rgba(124, 92, 252, 0.15);
+  --tag-accent-color: #a08cfc;
+  --tag-gold-bg: rgba(240, 184, 64, 0.15);
+  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+.theme-default:not(.dark),
+.theme-default.light {
+  --bg-base: #f0ecf5;
+  --bg-surface: #e0daf0;
+  --bg-elevated: #d0cae0;
+  --bg-glass: rgba(224, 218, 240, 0.7);
+  --border-subtle: #ccc8d8;
+  --border-moderate: #b0a8c0;
+  --text-primary: #1a1630;
+  --text-secondary: #5a5478;
+  --text-muted: #8a84a0;
+  --accent: #6c48e4;
+  --accent-glow: rgba(108, 72, 228, 0.3);
+  --accent-secondary: #48b4a0;
+  --gold: #b08020;
+  --gold-glow: rgba(176, 128, 32, 0.3);
+  --danger: #c0405a;
+  --danger-glow: rgba(192, 64, 90, 0.3);
+  --success: #30a068;
+  --scroll-thumb: #b0a8c0;
+  --pbar-bg: #d8d4e0;
+  --tag-accent-bg: rgba(108, 72, 228, 0.1);
+  --tag-accent-color: #5c38d4;
+  --tag-gold-bg: rgba(176, 128, 32, 0.1);
+  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+</style>
+  <style>
+    :root {
+      --panel: rgba(250, 246, 238, 0.92);
+      --panel-strong: rgba(255, 251, 245, 0.95);
+      --line: rgba(66, 49, 39, 0.16);
+      --text: #2d221b;
+      --muted: #716052;
+      --accent: #8d3025;
+      --accent-deep: #6c2119;
+      --tag: rgba(141, 48, 37, 0.08);
+      --wash: rgba(52, 40, 34, 0.06);
+      --gold: #aa8247;
+      --radius-lg: 18px;
+      --radius-md: 14px;
+      --shadow: 0 12px 28px rgba(66, 44, 30, 0.12);
+      --font-title: "FZKai-Z03", "STKaiti", "KaiTi", "Songti SC", "Noto Serif SC", serif;
+      --font-body: "PingFang SC", "Microsoft YaHei", "Noto Serif SC", sans-serif;
+    }
+
+    body.dark-theme {
+      --panel: rgba(22, 21, 24, 0.94);
+      --panel-strong: rgba(34, 33, 37, 0.98);
+      --line: rgba(234, 223, 203, 0.14);
+      --text: #f0e6d8;
+      --muted: #c6b6a4;
+      --accent: #d06c54;
+      --accent-deep: #b14f3c;
+      --tag: rgba(208, 108, 84, 0.16);
+      --wash: rgba(255, 255, 255, 0.08);
+      --gold: #dfb472;
+      --shadow: 0 18px 38px rgba(0, 0, 0, 0.42);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      background: transparent;
+      color: var(--text);
+      font-family: var(--font-body);
+    }
+
+    body {
+      padding: 6px;
+    }
+
+    .page {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background:
+        radial-gradient(circle at top right, rgba(170, 130, 71, 0.12), transparent 26%),
+        radial-gradient(circle at left bottom, rgba(52, 40, 34, 0.05), transparent 34%),
+        linear-gradient(180deg, rgba(251, 247, 241, 0.98), rgba(240, 231, 219, 0.98));
+      box-shadow: 0 22px 52px rgba(66, 44, 30, 0.18), 0 2px 0 rgba(255, 255, 255, 0.35) inset;
+      animation: page-rise 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    body.dark-theme .page {
+      background:
+        radial-gradient(circle at top right, rgba(223, 180, 114, 0.12), transparent 24%),
+        radial-gradient(circle at left bottom, rgba(208, 108, 84, 0.08), transparent 30%),
+        linear-gradient(180deg, rgba(18, 18, 21, 0.99), rgba(29, 26, 25, 0.98));
+      box-shadow: 0 26px 58px rgba(0, 0, 0, 0.42), 0 1px 0 rgba(255, 255, 255, 0.04) inset;
+    }
+
+    .page::before {
+      content: "";
+      position: absolute;
+      top: -48px;
+      right: -26px;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(52, 40, 34, 0.08), transparent 64%);
+      pointer-events: none;
+    }
+
+    .page::after {
+      content: "";
+      position: absolute;
+      left: -18px;
+      bottom: 22px;
+      width: 108px;
+      height: 108px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(141, 48, 37, 0.06), transparent 66%);
+      pointer-events: none;
+    }
+
+    .hero {
+      padding: 16px 16px 12px;
+      border-bottom: 1px solid var(--line);
+      background:
+        linear-gradient(135deg, rgba(255, 251, 246, 0.95), rgba(245, 236, 223, 0.9)),
+        radial-gradient(circle at right top, rgba(170, 130, 71, 0.08), transparent 24%);
+      animation: ink-fade 0.9s ease;
+    }
+
+    body.dark-theme .hero {
+      background:
+        linear-gradient(135deg, rgba(29, 28, 31, 0.97), rgba(40, 35, 33, 0.94)),
+        radial-gradient(circle at right top, rgba(223, 180, 114, 0.12), transparent 26%);
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset;
+    }
+
+    body.dark-theme .eyebrow {
+      border-color: rgba(223, 180, 114, 0.22);
+      background: rgba(50, 43, 39, 0.7);
+      color: #d8c8b7;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+    }
+
+    .hero-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .bottom-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 0 12px 14px;
+    }
+
+    .bottom-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(170, 130, 71, 0.26);
+      background: rgba(253, 247, 238, 0.88);
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), var(--accent));
+    }
+
+    .title {
+      margin: 10px 0 6px;
+      font-family: var(--font-title);
+      font-size: clamp(21px, 3.4vw, 30px);
+      line-height: 1.12;
+      letter-spacing: 0.06em;
+      font-weight: 800;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3), 0 3px 10px rgba(66, 44, 30, 0.08);
+    }
+
+    body.dark-theme .title {
+      text-shadow: 0 1px 0 rgba(0, 0, 0, 0.32), 0 4px 14px rgba(0, 0, 0, 0.24);
+    }
+
+    .desc {
+      margin: 0;
+      max-width: 680px;
+      color: var(--muted);
+      line-height: 1.66;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .filter-bar {
+      display: block;
+      gap: 10px;
+      padding: 12px 16px 10px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255, 252, 247, 0.82), rgba(249, 242, 233, 0.68));
+    }
+
+    body.dark-theme .filter-bar {
+      background: linear-gradient(180deg, rgba(34, 31, 31, 0.88), rgba(24, 22, 24, 0.72));
+    }
+
+    .filter-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .filter-toggle {
+      border: 1px solid rgba(141, 48, 37, 0.14);
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--panel-strong) 92%, transparent);
+      color: var(--accent-deep);
+      padding: 6px 11px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(66, 44, 30, 0.06), 0 1px 0 rgba(255, 255, 255, 0.35) inset;
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+    }
+
+    .filter-toggle:hover {
+      transform: translateY(-1px);
+      border-color: rgba(141, 48, 37, 0.24);
+      box-shadow: 0 12px 20px rgba(66, 44, 30, 0.1);
+    }
+
+    .filter-title {
+      margin: 0;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+
+    .filter-count {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .filter-mode {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px;
+      border: 1px solid rgba(141, 48, 37, 0.12);
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--panel-strong) 90%, transparent);
+      box-shadow: 0 8px 18px rgba(66, 44, 30, 0.05), 0 1px 0 rgba(255, 255, 255, 0.28) inset;
+    }
+
+    .filter-mode-btn {
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--muted);
+      padding: 6px 10px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .filter-mode-btn.active {
+      background: linear-gradient(135deg, rgba(141, 48, 37, 0.14), rgba(170, 130, 71, 0.12));
+      color: var(--accent-deep);
+      box-shadow: 0 6px 14px rgba(66, 44, 30, 0.08);
+    }
+
+    .filter-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .filter-bar.is-collapsed .filter-tags {
+      display: none;
+    }
+
+    .filter-chip {
+      border: 1px solid rgba(141, 48, 37, 0.12);
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--panel-strong) 92%, transparent);
+      color: var(--accent-deep);
+      padding: 6px 11px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      cursor: pointer;
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease, background 0.22s ease;
+      box-shadow: 0 8px 18px rgba(66, 44, 30, 0.06), 0 1px 0 rgba(255, 255, 255, 0.35) inset;
+    }
+
+    .filter-chip:hover {
+      transform: translateY(-1px);
+      border-color: rgba(141, 48, 37, 0.24);
+      box-shadow: 0 12px 20px rgba(66, 44, 30, 0.1);
+    }
+
+    .filter-chip.active,
+    .tag.active {
+      background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+      border-color: transparent;
+      color: #fff;
+      box-shadow: 0 12px 24px rgba(141, 48, 37, 0.22);
+    }
+
+    body.dark-theme .filter-title,
+    body.dark-theme .filter-count {
+      color: #c8b8a8;
+    }
+
+    body.dark-theme .filter-mode {
+      background: linear-gradient(180deg, rgba(47, 43, 42, 0.96), rgba(34, 31, 31, 0.96));
+      border-color: rgba(223, 180, 114, 0.14);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.18), 0 1px 0 rgba(255, 255, 255, 0.04) inset;
+    }
+
+    body.dark-theme .filter-mode-btn {
+      color: #c8b8a8;
+    }
+
+    body.dark-theme .filter-mode-btn.active {
+      background: linear-gradient(135deg, rgba(208, 108, 84, 0.22), rgba(223, 180, 114, 0.12));
+      color: #fff1e3;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.18);
+    }
+
+    body.dark-theme .filter-chip {
+      background: linear-gradient(180deg, rgba(47, 43, 42, 0.96), rgba(34, 31, 31, 0.96));
+      border-color: rgba(223, 180, 114, 0.14);
+      color: #e7d6c3;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.18), 0 1px 0 rgba(255, 255, 255, 0.04) inset;
+    }
+
+    body.dark-theme .filter-toggle {
+      background: linear-gradient(180deg, rgba(47, 43, 42, 0.96), rgba(34, 31, 31, 0.96));
+      border-color: rgba(223, 180, 114, 0.16);
+      color: #e7d6c3;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.18), 0 1px 0 rgba(255, 255, 255, 0.04) inset;
+    }
+
+    body.dark-theme .filter-toggle:hover {
+      border-color: rgba(223, 180, 114, 0.26);
+      box-shadow: 0 14px 26px rgba(0, 0, 0, 0.26);
+    }
+
+    body.dark-theme .filter-chip:hover {
+      border-color: rgba(223, 180, 114, 0.26);
+      box-shadow: 0 14px 26px rgba(0, 0, 0, 0.26);
+    }
+
+    body.dark-theme .filter-chip.active,
+    body.dark-theme .tag.active {
+      background: linear-gradient(135deg, #cd6e54, #a94536);
+      color: #fff7ef;
+      box-shadow: 0 14px 28px rgba(169, 69, 54, 0.34);
+    }
+
+    .theme-toggle {
+      flex: 0 0 auto;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--panel-strong);
+      color: var(--text);
+      padding: 6px 11px;
+      font-size: 11px;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(66, 44, 30, 0.1), 0 1px 0 rgba(255, 255, 255, 0.4) inset;
+      transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+    }
+
+    .fav-collection-btn {
+      flex: 0 0 auto;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--panel-strong) 92%, transparent);
+      color: var(--text);
+      padding: 6px 11px;
+      font-size: 11px;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(66, 44, 30, 0.1), 0 1px 0 rgba(255, 255, 255, 0.32) inset;
+      transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+    }
+
+    .theme-toggle:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 18px rgba(66, 44, 30, 0.12);
+    }
+
+    body.dark-theme .theme-toggle,
+    body.dark-theme .fav-collection-btn,
+    body.dark-theme .pager-btn {
+      background: linear-gradient(180deg, rgba(47, 43, 42, 0.96), rgba(34, 31, 31, 0.96));
+      border-color: rgba(223, 180, 114, 0.16);
+      color: var(--text);
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.28), 0 1px 0 rgba(255, 255, 255, 0.04) inset;
+    }
+
+    body.dark-theme .theme-toggle:hover,
+    body.dark-theme .fav-collection-btn:hover,
+    body.dark-theme .pager-btn:hover:not(:disabled) {
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.34), 0 1px 0 rgba(255, 255, 255, 0.05) inset;
+      border-color: rgba(223, 180, 114, 0.26);
+    }
+
+    .fav-collection-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 18px rgba(66, 44, 30, 0.12);
+    }
+
+    .favorites-panel {
+      position: fixed;
+      inset: 0;
+      z-index: 31;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(19, 15, 12, 0.24);
+      backdrop-filter: blur(6px);
+    }
+
+    .favorites-panel.open {
+      display: flex;
+      animation: ink-fade 0.3s ease;
+    }
+
+    .favorites-dialog {
+      width: min(720px, 100%);
+      max-height: 82vh;
+      overflow: auto;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: linear-gradient(180deg, color-mix(in srgb, var(--panel) 97%, transparent), color-mix(in srgb, var(--panel-strong) 94%, transparent));
+      box-shadow: 0 24px 54px rgba(66, 44, 30, 0.2), 0 1px 0 rgba(255, 255, 255, 0.24) inset;
+    }
+
+    .favorites-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .favorites-title {
+      margin: 0 0 5px;
+      font-family: var(--font-title);
+      font-size: 22px;
+      line-height: 1.1;
+    }
+
+    .favorites-note {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.65;
+    }
+
+    .favorites-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .favorite-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 12px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--panel-strong) 90%, transparent);
+      box-shadow: 0 12px 24px rgba(66, 44, 30, 0.1);
+    }
+
+    .favorite-item-title {
+      margin: 0 0 3px;
+      font-family: var(--font-title);
+      font-size: 18px;
+      line-height: 1.1;
+    }
+
+    .favorite-item-desc {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .favorite-empty {
+      padding: 18px 14px;
+      border: 1px dashed var(--line);
+      border-radius: 14px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    body.dark-theme .favorites-panel {
+      background: rgba(4, 4, 6, 0.52);
+    }
+
+    body.dark-theme .favorites-dialog {
+      background: linear-gradient(180deg, rgba(30, 28, 30, 0.98), rgba(24, 23, 25, 0.98));
+      border-color: rgba(223, 180, 114, 0.12);
+      box-shadow: 0 24px 54px rgba(0, 0, 0, 0.42), 0 1px 0 rgba(255, 255, 255, 0.04) inset;
+    }
+
+    .grid {
+      display: grid;
+      gap: 10px;
+      padding: 12px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      align-items: start;
+    }
+
+    .empty-state {
+      display: none;
+      grid-column: 1 / -1;
+      padding: 28px 16px;
+      border: 1px dashed rgba(141, 48, 37, 0.18);
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(255, 252, 247, 0.9), rgba(245, 236, 226, 0.84));
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.7;
+      box-shadow: 0 12px 26px rgba(66, 44, 30, 0.08);
+    }
+
+    .empty-state.is-visible {
+      display: block;
+      animation: ink-fade 0.35s ease;
+    }
+
+    body.dark-theme .empty-state {
+      background: linear-gradient(180deg, rgba(37, 33, 35, 0.88), rgba(28, 25, 27, 0.84));
+      border-color: rgba(223, 180, 114, 0.14);
+      color: #c8b8a8;
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.24);
+    }
+
+    .pager {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .pager.is-visible {
+      display: flex;
+      animation: ink-fade 0.3s ease;
+    }
+
+    .pager-meta {
+      display: grid;
+      gap: 3px;
+    }
+
+    .pager-title {
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+    }
+
+    .page-indicator {
+      font-family: var(--font-title);
+      font-size: 18px;
+      line-height: 1.1;
+    }
+
+    .pager-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+    }
+
+    .pager-btn {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--panel-strong);
+      color: var(--text);
+      padding: 8px 14px;
+      font-size: 12px;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(66, 44, 30, 0.1), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+      transition: transform 0.22s ease, box-shadow 0.22s ease, opacity 0.22s ease;
+    }
+
+    .pager-btn:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 22px rgba(66, 44, 30, 0.14);
+    }
+
+    .pager-btn:disabled {
+      opacity: 0.42;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    body.dark-theme .bottom-bar {
+      border-top: 1px solid rgba(223, 180, 114, 0.1);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.01), rgba(0, 0, 0, 0.06));
+    }
+
+    body.dark-theme .pager-title {
+      color: #cfbfaf;
+    }
+
+    body.dark-theme .page-indicator {
+      color: #f3e8da;
+      text-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background:
+        linear-gradient(180deg, rgba(252, 249, 244, 0.96), rgba(247, 240, 232, 0.92));
+      box-shadow: 0 12px 28px rgba(78, 45, 25, 0.11), 0 1px 0 rgba(255, 255, 255, 0.22) inset;
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+      animation: card-rise 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    }
+
+    .card.page-hidden {
+      display: none;
+    }
+
+    .card.page-enter-next,
+    .card.page-enter-prev {
+      animation-duration: 0.48s;
+      animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+      animation-fill-mode: both;
+      animation-delay: calc(var(--page-stagger, 0) * 60ms);
+      will-change: transform, opacity, filter;
+    }
+
+    .card.page-enter-next {
+      animation-name: page-card-enter-next;
+    }
+
+    .card.page-enter-prev {
+      animation-name: page-card-enter-prev;
+    }
+
+    body.dark-theme .card {
+      background:
+        linear-gradient(180deg, rgba(40, 36, 36, 0.98), rgba(28, 27, 29, 0.95));
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.26), 0 1px 0 rgba(255, 255, 255, 0.04) inset;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, rgba(170, 130, 71, 0.06), transparent 30%),
+        radial-gradient(circle at 88% 16%, rgba(141, 48, 37, 0.06), transparent 24%);
+      pointer-events: none;
+      opacity: 0.9;
+    }
+
+    body.dark-theme .card::before {
+      background:
+        linear-gradient(135deg, rgba(223, 180, 114, 0.08), transparent 30%),
+        radial-gradient(circle at 88% 16%, rgba(208, 108, 84, 0.12), transparent 24%);
+    }
+
+    .card:nth-child(2) {
+      animation-delay: 0.08s;
+    }
+
+    .card:nth-child(3) {
+      animation-delay: 0.16s;
+    }
+
+    .card:nth-child(4) {
+      animation-delay: 0.24s;
+    }
+
+    .card:nth-child(5) {
+      animation-delay: 0.32s;
+    }
+
+    .card:nth-child(6) {
+      animation-delay: 0.40s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 38px rgba(78, 45, 25, 0.18), 0 1px 0 rgba(255, 255, 255, 0.22) inset;
+      border-color: rgba(141, 48, 37, 0.22);
+    }
+
+    .card.is-favorite {
+      border-color: rgba(170, 130, 71, 0.38);
+      box-shadow: 0 18px 36px rgba(170, 130, 71, 0.16), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+    }
+
+    body.dark-theme .card.is-favorite {
+      border-color: rgba(223, 180, 114, 0.34);
+      box-shadow: 0 22px 42px rgba(223, 180, 114, 0.12), 0 1px 0 rgba(255, 255, 255, 0.05) inset;
+    }
+
+    body.dark-theme .card:hover {
+      box-shadow: 0 24px 44px rgba(0, 0, 0, 0.36), 0 1px 0 rgba(255, 255, 255, 0.05) inset;
+      border-color: rgba(223, 180, 114, 0.24);
+    }
+
+    body.dark-theme .meta,
+    body.dark-theme .card-desc,
+    body.dark-theme .favorite-item-desc,
+    body.dark-theme .favorites-note,
+    body.dark-theme .desc {
+      color: #c8b8a8;
+    }
+
+    body.dark-theme .index {
+      background: linear-gradient(135deg, rgba(223, 180, 114, 0.22), rgba(208, 108, 84, 0.18));
+      color: #f4dcc1;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 14px 14px 8px;
+    }
+
+    .meta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: 0.05em;
+    }
+
+    .index {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(170, 130, 71, 0.18), rgba(141, 48, 37, 0.14));
+      color: var(--accent-deep);
+      font-weight: 700;
+      font-size: 11px;
+    }
+
+    .card-title {
+      margin: 0;
+      font-family: var(--font-title);
+      font-size: 19px;
+      line-height: 1.12;
+      font-weight: 800;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.18);
+    }
+
+    body.dark-theme .card-title {
+      text-shadow: 0 1px 0 rgba(0, 0, 0, 0.28);
+    }
+
+    .swipe-badge {
+      flex: 0 0 auto;
+      height: fit-content;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 252, 246, 0.82);
+      color: var(--muted);
+      backdrop-filter: blur(6px);
+      transition: box-shadow 0.22s ease, border-color 0.22s ease, transform 0.22s ease;
+    }
+
+    .card.is-favorite .swipe-badge {
+      border-color: rgba(170, 130, 71, 0.42);
+      background: rgba(255, 247, 229, 0.92);
+      box-shadow: 0 0 0 4px rgba(170, 130, 71, 0.12);
+      transform: scale(1.02);
+    }
+
+    body.dark-theme .card.is-favorite .swipe-badge {
+      background: rgba(84, 61, 37, 0.96);
+      border-color: rgba(223, 180, 114, 0.42);
+      box-shadow: 0 0 0 4px rgba(223, 180, 114, 0.12);
+    }
+
+    body.dark-theme .swipe-badge {
+      background: rgba(46, 41, 41, 0.9);
+      border-color: rgba(223, 180, 114, 0.14);
+    }
+
+    body.dark-theme .fav-btn {
+      color: #b9a998;
+    }
+
+    body.dark-theme .fav-btn:hover,
+    body.dark-theme .fav-btn.active {
+      color: var(--gold);
+    }
+
+    .fav-btn {
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      font-size: 16px;
+      cursor: pointer;
+      padding: 0;
+      line-height: 1;
+      transition: transform 0.2s ease, color 0.2s ease;
+    }
+
+    .fav-btn:hover {
+      transform: scale(1.08);
+      color: var(--gold);
+    }
+
+    .fav-btn.active {
+      color: var(--gold);
+      text-shadow: 0 0 12px rgba(210, 166, 99, 0.28);
+      transform: scale(1.18);
+    }
+
+    .card-body {
+      padding: 0 14px 14px;
+    }
+
+    .card-desc {
+      margin: 0 0 10px;
+      color: var(--muted);
+      line-height: 1.62;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .tag {
+      border: 1px solid transparent;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: var(--tag);
+      color: var(--accent-deep);
+      font-size: 11px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease;
+    }
+
+    .tag:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 16px rgba(66, 44, 30, 0.1);
+    }
+
+    body.dark-theme .tag {
+      border: 1px solid rgba(223, 180, 114, 0.08);
+      color: #f0cab5;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+    }
+
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .path {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .jump-btn {
+      border: 0;
+      border-radius: 999px;
+      padding: 8px 14px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      box-shadow: 0 8px 18px rgba(141, 48, 37, 0.18);
+      transition: transform 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease;
+    }
+
+    .jump-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 22px rgba(141, 48, 37, 0.24);
+      filter: saturate(1.05);
+    }
+
+    .jump-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 6px 14px rgba(141, 48, 37, 0.16);
+    }
+
+    body.dark-theme .jump-btn {
+      background: linear-gradient(135deg, #cd6e54, #a94536);
+      box-shadow: 0 10px 22px rgba(169, 69, 54, 0.3);
+    }
+
+    body.dark-theme .jump-btn:hover {
+      box-shadow: 0 14px 26px rgba(169, 69, 54, 0.36);
+      filter: saturate(1.08) brightness(1.05);
+    }
+
+    body.dark-theme .favorite-item {
+      background: rgba(40, 36, 38, 0.92);
+      border-color: rgba(223, 180, 114, 0.12);
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.22);
+    }
+
+    body.dark-theme .favorite-empty {
+      background: rgba(37, 33, 35, 0.72);
+      border-color: rgba(223, 180, 114, 0.16);
+      color: #c8b8a8;
+    }
+
+    .status {
+      display: none;
+    }
+
+    .fav-mark {
+      display: none !important;
+    }
+
+    @keyframes page-rise {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes card-rise {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes ink-fade {
+      from {
+        opacity: 0;
+        filter: blur(4px);
+      }
+      to {
+        opacity: 1;
+        filter: blur(0);
+      }
+    }
+
+    @keyframes page-card-enter-next {
+      from {
+        opacity: 0;
+        transform: translateX(22px) translateY(10px) scale(0.985);
+        filter: blur(6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0) translateY(0) scale(1);
+        filter: blur(0);
+      }
+    }
+
+    @keyframes page-card-enter-prev {
+      from {
+        opacity: 0;
+        transform: translateX(-22px) translateY(10px) scale(0.985);
+        filter: blur(6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0) translateY(0) scale(1);
+        filter: blur(0);
+      }
+    }
+
+    @media (min-width: 1100px) {
+      body {
+        padding: 14px;
+      }
+
+      .page {
+        max-width: 1220px;
+        margin: 0 auto;
+      }
+
+      .hero {
+        padding: 22px 24px 16px;
+      }
+
+      .title {
+        font-size: 34px;
+      }
+
+      .desc {
+        max-width: 760px;
+        font-size: 13px;
+      }
+
+      .grid {
+        gap: 14px;
+        padding: 16px;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .bottom-bar {
+        padding: 0 16px 16px;
+      }
+
+      .favorites-dialog {
+        padding: 16px;
+      }
+
+      .card-top {
+        padding: 18px 18px 10px;
+      }
+
+      .card-body {
+        padding: 0 18px 18px;
+      }
+
+      .card-title {
+        font-size: 21px;
+      }
+
+      .card-desc {
+        font-size: 13px;
+      }
+
+      .jump-btn {
+        min-width: 106px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 4px;
+      }
+
+      .hero-bar {
+        align-items: flex-start;
+      }
+
+      .hero-actions {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .bottom-bar {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0 10px 10px;
+      }
+
+      .bottom-actions {
+        width: 100%;
+      }
+
+      .bottom-actions .fav-collection-btn {
+        flex: 1 1 0;
+        justify-content: center;
+      }
+
+      .pager {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .pager-controls {
+        width: 100%;
+      }
+
+      .pager-btn {
+        flex: 1 1 0;
+      }
+
+      .favorites-dialog {
+        max-height: 92vh;
+        padding: 12px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero,
+      .grid {
+        padding: 10px;
+      }
+
+      .card-top,
+      .card-body {
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+
+      .actions {
+        align-items: stretch;
+      }
+
+      .jump-btn {
+        width: 100%;
+      }
+    }
+
+</style>
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div class="hero-bar">
+        <span class="eyebrow"><span class="dot"></span> 爆操江湖 · 欲望开场入口</span>
+        <div class="hero-actions">
+          <button id="theme-toggle" class="theme-toggle" type="button">切换暗色</button>
+        </div>
+      </div>
+      <h1 class="title">爆操江湖 · 选择你的开局</h1>
+      <p class="desc">选一条路入局，从此身陷欲望、征服与被操控的江湖，选择你的猎物、掌控你的棋子、或是被压在身下。</p>
+    </header>
+
+    <section id="opening-filter-bar" class="filter-bar is-collapsed" aria-label="开场标签筛选">
+      <div class="filter-head">
+        <p class="filter-title">按标签筛选开场白</p>
+        <div class="hero-actions">
+          <span id="filter-count" class="filter-count">当前显示 8 条</span>
+          <div id="filter-mode" class="filter-mode" aria-label="标签筛选模式">
+            <button class="filter-mode-btn active" type="button" data-filter-mode="multi">多选</button>
+            <button class="filter-mode-btn" type="button" data-filter-mode="single">单选</button>
+          </div>
+          <button id="filter-toggle" class="filter-toggle" type="button" aria-expanded="false">展开标签</button>
+        </div>
+      </div>
+      <div id="opening-filter-tags" class="filter-tags"></div>
+    </section>
+
+    <section id="favorites-panel" class="favorites-panel">
+      <div class="favorites-dialog">
+        <div class="favorites-head">
+          <div>
+            <h2 class="favorites-title">收藏集</h2>
+            <p class="favorites-note">你标记过的开场会收在这里，可直接回跳。</p>
+          </div>
+          <button id="favorites-close" class="custom-close" type="button">关闭</button>
+        </div>
+        <div id="favorites-list" class="favorites-list"></div>
+      </div>
+    </section>
+
+    <main class="grid">
+      <article class="card" data-opening-id="1" data-tags="强制,羞辱,征服,强奸,捆绑">
+        <div class="card-top">
+          <div>
+            <div class="meta"><span class="index">01</span><span>灭门公子掌握邪功，俘获强敌为己用</span></div>
+            <h2 class="card-title">落难公子线</h2>
+          </div>
+          <span class="swipe-badge"><button class="fav-btn" data-fav="1" type="button" aria-label="收藏落难公子线">★</button></span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">家门被灭后你逃入荒野，意外习得极乐阁邪功。当追杀的锦衣卫上门时，你用淫功废其武功，将这位朝廷高手扒光绑在床上，准备享受你的第一个战利品。</p>
+          <div class="tags"><span class="tag">强制</span><span class="tag">羞辱</span><span class="tag">征服</span><span class="tag">强奸</span><span class="tag">捆绑</span></div>
+          <div class="actions">
+            <button class="jump-btn" onclick="jumpToOpening(1, '落难公子线')">进入剧情</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-opening-id="2" data-tags="师徒,迷奸,调教,控制,多人">
+        <div class="card-top">
+          <div>
+            <div class="meta"><span class="index">02</span><span>国师用迷香迷倒三位皇子，准备调教</span></div>
+            <h2 class="card-title">国师收徒线</h2>
+          </div>
+          <span class="swipe-badge"><button class="fav-btn" data-fav="2" type="button" aria-label="收藏国师收徒线">★</button></span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">你以祈雨之功被封国师，三位皇子被送到你门下拜师。在避暑山庄深处，你用迷香封住他们武功，看着他们衣衫凌乱、无力反抗，准备开始第一课。</p>
+          <div class="tags"><span class="tag">师徒</span><span class="tag">迷奸</span><span class="tag">调教</span><span class="tag">控制</span><span class="tag">多人</span></div>
+          <div class="actions">
+            <button class="jump-btn" onclick="jumpToOpening(2, '国师收徒线')">进入剧情</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-opening-id="3" data-tags="洗脑,控制,催眠,炉鼎,强上">
+        <div class="card-top">
+          <div>
+            <div class="meta"><span class="index">03</span><span>魔门弟子挑选第一个炉鼎，种下心印控制</span></div>
+            <h2 class="card-title">南疆炉鼎线</h2>
+          </div>
+          <span class="swipe-badge"><button class="fav-btn" data-fav="3" type="button" aria-label="收藏南疆炉鼎线">★</button></span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">你加入傀影洞魔门，需要在茶馆挑选第一个炉鼎完成试炼。三位壮汉各具特色——哪个会被你选中，成为你种下心印、吸食精元的第一个活祭？</p>
+          <div class="tags"><span class="tag">洗脑</span><span class="tag">控制</span><span class="tag">催眠</span><span class="tag">炉鼎</span><span class="tag">强上</span></div>
+          <div class="actions">
+            <button class="jump-btn" onclick="jumpToOpening(3, '南疆炉鼎线')">进入剧情</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-opening-id="4" data-tags="迷奸,强迫,下药,竹马,强奸">
+        <div class="card-top">
+          <div>
+            <div class="meta"><span class="index">04</span><span>竹马将军酒后被催情药迷倒，准备强上军医</span></div>
+            <h2 class="card-title">北疆竹马线</h2>
+          </div>
+          <span class="swipe-badge"><button class="fav-btn" data-fav="4" type="button" aria-label="收藏北疆竹马线">★</button></span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">身为军医的你为青梅竹马的将军上药，药效混着酒意让他失去理智。这位肌肉雄壮的将军把你按在榻边，胯下硬得发疼，直言想把你操到哭。</p>
+          <div class="tags"><span class="tag">迷奸</span><span class="tag">强迫</span><span class="tag">下药</span><span class="tag">竹马</span><span class="tag">强奸</span></div>
+          <div class="actions">
+            <button class="jump-btn" onclick="jumpToOpening(4, '北疆竹马线')">进入剧情</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-opening-id="5" data-tags="狩猎,恶堕,操控,征服,调教">
+        <div class="card-top">
+          <div>
+            <div class="meta"><span class="index">05</span><span>极乐阁阁主挑选猎物，享受猎人游戏</span></div>
+            <h2 class="card-title">极乐阁掌门线</h2>
+          </div>
+          <span class="swipe-badge"><button class="fav-btn" data-fav="5" type="button" aria-label="收藏极乐阁掌门线">★</button></span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">你是极乐阁掌门，厌倦了寻常的欢爱。正翻阅《江湖名人录》，挑选下一个征服目标——金刚禅院的禁欲僧人？神剑山庄的硬汉少庄主？还是一身腱子肉的朝廷锦衣卫？</p>
+          <div class="tags"><span class="tag">狩猎</span><span class="tag">恶堕</span><span class="tag">操控</span><span class="tag">征服</span><span class="tag">调教</span></div>
+          <div class="actions">
+            <button class="jump-btn" onclick="jumpToOpening(5, '极乐阁掌门线')">进入剧情</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-opening-id="6" data-tags="处男,开苞,迷奸,僧侣,群欢">
+        <div class="card-top">
+          <div>
+            <div class="meta"><span class="index">06</span><span>极乐阁弟子传送至西域禅院，发现一群处男</span></div>
+            <h2 class="card-title">西域禅院线</h2>
+          </div>
+          <span class="swipe-badge"><button class="fav-btn" data-fav="6" type="button" aria-label="收藏西域禅院线">★</button></span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">你探索遗迹时触发传送阵，被传送到西域金刚禅院。这里全是常年苦修的武僧，个个肌肉结实、身怀绝技，却因严守戒律根本不识性为何物，全是处子之身。</p>
+          <div class="tags"><span class="tag">处男</span><span class="tag">开苞</span><span class="tag">迷奸</span><span class="tag">僧侣</span><span class="tag">群欢</span></div>
+          <div class="actions">
+            <button class="jump-btn" onclick="jumpToOpening(6, '西域禅院线')">进入剧情</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-opening-id="7" data-tags="纯爱,竹马,兄长,宫廷,暧昧">
+        <div class="card-top">
+          <div>
+            <div class="meta"><span class="index">07</span><span>富家少爷与大哥、二皇子同赴宫宴，少年情愫暗生</span></div>
+            <h2 class="card-title">宫宴同窗线</h2>
+          </div>
+          <span class="swipe-badge"><button class="fav-btn" data-fav="7" type="button" aria-label="收藏宫宴同窗线">★</button></span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">你是家中最受宠的富家少爷，自幼被兄长护着长大，又与二皇子做了多年同窗伴读。今日三人一同换了衣冠，正说笑着往宫殿去用膳，廊下春风微暖，兄长替你理好衣领，二皇子则站在一旁含笑等你，谁也没说破这份过于亲近的偏爱。</p>
+          <div class="tags"><span class="tag">纯爱</span><span class="tag">竹马</span><span class="tag">兄长</span><span class="tag">宫廷</span><span class="tag">暧昧</span></div>
+          <div class="actions">
+            <button class="jump-btn" onclick="jumpToOpening(7, '宫宴同窗线')">进入剧情</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-opening-id="8" data-tags="纯爱,救助,皇子,山野,相知">
+        <div class="card-top">
+          <div>
+            <div class="meta"><span class="index">08</span><span>山中采药少年救下逃亡皇子，从此命运交缠</span></div>
+            <h2 class="card-title">山野救皇子线</h2>
+          </div>
+          <span class="swipe-badge"><button class="fav-btn" data-fav="8" type="button" aria-label="收藏山野救皇子线">★</button></span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">你出身草根，平日靠在山中采药度日。那日暴雨将至，你在溪涧边发现一名受伤昏迷的青年，将人背回木屋救治，后来才知道他竟是遭人追杀、被迫逃命的二皇子。少年皇子醒来时望着你满手草汁与伤痕，第一次记住了一个与权势毫无关系的人。</p>
+          <div class="tags"><span class="tag">纯爱</span><span class="tag">救助</span><span class="tag">皇子</span><span class="tag">山野</span><span class="tag">相知</span></div>
+          <div class="actions">
+            <button class="jump-btn" onclick="jumpToOpening(8, '山野救皇子线')">进入剧情</button>
+          </div>
+        </div>
+      </article>
+      <div id="opening-empty" class="empty-state">这个标签下暂时没有开场。<br>换个标签试试。</div>
+    </main>
+
+    <div class="bottom-bar">
+      <div id="opening-pager" class="pager" aria-label="开场分页">
+        <div class="pager-meta">
+          <span class="pager-title">开场分页</span>
+          <span id="page-indicator" class="page-indicator">第 1 / 1 页</span>
+        </div>
+        <div class="pager-controls">
+          <button id="page-prev" class="pager-btn" type="button">上一页</button>
+          <button id="page-next" class="pager-btn" type="button">下一页</button>
+        </div>
+      </div>
+
+      <div class="bottom-actions">
+        <button id="favorites-toggle" class="fav-collection-btn" type="button">收藏集</button>
+      </div>
+    </div>
+
+    <div id="jump-status" class="status"></div>
+  </div>
+
+<script>
+    var THEME_KEY = 'blast-jianghu-opening-theme';
+    var FAVORITE_KEY = 'blast-jianghu-opening-favorites';
+    var ITEMS_PER_PAGE = 6;
+    var currentPage = 1;
+    var activeTags = [];
+    var filterExpanded = false;
+    var filterMode = 'multi';
+    var OPENING_MAP = {
+      '1': {
+        title: '落难公子线',
+        desc: '灭门公子掌握邪功，俘获强敌为己用',
+        swipe: 1,
+        tags: ['强制', '羞辱', '征服', '强奸', '捆绑'],
+      },
+      '2': {
+        title: '国师收徒线',
+        desc: '国师用迷香迷倒三位皇子，准备调教',
+        swipe: 2,
+        tags: ['师徒', '迷奸', '调教', '控制', '多人'],
+      },
+      '3': {
+        title: '南疆炉鼎线',
+        desc: '魔门弟子挑选第一个炉鼎，种下心印控制',
+        swipe: 3,
+        tags: ['洗脑', '控制', '催眠', '炉鼎', '强上'],
+      },
+      '4': {
+        title: '北疆竹马线',
+        desc: '竹马将军酒后被催情药迷倒，准备强上军医',
+        swipe: 4,
+        tags: ['迷奸', '强迫', '下药', '竹马', '强奸'],
+      },
+      '5': {
+        title: '极乐阁掌门线',
+        desc: '极乐阁阁主挑选猎物，享受猎人游戏',
+        swipe: 5,
+        tags: ['狩猎', '恶堕', '操控', '征服', '调教'],
+      },
+      '6': {
+        title: '西域禅院线',
+        desc: '极乐阁弟子传送至西域禅院，发现一群处男',
+        swipe: 6,
+        tags: ['处男', '开苞', '迷奸', '僧侣', '群欢'],
+      },
+      '7': {
+        title: '宫宴同窗线',
+        desc: '富家少爷与大哥、二皇子同赴宫宴，少年情愫暗生',
+        swipe: 7,
+        tags: ['纯爱', '竹马', '兄长', '宫廷', '暧昧'],
+      },
+      '8': {
+        title: '山野救皇子线',
+        desc: '山中采药少年救下逃亡皇子，从此命运交缠',
+        swipe: 8,
+        tags: ['纯爱', '救助', '皇子', '山野', '相知'],
+      },
+    };
+
+    function isValidTagLength(tag) {
+      return /^[\u4e00-\u9fa5]{2}$/.test(tag) || /^[\u4e00-\u9fa5]{4}$/.test(tag);
+    }
+
+    function getTagListFromCard(card) {
+      return String(card.getAttribute('data-tags') || '')
+        .split(',')
+        .map(function (tag) { return tag.trim(); })
+        .filter(function (tag, index, list) {
+          return tag && list.indexOf(tag) === index && isValidTagLength(tag);
+        });
+    }
+
+    function getFilteredCards() {
+      return getCards().filter(function (card) {
+        var tags;
+        if (!activeTags.length) {
+          return true;
+        }
+        tags = getTagListFromCard(card);
+        return activeTags.every(function (activeTag) {
+          return tags.indexOf(activeTag) !== -1;
+        });
+      });
+    }
+
+    function updateFilterCount() {
+      var node = document.getElementById('filter-count');
+      var count = getFilteredCards().length;
+      var label = activeTags.join(' + ');
+      if (node) {
+        node.textContent = !activeTags.length
+          ? '当前显示 ' + count + ' 条'
+          : '标签「' + label + '」下共 ' + count + ' 条';
+      }
+    }
+
+    function updateFilterBarState() {
+      var bar = document.getElementById('opening-filter-bar');
+      var toggle = document.getElementById('filter-toggle');
+      if (bar) {
+        bar.classList.toggle('is-collapsed', !filterExpanded);
+      }
+      if (toggle) {
+        toggle.textContent = filterExpanded ? '收起标签' : '展开标签';
+        toggle.setAttribute('aria-expanded', filterExpanded ? 'true' : 'false');
+      }
+    }
+
+    function updateFilterModeState() {
+      document.querySelectorAll('[data-filter-mode]').forEach(function (button) {
+        var mode = String(button.getAttribute('data-filter-mode') || 'multi');
+        button.classList.toggle('active', mode === filterMode);
+        button.setAttribute('aria-pressed', mode === filterMode ? 'true' : 'false');
+      });
+    }
+
+    function setTagSelection(tag) {
+      var cleanTag = String(tag || '').trim();
+      var index;
+      if (!cleanTag || !isValidTagLength(cleanTag)) {
+        return;
+      }
+
+      if (filterMode === 'single') {
+        activeTags = activeTags.length === 1 && activeTags[0] === cleanTag ? [] : [cleanTag];
+        return;
+      }
+
+      index = activeTags.indexOf(cleanTag);
+      if (index === -1) {
+        activeTags.push(cleanTag);
+      } else {
+        activeTags.splice(index, 1);
+      }
+    }
+
+    function renderTagFilters() {
+      var container = document.getElementById('opening-filter-tags');
+      var seen = {};
+      var tags = [];
+
+      if (!container) {
+        return;
+      }
+
+      getCards().forEach(function (card) {
+        getTagListFromCard(card).forEach(function (tag) {
+          if (!seen[tag]) {
+            seen[tag] = true;
+            tags.push(tag);
+          }
+        });
+      });
+
+      container.innerHTML = tags
+        .map(function (tag) {
+          var activeClass = activeTags.indexOf(tag) !== -1 ? ' active' : '';
+          return '<button class="filter-chip' + activeClass + '" type="button" data-filter-tag="' + tag + '">' + tag + '</button>';
+        })
+        .join('');
+
+      container.querySelectorAll('[data-filter-tag]').forEach(function (button) {
+        button.addEventListener('click', function () {
+          var tag = String(button.getAttribute('data-filter-tag') || '').trim();
+          if (!tag) {
+            return;
+          }
+          setTagSelection(tag);
+          currentPage = 1;
+          renderTagFilters();
+          renderPage();
+        });
+      });
+    }
+
+    function syncCardTagStates() {
+      document.querySelectorAll('.card .tag').forEach(function (tagNode) {
+        var tag = String(tagNode.getAttribute('data-card-tag') || '').trim();
+        tagNode.classList.toggle('active', activeTags.indexOf(tag) !== -1);
+      });
+    }
+
+    function toggleTagFilter(tag) {
+      var cleanTag = String(tag || '').trim();
+      if (!cleanTag || !isValidTagLength(cleanTag)) {
+        return;
+      }
+
+      setTagSelection(cleanTag);
+
+      filterExpanded = true;
+      currentPage = 1;
+      updateFilterBarState();
+      updateFilterModeState();
+      renderTagFilters();
+      syncCardTagStates();
+      renderPage();
+    }
+
+    function applyTheme(theme) {
+      if (theme === 'dark') {
+        document.body.classList.add('dark-theme');
+      } else {
+        document.body.classList.remove('dark-theme');
+      }
+      var button = document.getElementById('theme-toggle');
+      if (button) {
+        button.textContent = theme === 'dark' ? '切换浅色' : '切换暗色';
+      }
+    }
+
+    function setStatus(message) {
+      var node = document.getElementById('jump-status');
+      if (node) {
+        node.textContent = message;
+      }
+    }
+
+    function readFavorites() {
+      try {
+        return JSON.parse(localStorage.getItem(FAVORITE_KEY) || '[]');
+      } catch (_error) {
+        return [];
+      }
+    }
+
+    function writeFavorites(value) {
+      try {
+        localStorage.setItem(FAVORITE_KEY, JSON.stringify(value));
+      } catch (_error) {}
+    }
+
+    function renderFavorites() {
+      var favorites = readFavorites();
+      var buttons = document.querySelectorAll('[data-fav]');
+      buttons.forEach(function (button) {
+        var id = String(button.getAttribute('data-fav'));
+        var active = favorites.indexOf(id) !== -1;
+        button.classList.toggle('active', active);
+        var card = button.closest('.card');
+        if (card) {
+          card.classList.toggle('is-favorite', active);
+        }
+      });
+
+      var list = document.getElementById('favorites-list');
+      if (!list) {
+        return;
+      }
+
+      if (!favorites.length) {
+        list.innerHTML = '<div class="favorite-empty">你还没有收藏任何开场。<br>点击开场卡片右上角的五角星即可收录。</div>';
+        return;
+      }
+
+      list.innerHTML = favorites
+        .map(function (id) {
+          var item = OPENING_MAP[id];
+          if (!item) {
+            return '';
+          }
+          return [
+            '<div class="favorite-item">',
+            '  <div>',
+            '    <h3 class="favorite-item-title">' + item.title + '</h3>',
+            '    <p class="favorite-item-desc">' + item.desc + '</p>',
+            '  </div>',
+            '  <button class="jump-btn" type="button" data-favorite-jump="' + id + '">进入剧情</button>',
+            '</div>',
+          ].join('');
+        })
+        .join('');
+
+      list.querySelectorAll('[data-favorite-jump]').forEach(function (button) {
+        button.addEventListener('click', function () {
+          var id = String(button.getAttribute('data-favorite-jump'));
+          var item = OPENING_MAP[id];
+          if (item) {
+            jumpToOpening(item.swipe, item.title);
+            closeFavoritesPanel();
+          }
+        });
+      });
+    }
+
+    function toggleFavorite(id) {
+      var favorites = readFavorites();
+      var stringId = String(id);
+      if (favorites.indexOf(stringId) !== -1) {
+        favorites = favorites.filter(function (item) { return item !== stringId; });
+      } else {
+        favorites.push(stringId);
+      }
+      writeFavorites(favorites);
+      renderFavorites();
+    }
+
+    function getCards() {
+      return Array.prototype.slice.call(document.querySelectorAll('.grid .card'));
+    }
+
+    function getTotalPages() {
+      return Math.max(1, Math.ceil(getFilteredCards().length / ITEMS_PER_PAGE));
+    }
+
+    function updatePager() {
+      var totalPages = getTotalPages();
+      var bottomBar = document.querySelector('.bottom-bar');
+      var pager = document.getElementById('opening-pager');
+      var indicator = document.getElementById('page-indicator');
+      var prev = document.getElementById('page-prev');
+      var next = document.getElementById('page-next');
+
+      currentPage = Math.max(1, Math.min(currentPage, totalPages));
+
+      if (bottomBar) {
+        bottomBar.classList.toggle('has-pagination', totalPages > 1);
+      }
+      if (pager) {
+        pager.classList.toggle('is-visible', totalPages > 1);
+      }
+      if (indicator) {
+        indicator.textContent = '第 ' + currentPage + ' / ' + totalPages + ' 页';
+      }
+      if (prev) {
+        prev.disabled = currentPage <= 1;
+      }
+      if (next) {
+        next.disabled = currentPage >= totalPages;
+      }
+    }
+
+    function renderPage(direction) {
+      var cards = getCards();
+      var filteredCards = getFilteredCards();
+      var totalPages = Math.max(1, Math.ceil(filteredCards.length / ITEMS_PER_PAGE));
+      var empty = document.getElementById('opening-empty');
+      var start;
+      var end;
+
+      currentPage = Math.max(1, Math.min(currentPage, totalPages));
+      start = (currentPage - 1) * ITEMS_PER_PAGE;
+      end = start + ITEMS_PER_PAGE;
+
+      cards.forEach(function (card) {
+        card.classList.remove('page-enter-next', 'page-enter-prev');
+        card.classList.add('page-hidden');
+      });
+
+      filteredCards.forEach(function (card, index) {
+        var visible = index >= start && index < end;
+        card.classList.remove('page-enter-next', 'page-enter-prev');
+        card.classList.toggle('page-hidden', !visible);
+
+        if (visible) {
+          card.style.setProperty('--page-stagger', String(index - start));
+          if (direction === 'next') {
+            void card.offsetWidth;
+            card.classList.add('page-enter-next');
+          } else if (direction === 'prev') {
+            void card.offsetWidth;
+            card.classList.add('page-enter-prev');
+          }
+        }
+      });
+
+      if (empty) {
+        empty.classList.toggle('is-visible', filteredCards.length === 0);
+      }
+
+      syncCardTagStates();
+      updateFilterCount();
+      updatePager();
+    }
+
+    function goToPage(page) {
+      var totalPages = getTotalPages();
+      var nextPage = Math.max(1, Math.min(page, totalPages));
+      var direction;
+
+      if (nextPage === currentPage) {
+        updatePager();
+        return;
+      }
+
+      direction = nextPage > currentPage ? 'next' : 'prev';
+      currentPage = nextPage;
+      renderPage(direction);
+    }
+
+    function getJumpApi() {
+      if (typeof setChatMessages === 'function') {
+        return { setChatMessages: setChatMessages };
+      }
+      if (window.TavernHelper && typeof window.TavernHelper.setChatMessages === 'function') {
+        return { setChatMessages: window.TavernHelper.setChatMessages };
+      }
+      if (window.parent && window.parent !== window && window.parent.TavernHelper && typeof window.parent.TavernHelper.setChatMessages === 'function') {
+        return { setChatMessages: window.parent.TavernHelper.setChatMessages };
+      }
+      return null;
+    }
+
+    async function jumpToOpening(swipeId, title) {
+      var api = getJumpApi();
+      if (!api) {
+        setStatus('当前环境未暴露跳转接口，无法自动切换到「' + title + '」。');
+        return;
+      }
+
+      setStatus('正在切换到「' + title + '」...');
+
+      try {
+        await api.setChatMessages([{ message_id: 0, swipe_id: swipeId }], { refresh: 'affected' });
+        setStatus('已切换到「' + title + '」。');
+      } catch (error) {
+        var message = error && error.message ? error.message : String(error);
+        setStatus('切换失败：' + message);
+      }
+    }
+
+    function openFavoritesPanel() {
+      var panel = document.getElementById('favorites-panel');
+      if (panel) {
+        panel.classList.add('open');
+      }
+      renderFavorites();
+    }
+
+    function closeFavoritesPanel() {
+      var panel = document.getElementById('favorites-panel');
+      if (panel) {
+        panel.classList.remove('open');
+      }
+    }
+
+    (function initTheme() {
+      var savedTheme = 'light';
+      try {
+        savedTheme = localStorage.getItem(THEME_KEY) || 'light';
+      } catch (_error) {}
+
+      applyTheme(savedTheme);
+
+      var button = document.getElementById('theme-toggle');
+      if (button) {
+        button.addEventListener('click', function () {
+          var nextTheme = document.body.classList.contains('dark-theme') ? 'light' : 'dark';
+          applyTheme(nextTheme);
+          try {
+            localStorage.setItem(THEME_KEY, nextTheme);
+          } catch (_error) {}
+        });
+      }
+    })();
+
+    (function initFavorites() {
+      document.querySelectorAll('[data-fav]').forEach(function (button) {
+        button.addEventListener('click', function (event) {
+          event.stopPropagation();
+          toggleFavorite(button.getAttribute('data-fav'));
+        });
+      });
+
+      document.querySelectorAll('.card .tag').forEach(function (tagNode) {
+        var tag = String(tagNode.textContent || '').trim();
+        tagNode.setAttribute('data-card-tag', tag);
+        tagNode.setAttribute('role', 'button');
+        tagNode.setAttribute('tabindex', '0');
+        tagNode.addEventListener('click', function (event) {
+          event.stopPropagation();
+          toggleTagFilter(tag);
+        });
+        tagNode.addEventListener('keydown', function (event) {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            toggleTagFilter(tag);
+          }
+        });
+      });
+
+      renderFavorites();
+    })();
+
+    (function initFavoritesPanel() {
+      var open = document.getElementById('favorites-toggle');
+      var close = document.getElementById('favorites-close');
+      var panel = document.getElementById('favorites-panel');
+      if (open) {
+        open.addEventListener('click', openFavoritesPanel);
+      }
+      if (close) {
+        close.addEventListener('click', closeFavoritesPanel);
+      }
+      if (panel) {
+        panel.addEventListener('click', function (event) {
+          if (event.target === panel) {
+            closeFavoritesPanel();
+          }
+        });
+      }
+    })();
+
+    (function initPagination() {
+      var prev = document.getElementById('page-prev');
+      var next = document.getElementById('page-next');
+      var filterToggle = document.getElementById('filter-toggle');
+      var filterModeButtons = document.querySelectorAll('[data-filter-mode]');
+
+      if (prev) {
+        prev.addEventListener('click', function () {
+          goToPage(currentPage - 1);
+        });
+      }
+
+      if (next) {
+        next.addEventListener('click', function () {
+          goToPage(currentPage + 1);
+        });
+      }
+
+      if (filterToggle) {
+        filterToggle.addEventListener('click', function () {
+          filterExpanded = !filterExpanded;
+          updateFilterBarState();
+        });
+      }
+
+      filterModeButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+          var nextMode = String(button.getAttribute('data-filter-mode') || 'multi');
+          if (nextMode !== 'single' && nextMode !== 'multi') {
+            return;
+          }
+          filterMode = nextMode;
+          if (filterMode === 'single' && activeTags.length > 1) {
+            activeTags = activeTags.slice(0, 1);
+          }
+          updateFilterModeState();
+          renderTagFilters();
+          syncCardTagStates();
+          renderPage();
+        });
+      });
+
+      updateFilterBarState();
+      updateFilterModeState();
+      renderTagFilters();
+      renderPage();
+    })();
+
+
+</script>
+</body>
+</html>
