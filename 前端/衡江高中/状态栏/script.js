@@ -1,4 +1,4 @@
-import { getMvuData, get, waitMvu } from '../../公共/utils.js';
+import { getMvuData, get, waitMvu } from '../公共/utils.js';
 
 /* ===== 工具函数 ===== */
 function pad(num) {
