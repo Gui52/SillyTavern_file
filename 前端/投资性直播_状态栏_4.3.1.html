@@ -1381,6 +1381,15 @@
       float: right;
     }
 
+    /* Cognition Indicator */
+    #cognition-indicator {
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    #cognition-indicator.known {
+      border-color: var(--accent);
+      box-shadow: 0 0 12px var(--accent-glow);
+    }
+
     /* Radar */
     .radar-wrap {
       display: flex;
@@ -2058,6 +2067,14 @@
           <div class="stat-label">分区标签</div>
           <div class="tag-container" id="val-tags"></div>
         </div>
+        <div style="margin-top:10px;display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:var(--radius-sm);background:var(--bg-surface);border:1px solid var(--border-subtle);" id="cognition-indicator">
+          <span id="cognition-icon" style="font-size:1.1em;">🔒</span>
+          <div>
+            <div class="stat-label" style="font-size:0.72em;">平台认知</div>
+            <div style="font-weight:600;font-size:0.85em;" id="cognition-text">未认知</div>
+          </div>
+          <span id="cognition-time" style="margin-left:auto;font-size:0.72em;color:var(--text-muted);display:none;"></span>
+        </div>
       </div>
 
       <div class="card">
@@ -2638,6 +2655,27 @@ export function waitMvu() {
         q('#val-tags').innerHTML = tags.length > 0
           ? tags.map(t => `<span class="tag">${escHtml(t)}</span>`).join('')
           : '<span style="color:var(--text-muted);font-size:0.78em;">无</span>';
+
+        // 平台认知指示器
+        const cog = _.get(s, '运营号.主播认知', {});
+        const isKnown = _.get(cog, '是否知情', false);
+        const cogTime = _.get(cog, '认知突破时间', '');
+        const cogEl = q('#cognition-indicator');
+        const cogIcon = q('#cognition-icon');
+        const cogText = q('#cognition-text');
+        const cogTimeEl = q('#cognition-time');
+        if (isKnown) {
+          cogEl.classList.add('known');
+          cogIcon.textContent = '🔓';
+          cogText.textContent = '已认知';
+          cogTimeEl.textContent = cogTime ? cogTime.slice(0, 16) : '';
+          cogTimeEl.style.display = '';
+        } else {
+          cogEl.classList.remove('known');
+          cogIcon.textContent = '🔒';
+          cogText.textContent = '未认知';
+          cogTimeEl.style.display = 'none';
+        }
 
         // 三轴状态
         const stick = _.clamp(_.get(host, '核心状态.坚守度', 100), 0, 100);
