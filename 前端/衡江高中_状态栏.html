@@ -141,6 +141,65 @@ html, body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* --- SVG图标 --- */
+.svg-icon {
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  vertical-align: middle;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.3s ease;
+}
+.svg-icon.svg-bolt { color: var(--warning-color); }
+.svg-weather { transition: transform 0.3s ease, opacity 0.3s ease; }
+
+/* 亮色主题图标颜色 */
+.theme-campus:not(.dark) .svg-icon,
+.theme-campus.light .svg-icon {
+  stroke: var(--primary-dark);
+}
+.theme-campus:not(.dark) .svg-icon.svg-bolt,
+.theme-campus.light .svg-icon.svg-bolt {
+  color: var(--warning-color);
+}
+.theme-campus:not(.dark) .svg-theme,
+.theme-campus.light .svg-theme {
+  stroke: var(--accent-color);
+}
+.theme-campus:not(.dark) .svg-weather,
+.theme-campus.light .svg-weather {
+  stroke: var(--primary-color);
+}
+
+/* --- 滚动条美化 --- */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 3px;
+  transition: background 0.3s ease;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-color);
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) transparent;
+}
+
 /* --- 仪表板 --- */
 .dashboard {
   width: 100%;
@@ -768,13 +827,119 @@ html, body {
   50% { box-shadow: 0 0 20px var(--primary-color), 0 0 30px var(--primary-light); }
 }
 </style>
+  <svg style="display:none">
+    <symbol id="svg-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+      <line x1="16" y1="2" x2="16" y2="6"></line>
+      <line x1="8" y1="2" x2="8" y2="6"></line>
+      <line x1="3" y1="10" x2="21" y2="10"></line>
+    </symbol>
+    <symbol id="svg-weather-sunny" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </symbol>
+    <symbol id="svg-weather-cloudy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path>
+    </symbol>
+    <symbol id="svg-weather-rain" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="16" y1="13" x2="16" y2="21"></line>
+      <line x1="8" y1="13" x2="8" y2="21"></line>
+      <line x1="12" y1="15" x2="12" y2="23"></line>
+      <path d="M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25"></path>
+    </symbol>
+    <symbol id="svg-weather-snow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 17.58A5 5 0 0 0 18 8h-1.26A8 8 0 1 0 4 16.25"></path>
+      <line x1="8" y1="16" x2="8.01" y2="16"></line>
+      <line x1="8" y1="20" x2="8.01" y2="20"></line>
+      <line x1="12" y1="18" x2="12.01" y2="18"></line>
+      <line x1="12" y1="22" x2="12.01" y2="22"></line>
+      <line x1="16" y1="16" x2="16.01" y2="16"></line>
+      <line x1="16" y1="20" x2="16.01" y2="20"></line>
+    </symbol>
+    <symbol id="svg-event" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+    </symbol>
+    <symbol id="svg-location" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+      <circle cx="12" cy="10" r="3"></circle>
+    </symbol>
+    <symbol id="svg-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+      <circle cx="12" cy="7" r="4"></circle>
+    </symbol>
+    <symbol id="svg-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+    </symbol>
+    <symbol id="svg-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+      <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+    </symbol>
+    <symbol id="svg-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    </symbol>
+    <symbol id="svg-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </symbol>
+    <symbol id="svg-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+      <polyline points="9 22 9 12 15 12 15 22"></polyline>
+    </symbol>
+    <symbol id="svg-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="18" y1="6" x2="6" y2="18"></line>
+      <line x1="6" y1="6" x2="18" y2="18"></line>
+    </symbol>
+    <symbol id="svg-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="8"></circle>
+      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </symbol>
+    <symbol id="svg-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </symbol>
+    <symbol id="svg-chevron-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </symbol>
+    <symbol id="svg-bolt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+    </symbol>
+    <symbol id="svg-money" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="1" x2="12" y2="23"></line>
+      <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+    </symbol>
+    <symbol id="svg-school" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+      <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+    </symbol>
+    <symbol id="svg-activity" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+    </symbol>
+    <symbol id="svg-trend-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+      <polyline points="17 6 23 6 23 12"></polyline>
+    </symbol>
+  </svg>
 </head>
 <body>
   <div class="dashboard">
-    <!-- 顶部卡片 -->
     <div class="header-card" id="header-toggle" role="button" tabindex="0" aria-expanded="false" aria-controls="card-env card-status card-social card-guide">
       <div class="header-left">
-        <div class="school-logo">衡</div>
+        <div class="school-logo">
+          <svg class="svg-icon"><use href="#svg-school"></use></svg>
+        </div>
         <div class="header-info">
           <h1>衡江高中</h1>
           <span>Student Terminal</span>
@@ -785,8 +950,12 @@ html, body {
         <div class="header-time" id="sys-time">---- --:--</div>
       </div>
       <div class="header-right">
-        <button class="header-btn" id="btn-guide" title="人物图鉴" aria-label="人物图鉴">📖</button>
-        <button class="header-btn" id="toggle-theme" title="切换主题" aria-label="切换主题">🌙</button>
+        <button class="header-btn" id="btn-guide" title="人物图鉴" aria-label="人物图鉴">
+          <svg class="svg-icon"><use href="#svg-book"></use></svg>
+        </button>
+        <button class="header-btn" id="toggle-theme" title="切换主题" aria-label="切换主题">
+          <svg class="svg-icon svg-theme"><use href="#svg-moon"></use></svg>
+        </button>
       </div>
       <div class="header-summary" aria-label="快速状态概览">
         <div class="header-chip">
@@ -820,44 +989,74 @@ html, body {
       </div>
     </div>
 
-    <!-- 环境卡片 -->
     <div class="card" id="card-env">
       <div class="card-header" role="button" tabindex="0" aria-expanded="true">
         <div class="card-title">
-          <div class="card-icon" style="background: linear-gradient(135deg, #38b2e8, #81d4f0);">🌤</div>
+          <div class="card-icon" style="background: linear-gradient(135deg, #38b2e8, #81d4f0);">
+            <svg class="svg-icon"><use href="#svg-weather-sunny"></use></svg>
+          </div>
           校园环境
         </div>
         <button class="toggle-btn"><span class="toggle-arrow">▼</span></button>
       </div>
       <div class="card-body">
         <div class="env-grid">
-          <div class="env-item"><div class="env-icon">📅</div><div class="env-label">日期</div><div class="env-value" id="env-date">----</div></div>
-          <div class="env-item"><div class="env-icon">🌡</div><div class="env-label">气候</div><div class="env-value" id="sys-env">----</div></div>
-          <div class="env-item"><div class="env-icon">🎉</div><div class="env-label">事件</div><div class="env-value" id="sys-festival">----</div></div>
-          <div class="env-item"><div class="env-icon">📍</div><div class="env-label">位置</div><div class="env-value" id="player-loc">----</div></div>
+          <div class="env-item">
+            <div class="env-icon"><svg class="svg-icon"><use href="#svg-calendar"></use></svg></div>
+            <div class="env-label">日期</div>
+            <div class="env-value" id="env-date">----</div>
+          </div>
+          <div class="env-item">
+            <div class="env-icon"><svg class="svg-icon svg-weather" id="env-weather-icon"><use href="#svg-weather-sunny"></use></svg></div>
+            <div class="env-label">气候</div>
+            <div class="env-value" id="sys-env">----</div>
+          </div>
+          <div class="env-item">
+            <div class="env-icon"><svg class="svg-icon"><use href="#svg-event"></use></svg></div>
+            <div class="env-label">事件</div>
+            <div class="env-value" id="sys-festival">----</div>
+          </div>
+          <div class="env-item">
+            <div class="env-icon"><svg class="svg-icon"><use href="#svg-location"></use></svg></div>
+            <div class="env-label">位置</div>
+            <div class="env-value" id="player-loc">----</div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- 状态卡片 -->
     <div class="card" id="card-status">
       <div class="card-header" role="button" tabindex="0" aria-expanded="true">
         <div class="card-title">
-          <div class="card-icon" style="background: linear-gradient(135deg, #48bb78, #9ae6b4);">👤</div>
+          <div class="card-icon" style="background: linear-gradient(135deg, #48bb78, #9ae6b4);">
+            <svg class="svg-icon"><use href="#svg-user"></use></svg>
+          </div>
           当前状态
         </div>
         <button class="toggle-btn"><span class="toggle-arrow">▼</span></button>
       </div>
       <div class="card-body">
         <div class="status-grid">
-          <div class="status-item"><div class="status-label">班级</div><div class="status-value" id="player-class">----</div></div>
-          <div class="status-item"><div class="status-label">余额</div><div class="status-value highlight" id="player-money">----</div></div>
-          <div class="status-item full"><div class="status-label">当前行为</div><div class="status-value" id="player-action">----</div></div>
-          <div class="status-item full"><div class="status-label">课程/活动</div><div class="status-value highlight" id="player-course">----</div></div>
+          <div class="status-item">
+            <div class="status-label">班级</div>
+            <div class="status-value" id="player-class">----</div>
+          </div>
+          <div class="status-item">
+            <div class="status-label">余额</div>
+            <div class="status-value highlight" id="player-money">----</div>
+          </div>
+          <div class="status-item full">
+            <div class="status-label">当前行为</div>
+            <div class="status-value" id="player-action">----</div>
+          </div>
+          <div class="status-item full">
+            <div class="status-label">课程/活动</div>
+            <div class="status-value highlight" id="player-course">----</div>
+          </div>
         </div>
         <div class="stamina-section">
           <div class="stamina-header">
-            <span class="stamina-label">⚡ 体力状态</span>
+            <span class="stamina-label"><svg class="svg-icon svg-bolt"><use href="#svg-bolt"></use></svg> 体力状态</span>
             <span class="stamina-value" id="player-stamina-val">0/100</span>
           </div>
           <div class="stamina-bar">
@@ -865,16 +1064,19 @@ html, body {
           </div>
         </div>
         <div class="quick-actions">
-          <button class="quick-btn" id="quick-rest">🏠 休息恢复</button>
+          <button class="quick-btn" id="quick-rest">
+            <svg class="svg-icon"><use href="#svg-home"></use></svg> 休息恢复
+          </button>
         </div>
       </div>
     </div>
 
-    <!-- 社交卡片 -->
     <div class="card" id="card-social">
       <div class="card-header" role="button" tabindex="0" aria-expanded="true">
         <div class="card-title">
-          <div class="card-icon" style="background: linear-gradient(135deg, #ed8936, #fbd38d);">💕</div>
+          <div class="card-icon" style="background: linear-gradient(135deg, #ed8936, #fbd38d);">
+            <svg class="svg-icon"><use href="#svg-heart"></use></svg>
+          </div>
           社交关系
         </div>
         <button class="toggle-btn"><span class="toggle-arrow">▼</span></button>
@@ -892,11 +1094,12 @@ html, body {
     </div>
   </div>
 
-  <!-- 角色详情模态框 -->
   <div class="modal-overlay" id="char-modal">
     <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-name">
       <div class="modal-header">
-        <button class="modal-close" id="modal-close">✕</button>
+        <button class="modal-close" id="modal-close">
+          <svg class="svg-icon"><use href="#svg-close"></use></svg>
+        </button>
         <div class="modal-avatar" id="modal-avatar">?</div>
         <div class="modal-name" id="modal-name">角色名称</div>
         <span class="modal-relation" id="modal-relation">关系</span>
@@ -912,12 +1115,15 @@ html, body {
     </div>
   </div>
 
-  <!-- 人物图鉴模态框 -->
   <div class="modal-overlay" id="guide-modal">
     <div class="modal-content guide-modal-content" role="dialog" aria-modal="true" aria-labelledby="guide-title">
       <div class="guide-header">
-        <button class="modal-close" id="guide-close">✕</button>
-        <h2 class="guide-title" id="guide-title">📖 人物图鉴</h2>
+        <button class="modal-close" id="guide-close">
+          <svg class="svg-icon"><use href="#svg-close"></use></svg>
+        </button>
+        <h2 class="guide-title" id="guide-title">
+          <svg class="svg-icon"><use href="#svg-book"></use></svg> 人物图鉴
+        </h2>
         <div class="guide-tabs">
           <button class="guide-tab active" data-filter="all">全部</button>
           <button class="guide-tab" data-filter="met">已相遇</button>
@@ -925,12 +1131,15 @@ html, body {
         </div>
       </div>
       <div class="guide-search">
+        <svg class="svg-icon search-icon"><use href="#svg-search"></use></svg>
         <input type="text" class="guide-search-input" id="guide-search" placeholder="搜索角色名称...">
       </div>
       <div class="guide-body" id="guide-body">
         <div class="guide-char-grid" id="guide-char-grid"></div>
         <div class="guide-empty" id="guide-empty" style="display:none;">
-          <div class="guide-empty-icon">🔍</div>
+          <div class="guide-empty-icon">
+            <svg class="svg-icon"><use href="#svg-search"></use></svg>
+          </div>
           <div class="guide-empty-text">暂无匹配角色</div>
         </div>
       </div>
@@ -1043,6 +1252,31 @@ function pad(num) {
   return num < 10 ? '0' + num : num;
 }
 
+/* ===== 天气图标映射 ===== */
+const weatherIcons = {
+  '晴': 'svg-weather-sunny',
+  '晴朗': 'svg-weather-sunny',
+  '晴天': 'svg-weather-sunny',
+  '阳光': 'svg-weather-sunny',
+  '多云': 'svg-weather-cloudy',
+  '阴': 'svg-weather-cloudy',
+  '阴天': 'svg-weather-cloudy',
+  '雨': 'svg-weather-rain',
+  '雨天': 'svg-weather-rain',
+  '下雨': 'svg-weather-rain',
+  '暴雨': 'svg-weather-rain',
+  '雪': 'svg-weather-snow',
+  '雪天': 'svg-weather-snow',
+  '下雪': 'svg-weather-snow',
+};
+
+function updateWeatherIcon(weather) {
+  const iconEl = document.getElementById('env-weather-icon');
+  if (!iconEl) return;
+  const iconId = weatherIcons[weather] || 'svg-weather-sunny';
+  iconEl.innerHTML = `<use href="#${iconId}"></use>`;
+}
+
 /* ===== 数据填充 ===== */
 function populateData() {
   const vars = getMvuData();
@@ -1055,7 +1289,10 @@ function populateData() {
   setText('sys-date', dateStr);
   setText('sys-time', `${sysTime.星期 || '---'} ${timeStr}`);
   setText('env-date', dateStr);
-  setText('sys-env', `${sysEnv.季节 || '-'}季 / ${sysEnv.天气 || '-'}`);
+  const season = sysEnv.季节 || '-';
+  const weather = sysEnv.天气 || '-';
+  setText('sys-env', `${season}季 / ${weather}`);
+  updateWeatherIcon(weather);
   setText('sys-festival', sysEnv.特殊节日 && sysEnv.特殊节日 !== '无' ? sysEnv.特殊节日 : '日常');
 
   setText('player-class', player.当前班级 || '未分班');
@@ -1331,15 +1568,24 @@ function closeCharModal() {
 }
 
 /* ===== 主题管理 ===== */
+function updateThemeIcon(isDark) {
+  const btn = document.getElementById('toggle-theme');
+  if (!btn) return;
+  const useEl = btn.querySelector('use');
+  if (useEl) {
+    useEl.setAttribute('href', isDark ? '#svg-moon' : '#svg-sun');
+  }
+}
+
 function loadTheme() {
   try {
     const saved = localStorage.getItem('hengjiang-theme');
     if (saved === 'light') {
       document.documentElement.classList.remove('dark');
-      document.getElementById('toggle-theme').textContent = '☀️';
+      updateThemeIcon(false);
     } else {
       document.documentElement.classList.add('dark');
-      document.getElementById('toggle-theme').textContent = '🌙';
+      updateThemeIcon(true);
     }
   } catch {}
 }
@@ -1451,7 +1697,7 @@ async function init() {
     this.style.animation = 'none';
     this.offsetHeight;
     this.style.animation = 'themeSwitch 0.5s ease';
-    this.textContent = isDark ? '🌙' : '☀️';
+    updateThemeIcon(isDark);
     saveTheme(isDark);
   });
 
