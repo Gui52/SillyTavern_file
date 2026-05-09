@@ -1,9 +1,7 @@
-/* ===== 地图卡片 ===== */
-#card-map { animation-delay: 0.15s; }
-
-.map-container {
+/* ===== 地图嵌入样式 ===== */
+.env-card .map-container {
   position: relative;
-  width: 100%;
+  margin-top: 12px;
   border-radius: var(--radius-md);
   overflow: hidden;
   background: #f0ebe3;
@@ -11,7 +9,7 @@
   cursor: grab;
   user-select: none;
 }
-.map-container:active { cursor: grabbing; }
+.env-card .map-container:active { cursor: grabbing; }
 
 .map-svg-wrapper {
   width: 100%;
@@ -122,15 +120,15 @@
 }
 
 /* ===== 暗色主题适配 ===== */
-.theme-campus.dark .map-container { background: #1a2332; }
-.theme-campus.dark .map-legend {
+.theme-campus.dark .env-card .map-container { background: #1a2332; }
+.theme-campus.dark .env-card .map-legend {
   background: rgba(30, 38, 52, 0.92);
   color: var(--text-sub);
 }
-.theme-campus.dark .map-btn { background: rgba(30, 38, 52, 0.9); }
+.theme-campus.dark .env-card .map-btn { background: rgba(30, 38, 52, 0.9); }
 
 /* ===== 亮色主题适配 ===== */
-.theme-campus:not(.dark) .map-btn,
-.theme-campus.light .map-btn {
+.theme-campus:not(.dark) .env-card .map-btn,
+.theme-campus.light .env-card .map-btn {
   background: rgba(255, 255, 255, 0.9);
 }

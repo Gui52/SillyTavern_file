@@ -826,12 +826,10 @@ html, body {
 }
 </style>
   <style>
-/* ===== 地图卡片 ===== */
-#card-map { animation-delay: 0.15s; }
-
-.map-container {
+/* ===== 地图嵌入样式 ===== */
+.env-card .map-container {
   position: relative;
-  width: 100%;
+  margin-top: 12px;
   border-radius: var(--radius-md);
   overflow: hidden;
   background: #f0ebe3;
@@ -839,7 +837,7 @@ html, body {
   cursor: grab;
   user-select: none;
 }
-.map-container:active { cursor: grabbing; }
+.env-card .map-container:active { cursor: grabbing; }
 
 .map-svg-wrapper {
   width: 100%;
@@ -950,16 +948,16 @@ html, body {
 }
 
 /* ===== 暗色主题适配 ===== */
-.theme-campus.dark .map-container { background: #1a2332; }
-.theme-campus.dark .map-legend {
+.theme-campus.dark .env-card .map-container { background: #1a2332; }
+.theme-campus.dark .env-card .map-legend {
   background: rgba(30, 38, 52, 0.92);
   color: var(--text-sub);
 }
-.theme-campus.dark .map-btn { background: rgba(30, 38, 52, 0.9); }
+.theme-campus.dark .env-card .map-btn { background: rgba(30, 38, 52, 0.9); }
 
 /* ===== 亮色主题适配 ===== */
-.theme-campus:not(.dark) .map-btn,
-.theme-campus.light .map-btn {
+.theme-campus:not(.dark) .env-card .map-btn,
+.theme-campus.light .env-card .map-btn {
   background: rgba(255, 255, 255, 0.9);
 }
 
@@ -1154,6 +1152,24 @@ html, body {
             <div class="env-value" id="player-loc">----</div>
           </div>
         </div>
+        <div class="map-container" id="map-container">
+          <div class="map-svg-wrapper" id="map-svg-wrapper"></div>
+          <div class="map-controls">
+            <button class="map-btn map-btn-zoomin" id="map-zoom-in" title="放大">+</button>
+            <button class="map-btn map-btn-zoomout" id="map-zoom-out" title="缩小">−</button>
+            <button class="map-btn map-btn-reset" id="map-zoom-reset" title="重置">↺</button>
+          </div>
+          <div class="map-legend">
+            <div class="map-legend-item">
+              <div class="map-legend-dot" style="background:#2196F3;"></div>
+              <span>玩家</span>
+            </div>
+            <div class="map-legend-item">
+              <div class="map-legend-dot" style="background:#ed8936;"></div>
+              <span>角色</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -1198,37 +1214,6 @@ html, body {
           <button class="quick-btn" id="quick-rest">
             <svg class="svg-icon"><use href="#svg-home"></use></svg> 休息恢复
           </button>
-        </div>
-      </div>
-    </div>
-
-    <div class="card" id="card-map">
-      <div class="card-header" role="button" tabindex="0" aria-expanded="true">
-        <div class="card-title">
-          <div class="card-icon" style="background: linear-gradient(135deg, #38b2e8, #81d4f0);">
-            <svg class="svg-icon"><use href="#svg-location"></use></svg>
-          </div>
-          校园地图
-        </div>
-      </div>
-      <div class="card-body">
-        <div class="map-container" id="map-container">
-          <div class="map-svg-wrapper" id="map-svg-wrapper"></div>
-          <div class="map-controls">
-            <button class="map-btn map-btn-zoomin" id="map-zoom-in" title="放大">+</button>
-            <button class="map-btn map-btn-zoomout" id="map-zoom-out" title="缩小">−</button>
-            <button class="map-btn map-btn-reset" id="map-zoom-reset" title="重置">↺</button>
-          </div>
-          <div class="map-legend">
-            <div class="map-legend-item">
-              <div class="map-legend-dot" style="background:#2196F3;"></div>
-              <span>玩家</span>
-            </div>
-            <div class="map-legend-item">
-              <div class="map-legend-dot" style="background:#ed8936;"></div>
-              <span>角色</span>
-            </div>
-          </div>
         </div>
       </div>
     </div>
