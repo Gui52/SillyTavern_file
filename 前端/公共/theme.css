@@ -1,0 +1,53 @@
+/* ===== 主题系统 - CSS 自定义属性 ===== */
+.theme-default {
+  --bg-base: #0d0d1a;
+  --bg-surface: #16162a;
+  --bg-elevated: #1e1e3a;
+  --bg-glass: rgba(22, 22, 42, 0.7);
+  --border-subtle: #2a2a4a;
+  --border-moderate: #3a3a5a;
+  --text-primary: #e8e6f0;
+  --text-secondary: #a8a0c8;
+  --text-muted: #6a6478;
+  --accent: #7c5cfc;
+  --accent-glow: rgba(124, 92, 252, 0.4);
+  --accent-secondary: #5ce0c8;
+  --gold: #f0b840;
+  --gold-glow: rgba(240, 184, 64, 0.4);
+  --danger: #e8465e;
+  --danger-glow: rgba(232, 70, 94, 0.4);
+  --success: #3cc878;
+  --scroll-thumb: #3a3a5a;
+  --pbar-bg: #2a2a4a;
+  --tag-accent-bg: rgba(124, 92, 252, 0.15);
+  --tag-accent-color: #a08cfc;
+  --tag-gold-bg: rgba(240, 184, 64, 0.15);
+  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+.theme-default:not(.dark),
+.theme-default.light {
+  --bg-base: #f0ecf5;
+  --bg-surface: #e0daf0;
+  --bg-elevated: #d0cae0;
+  --bg-glass: rgba(224, 218, 240, 0.7);
+  --border-subtle: #ccc8d8;
+  --border-moderate: #b0a8c0;
+  --text-primary: #1a1630;
+  --text-secondary: #5a5478;
+  --text-muted: #8a84a0;
+  --accent: #6c48e4;
+  --accent-glow: rgba(108, 72, 228, 0.3);
+  --accent-secondary: #48b4a0;
+  --gold: #b08020;
+  --gold-glow: rgba(176, 128, 32, 0.3);
+  --danger: #c0405a;
+  --danger-glow: rgba(192, 64, 90, 0.3);
+  --success: #30a068;
+  --scroll-thumb: #b0a8c0;
+  --pbar-bg: #d8d4e0;
+  --tag-accent-bg: rgba(108, 72, 228, 0.1);
+  --tag-accent-color: #5c38d4;
+  --tag-gold-bg: rgba(176, 128, 32, 0.1);
+  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
