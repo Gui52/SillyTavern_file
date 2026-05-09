@@ -2569,7 +2569,7 @@ export function waitMvu() {
       function renderData() {
         const all = getMvuDataSafe({ type: 'message', message_id: currentMsgId });
         const s = _.get(all, 'stat_data', {});
-        const hostId = _.get(s, '全局.当前主播ID', 'host_1');
+        const hostId = _.get(s, '全局.当前主播ID', 'host_0');
         const host = _.get(s, ['主播池', hostId], {});
 
         renderLiveTab(s);
@@ -2645,8 +2645,10 @@ export function waitMvu() {
 
       /* ─── Anchor Tab ─── */
       function renderAnchorTab(host, s) {
+        const hostId = _.get(s, '全局.当前主播ID', 'host_0');
+        const isEmpty = hostId === 'host_0' || Object.keys(host).length === 0;
         const info = _.get(host, '基本信息', {});
-        q('#val-name').textContent = _.get(info, '名字', '---');
+        q('#val-name').textContent = isEmpty ? '待选定' : _.get(info, '名字', '---');
         q('#val-age').textContent = _.get(info, '年龄', '--');
         q('#val-id').textContent = _.get(info, '身份', '--');
         q('#val-loc').textContent = _.get(info, '当前位置', '--');
