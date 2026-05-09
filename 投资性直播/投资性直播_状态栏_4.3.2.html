@@ -2761,7 +2761,7 @@
         renderInventory(items, all);
 
         // Log
-        const logs = _.get(s, '系统日志', []);
+        const logs = _.get(s, '系统日志', {});
         renderLog(logs);
 
         renderDescentPanel(s);
@@ -2823,11 +2823,12 @@
       function renderLog(logs) {
         const container = q('#system-log');
         if (!container) return;
-        if (logs.length === 0) {
+        const entries = Object.values(logs || {}).sort((a, b) => (a.时间||'').localeCompare(b.时间||''));
+        if (entries.length === 0) {
           container.innerHTML = '<div class="empty-state"><div class="empty-state-icon"><i class="fa-solid fa-clipboard-list"></i></div>暂无系统日志</div>';
           return;
         }
-        container.innerHTML = logs.slice(-10).reverse().map(l =>
+        container.innerHTML = entries.slice(-10).reverse().map(l =>
           `<div class="msg" style="font-size:0.75em;">
             <span style="color:var(--text-muted);">${escHtml(l.时间||'').slice(5,16)}</span>
             <span class="tag" style="margin-left:6px;font-size:0.7em;">${escHtml(l.事件类型||'系统')}</span>
@@ -2985,6 +2986,14 @@
         return _.get(allData, 'stat_data.全局.当前主播ID', 'host_0');
       }
 
+      function addLogEntry(data, eventType, description, time) {
+        const logs = _.get(data.stat_data, '系统日志', {});
+        const ts = time || getMvuTime(data) || formatNow();
+        const key = `log_${Date.now()}_${(Math.random()*1e9|0).toString(36)}`;
+        logs[key] = { 时间: ts, 事件类型: eventType, 描述: description };
+        data.stat_data.系统日志 = logs;
+      }
+
       function resolveCheatPath(path, hostId) {
         return path.replace('{id}', hostId);
       }
@@ -3034,9 +3043,7 @@
         try {
           const all = getMvuDataSafe({ type: 'message', message_id: currentMsgId });
           all.stat_data.运营号.持有道具 = {};
-          const logs = _.get(all.stat_data, '系统日志', []);
-          logs.push({ 时间: getMvuTime(all) || formatNow(), 事件类型: '道具管理', 描述: '金手指：清除了所有持有道具' });
-          all.stat_data.系统日志 = logs;
+          addLogEntry(all, '道具管理', '金手指：清除了所有持有道具');
           Mvu.replaceMvuData(all, { type: 'message', message_id: currentMsgId });
           scheduleRender();
           toastr.success('已清除所有道具');
@@ -3047,7 +3054,7 @@
         if (!confirm('确认清除所有系统日志？此操作不可撤销。')) return;
         try {
           const all = getMvuDataSafe({ type: 'message', message_id: currentMsgId });
-          all.stat_data.系统日志 = [];
+          all.stat_data.系统日志 = {};
           Mvu.replaceMvuData(all, { type: 'message', message_id: currentMsgId });
           scheduleRender();
           toastr.success('已清除系统日志');
@@ -3188,9 +3195,7 @@
 
             data.stat_data.运营号.账户资产.性币 -= price;
             data.stat_data.运营号.持有道具[newId] = newItem;
-            const buyLog = _.get(data.stat_data, '系统日志', []);
-            buyLog.push({ 时间: currentTime, 事件类型: '道具购买', 描述: `购买了「${item.名称}」，花费 ${price} 性币` });
-            data.stat_data.系统日志 = buyLog;
+            addLogEntry(data, '道具购买', `购买了「${item.名称}」，花费 ${price} 性币`, currentTime);
             Mvu.replaceMvuData(data, { type: 'message', message_id: currentMsgId });
             scheduleRender();
             toastr.success(`成功购买「${item.名称}」`);
@@ -3233,9 +3238,7 @@
             target.失效时间 = calculateExpiry(currentTime, target.有效期小时 || 24);
           }
 
-          const useLog = _.get(data.stat_data, '系统日志', []);
-          useLog.push({ 时间: currentTime, 事件类型: '道具使用', 描述: `使用了「${target.名称}」` });
-          data.stat_data.系统日志 = useLog;
+          addLogEntry(data, '道具使用', `使用了「${target.名称}」`, currentTime);
 
           if (isCount && target.剩余次数 <= 0) {
             delete data.stat_data.运营号.持有道具[itemId];
@@ -3306,9 +3309,7 @@
       function refreshShop() {
         const all = getMvuDataSafe({ type: 'message', message_id: currentMsgId });
         all.stat_data.运营号._商店待刷新 = true;
-        const log = _.get(all.stat_data, '系统日志', []);
-        log.push({ 时间: getMvuTime(all) || formatNow(), 事件类型:'道具管理', 描述:'前端触发商店刷新，AI将在下一轮生成新道具' });
-        all.stat_data.系统日志 = log;
+        addLogEntry(all, '道具管理', '前端触发商店刷新，AI将在下一轮生成新道具');
         Mvu.replaceMvuData(all, { type: 'message', message_id: currentMsgId });
         scheduleRender();
         toastr.success('已请求AI刷新商店，请等待下一轮回复');
@@ -3417,9 +3418,7 @@
             data.stat_data.运营号.降临状态.是否已降临 = true;
             data.stat_data.运营号.降临状态.降临时间 = getMvuTime(data) || formatNow();
             data.stat_data.运营号.降临状态.降临身份 = identity;
-            const log = _.get(data.stat_data, '系统日志', []);
-            log.push({ 时间: getMvuTime(data) || formatNow(), 事件类型:'道具管理', 描述:'消耗10000性币进行降临，进入平行宇宙' });
-            data.stat_data.系统日志 = log;
+            addLogEntry(data, '道具管理', '消耗10000性币进行降临，进入平行宇宙');
             Mvu.replaceMvuData(data, { type: 'message', message_id: currentMsgId });
             scheduleRender();
             toastr.success('降临成功！AI 将在下一轮基于你的身份进行修正扩写。');
@@ -3473,9 +3472,7 @@
         const localCoins = amount * 100;
         // 转换后的本地货币不存储在变量中，而是由 AI 在叙事中自然体现
         // 记录到系统日志中
-        const log = _.get(all.stat_data, '系统日志', []);
-        log.push({ 时间: getMvuTime(all) || formatNow(), 事件类型:'道具管理', 描述:`转换 ${amount} 性币为 ${localCoins} 本地货币（1:100），注入当前主播所在世界经济系统` });
-        all.stat_data.系统日志 = log;
+        addLogEntry(all, '道具管理', `转换 ${amount} 性币为 ${localCoins} 本地货币（1:100），注入当前主播所在世界经济系统`);
 
         Mvu.replaceMvuData(all, { type: 'message', message_id: currentMsgId });
         scheduleRender();
@@ -3508,9 +3505,7 @@
           购买时间: getMvuTime(all) || formatNow(),
         });
 
-        const log = _.get(all.stat_data, '系统日志', []);
-        log.push({ 时间: getMvuTime(all) || formatNow(), 事件类型:'规则部署', 描述:`部署规则: ${ruleText.slice(0,60)}` });
-        all.stat_data.系统日志 = log;
+        addLogEntry(all, '规则部署', `部署规则: ${ruleText.slice(0,60)}`);
 
         Mvu.replaceMvuData(all, { type: 'message', message_id: currentMsgId });
         input.value = '';
@@ -3530,9 +3525,7 @@
         if (rules.length === 0) delete universeRules[universe];
         all.stat_data.运营号.已部署规则 = universeRules;
 
-        const log = _.get(all.stat_data, '系统日志', []);
-        log.push({ 时间: getMvuTime(all) || formatNow(), 事件类型:'规则删除', 描述:`删除规则: ${deletedText.slice(0,60)}` });
-        all.stat_data.系统日志 = log;
+        addLogEntry(all, '规则删除', `删除规则: ${deletedText.slice(0,60)}`);
 
         Mvu.replaceMvuData(all, { type: 'message', message_id: currentMsgId });
         scheduleRender();
