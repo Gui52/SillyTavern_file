@@ -131,10 +131,10 @@ html, body {
 .axis-num { font-size: 12px; font-weight: 700; width: 30px; text-align: right; }
 
 /* Training grid */
-.train-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px 16px; margin-bottom: 8px; }
+.train-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 12px; margin-bottom: 8px; }
 .train-item { display: flex; align-items: center; gap: 6px; min-width: 0; }
-.train-label { font-size: 10px; color: var(--text-muted); white-space: nowrap; flex-shrink: 0; max-width: 60px; overflow: hidden; text-overflow: ellipsis; }
-.train-bar-wrap { flex: 1; min-width: 40px; height: 8px; background: rgba(255,255,255,0.04); border-radius: 4px; overflow: hidden; }
+.train-label { font-size: 10px; color: var(--text-muted); white-space: nowrap; flex-shrink: 0; }
+.train-bar-wrap { flex: 1; min-width: 30px; height: 8px; background: rgba(255,255,255,0.04); border-radius: 4px; overflow: hidden; }
 .train-bar { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--accent), var(--corruption)); transition: width 0.5s ease; }
 .train-num { font-size: 10px; color: var(--text-sub); width: 24px; text-align: right; flex-shrink: 0; }
 
