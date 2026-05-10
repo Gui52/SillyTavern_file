@@ -181,6 +181,20 @@ html, body {
 .log-type { color: var(--accent); flex-shrink: 0; }
 .log-desc { color: var(--text-sub); }
 
+/* Super chat & gifts */
+.sc-box { margin-top: 6px; }
+.sc-title { font-size: 11px; font-weight: 600; color: var(--text-sub); margin-bottom: 4px; display: flex; align-items: center; gap: 4px; }
+.sc-title .svg-icon { width: 12px; height: 12px; }
+.sc-list { font-size: 10px; color: var(--text-muted); max-height: 60px; overflow-y: auto; display: flex; flex-direction: column; gap: 2px; }
+.sc-item { padding: 3px 6px; border-radius: 4px; background: rgba(240,184,64,0.08); border-left: 2px solid var(--gold); }
+.sc-item .sc-sender { color: var(--gold); font-weight: 600; }
+.sc-item .sc-amount { color: var(--gold); font-weight: 700; margin-left: 4px; }
+.sc-item .sc-text { color: var(--text-sub); }
+.gift-item { padding: 2px 6px; background: rgba(138,92,252,0.06); border-radius: 4px; display: flex; gap: 4px; }
+.gift-item .gift-sender { color: var(--accent); font-weight: 600; }
+.gift-item .gift-name { color: var(--text-sub); }
+.gift-item .gift-amount { color: var(--gold); font-weight: 600; margin-left: auto; }
+
 .dim { color: var(--text-muted); font-style: italic; }
 .gold { color: var(--gold); }
 
@@ -299,6 +313,14 @@ html, body {
         <div class="danmaku-box" id="danmaku-box">
           <div class="danmaku-title">弹幕预览</div>
           <div class="danmaku-list" id="danmaku-list"><span class="dim">暂无弹幕</span></div>
+        </div>
+        <div class="sc-box" id="sc-box">
+          <div class="sc-title"><svg class="svg-icon"><use href="#svg-star"></use></svg> 超级留言</div>
+          <div class="sc-list" id="sc-list"><span class="dim">暂无</span></div>
+        </div>
+        <div class="sc-box" id="gift-box">
+          <div class="sc-title"><svg class="svg-icon"><use href="#svg-gift"></use></svg> 礼物记录</div>
+          <div class="sc-list" id="gift-list"><span class="dim">暂无</span></div>
         </div>
       </div>
     </div>
@@ -449,6 +471,34 @@ html, body {
       } else {
         dl.innerHTML = dm.slice(-8).map(d =>
           `<div><span class="dm-sender">${d.发送者||'观众'}:</span> ${d.内容||''}</div>`
+        ).join('');
+      }
+    }
+
+    // Super chats
+    const sc = get(stream, '超级留言', {});
+    const scl = document.getElementById('sc-list');
+    if (scl) {
+      const scEntries = Object.entries(sc);
+      if (scEntries.length === 0) {
+        scl.innerHTML = '<span class="dim">暂无</span>';
+      } else {
+        scl.innerHTML = scEntries.slice(-5).map(([id, item]) =>
+          `<div class="sc-item"><span class="sc-sender">${item.发送者||'匿名'}</span><span class="sc-amount">¥${item.金额||item.价值||0}</span><div class="sc-text">${item.内容||''}</div></div>`
+        ).join('');
+      }
+    }
+
+    // Gift records
+    const gr = get(stream, '礼物记录', {});
+    const gl = document.getElementById('gift-list');
+    if (gl) {
+      const grEntries = Object.entries(gr);
+      if (grEntries.length === 0) {
+        gl.innerHTML = '<span class="dim">暂无</span>';
+      } else {
+        gl.innerHTML = grEntries.slice(-5).map(([id, item]) =>
+          `<div class="gift-item"><span class="gift-sender">${item.发送者||'匿名'}</span><span class="gift-name">${item.礼物名||'礼物'}</span><span class="gift-amount">¥${item.价值||0}</span></div>`
         ).join('');
       }
     }
