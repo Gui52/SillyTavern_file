@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="theme-livestream dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>投资性直播 - 运营终端</title>
+  <style>
+/* ===== 投资性直播 - 运营终端 样式 ===== */
+
+:root, .theme-livestream.dark {
+  --bg-gradient: linear-gradient(135deg, #0a0a14 0%, #120f1e 30%, #1a1430 60%, #0f0a1a 100%);
+  --card-bg: rgba(18, 14, 30, 0.92);
+  --card-bg-hover: rgba(24, 20, 38, 0.96);
+  --text-main: #e0daf0;
+  --text-sub: #b0a8d0;
+  --text-muted: #6a6480;
+  --border-color: rgba(120, 80, 200, 0.12);
+  --accent: #8a5cfc;
+  --accent-glow: rgba(138, 92, 252, 0.35);
+  --gold: #f0b840;
+  --gold-glow: rgba(240, 184, 64, 0.35);
+  --danger: #e8465e;
+  --danger-dim: rgba(232, 70, 94, 0.25);
+  --success: #3cc878;
+  --corruption: #c060e8;
+  --obedience: #48b8f0;
+  --shadow-card: 0 2px 16px rgba(138, 92, 252, 0.08);
+  --radius: 10px;
+  --radius-sm: 6px;
+}
+
+.theme-livestream:not(.dark), .theme-livestream.light {
+  --bg-gradient: linear-gradient(135deg, #f0ecf8 0%, #e4dcf4 30%, #ece0f8 60%, #f4ecf0 100%);
+  --card-bg: rgba(255, 255, 255, 0.92);
+  --card-bg-hover: rgba(250, 248, 255, 0.96);
+  --text-main: #1a1430;
+  --text-sub: #504a70;
+  --text-muted: #9088a8;
+  --border-color: rgba(80, 60, 140, 0.12);
+  --accent: #7c4cf0;
+  --accent-glow: rgba(124, 76, 240, 0.2);
+  --gold: #b08020;
+  --gold-glow: rgba(176, 128, 32, 0.2);
+  --danger: #c83850;
+  --danger-dim: rgba(200, 56, 80, 0.15);
+  --success: #30a068;
+  --corruption: #a040c0;
+  --obedience: #3898d0;
+  --shadow-card: 0 2px 12px rgba(80, 60, 140, 0.08);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  background: transparent;
+  color: var(--text-main);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 13px;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+}
+
+.dashboard { padding: 8px; display: flex; flex-direction: column; gap: 8px; max-width: 100%; }
+
+/* SVG */
+.svg-icon { width: 16px; height: 16px; display: inline-block; vertical-align: middle; fill: none; }
+.svg-icon use { stroke: currentColor; }
+
+/* Header */
+.header-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  cursor: pointer;
+  box-shadow: var(--shadow-card);
+}
+.header-card:hover { background: var(--card-bg-hover); }
+.header-card > div { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.header-left { display: flex; align-items: center; gap: 10px; }
+.logo { width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg, var(--accent), var(--corruption)); display: flex; align-items: center; justify-content: center; }
+.logo .svg-icon { width: 20px; height: 20px; color: #fff; }
+.header-info h1 { font-size: 15px; font-weight: 700; }
+.header-info span { font-size: 11px; color: var(--text-muted); }
+.host-badge { display: inline-block; background: var(--accent); color: #fff; font-size: 10px; padding: 0 6px; border-radius: 4px; margin-left: 4px; }
+.header-center { text-align: center; flex: 1; min-width: 120px; }
+.header-time { font-size: 14px; font-weight: 600; }
+.header-date { font-size: 11px; color: var(--text-muted); }
+.header-right { display: flex; gap: 6px; }
+.header-btn { background: none; border: 1px solid var(--border-color); border-radius: 6px; padding: 4px 8px; cursor: pointer; color: var(--text-sub); }
+.header-btn:hover { background: var(--card-bg-hover); color: var(--accent); }
+.header-summary { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+.header-chip { background: rgba(138,92,252,0.08); border-radius: 6px; padding: 3px 10px; display: flex; gap: 6px; font-size: 11px; align-items: center; }
+.chip-label { color: var(--text-muted); }
+.chip-value { font-weight: 600; }
+.chip-value.gold { color: var(--gold); }
+
+/* Cards */
+.card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-card); }
+.card-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 14px; cursor: pointer; user-select: none;
+  font-size: 13px; font-weight: 600;
+}
+.card-header:hover { background: var(--card-bg-hover); }
+.card-title { display: flex; align-items: center; gap: 6px; }
+.card-title .svg-icon { width: 15px; height: 15px; }
+.card-chevron { width: 14px; height: 14px; color: var(--text-muted); transition: transform 0.2s; }
+.card-header:not(.expanded) .card-chevron { transform: rotate(-90deg); }
+.card-body { padding: 10px 14px; border-top: 1px solid var(--border-color); }
+.card-header:not(.expanded) + .card-body { display: none; }
+
+/* Host avatar */
+.host-top { display: flex; gap: 12px; margin-bottom: 12px; align-items: center; }
+.host-avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--corruption)); display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700; color: #fff; flex-shrink: 0; }
+.host-meta { flex: 1; min-width: 0; }
+.host-name { font-size: 15px; font-weight: 700; }
+.host-identity { font-size: 11px; color: var(--accent); }
+.host-thought { font-size: 11px; color: var(--text-muted); font-style: italic; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* Three-axis */
+.axis-grid { display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; }
+.axis-item { display: flex; align-items: center; gap: 8px; }
+.axis-label { font-size: 11px; color: var(--text-sub); width: 70px; flex-shrink: 0; display: flex; align-items: center; gap: 4px; }
+.axis-icon { width: 12px; height: 12px; }
+.shield-icon { color: var(--success); }
+.brain-icon { color: var(--corruption); }
+.axis-bar-wrap { flex: 1; height: 16px; background: rgba(255,255,255,0.06); border-radius: 8px; overflow: hidden; }
+.axis-bar { height: 100%; border-radius: 8px; background: linear-gradient(90deg, var(--success), #48e090); transition: width 0.5s ease; }
+.axis-bar.corruption { background: linear-gradient(90deg, var(--corruption), #e080f0); }
+.axis-bar.obedience { background: linear-gradient(90deg, var(--obedience), #60d0f8); }
+.axis-num { font-size: 12px; font-weight: 700; width: 30px; text-align: right; }
+
+/* Training grid */
+.train-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px 16px; margin-bottom: 8px; }
+.train-item { display: flex; align-items: center; gap: 6px; min-width: 0; }
+.train-label { font-size: 10px; color: var(--text-muted); white-space: nowrap; flex-shrink: 0; max-width: 60px; overflow: hidden; text-overflow: ellipsis; }
+.train-bar-wrap { flex: 1; min-width: 40px; height: 8px; background: rgba(255,255,255,0.04); border-radius: 4px; overflow: hidden; }
+.train-bar { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--accent), var(--corruption)); transition: width 0.5s ease; }
+.train-num { font-size: 10px; color: var(--text-sub); width: 24px; text-align: right; flex-shrink: 0; }
+
+/* Meta row */
+.meta-row { display: flex; flex-direction: column; gap: 4px; }
+.meta-tags { font-size: 10px; color: var(--text-muted); display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+.tag-label { color: var(--text-sub); font-weight: 600; }
+
+/* Stat grid */
+.stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 8px; }
+.stat-item { text-align: center; padding: 6px; background: rgba(255,255,255,0.03); border-radius: var(--radius-sm); }
+.stat-val { font-size: 16px; font-weight: 700; }
+.stat-val.gold { color: var(--gold); }
+.stat-lbl { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
+
+/* Danmaku */
+.danmaku-box { margin-top: 4px; }
+.danmaku-title { font-size: 11px; font-weight: 600; color: var(--text-sub); margin-bottom: 4px; }
+.danmaku-list { font-size: 10px; color: var(--text-muted); max-height: 48px; overflow-y: auto; }
+.danmaku-list > div { padding: 1px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.danmaku-list .dm-sender { color: var(--accent); font-weight: 600; }
+
+/* Sections */
+.section-title { font-size: 12px; font-weight: 600; color: var(--text-sub); margin: 8px 0 4px; display: flex; align-items: center; gap: 4px; }
+
+/* Item/Shop grid */
+.item-grid, .shop-grid { display: flex; flex-wrap: wrap; gap: 4px; }
+.shop-item, .inv-item {
+  font-size: 10px; padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  white-space: nowrap;
+}
+.shop-item { background: rgba(240,184,64,0.06); }
+.inv-item { background: rgba(138,92,252,0.06); }
+.shop-item .price { color: var(--gold); font-weight: 600; }
+.shop-item .sname { color: var(--text-sub); }
+.shop-item .scat { color: var(--text-muted); font-size: 9px; }
+
+/* Log */
+.log-list { font-size: 10px; color: var(--text-muted); max-height: 100px; overflow-y: auto; }
+.log-item { padding: 2px 0; border-bottom: 1px solid var(--border-color); display: flex; gap: 6px; }
+.log-time { color: var(--text-muted); flex-shrink: 0; }
+.log-type { color: var(--accent); flex-shrink: 0; }
+.log-desc { color: var(--text-sub); }
+
+/* Super chat & gifts */
+.sc-box { margin-top: 6px; }
+.sc-title { font-size: 11px; font-weight: 600; color: var(--text-sub); margin-bottom: 4px; display: flex; align-items: center; gap: 4px; }
+.sc-title .svg-icon { width: 12px; height: 12px; }
+.sc-list { font-size: 10px; color: var(--text-muted); max-height: 60px; overflow-y: auto; display: flex; flex-direction: column; gap: 2px; }
+.sc-item { padding: 3px 6px; border-radius: 4px; background: rgba(240,184,64,0.08); border-left: 2px solid var(--gold); }
+.sc-item .sc-sender { color: var(--gold); font-weight: 600; }
+.sc-item .sc-amount { color: var(--gold); font-weight: 700; margin-left: 4px; }
+.sc-item .sc-text { color: var(--text-sub); }
+.gift-item { padding: 2px 6px; background: rgba(138,92,252,0.06); border-radius: 4px; display: flex; gap: 4px; }
+.gift-item .gift-sender { color: var(--accent); font-weight: 600; }
+.gift-item .gift-name { color: var(--text-sub); }
+.gift-item .gift-amount { color: var(--gold); font-weight: 600; margin-left: auto; }
+
+.dim { color: var(--text-muted); font-style: italic; }
+.gold { color: var(--gold); }
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 2px; }
+
+</style>
+  <svg style="display:none">
+    <symbol id="svg-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>
+    </symbol>
+    <symbol id="svg-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></symbol>
+    <symbol id="svg-brain" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 0 0-7 7c0 2.4 1.2 4.5 3 5.7V20a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-5.3c1.8-1.2 3-3.3 3-5.7a7 7 0 0 0-7-7z"/><path d="M9 9h6"/><path d="M9 13h3"/></symbol>
+    <symbol id="svg-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
+    <symbol id="svg-coin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v12"/><path d="M16 9H9.5a2.5 2.5 0 0 0 0 5h5a2.5 2.5 0 0 1 0 5H8"/></symbol>
+    <symbol id="svg-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+    <symbol id="svg-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
+    <symbol id="svg-gift" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></symbol>
+    <symbol id="svg-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></symbol>
+    <symbol id="svg-flame" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 1 1 2 2.5 2 4.5a5.5 5.5 0 0 1-5.5 5.5c-2.76 0-5-2.24-5-5.5 0-.5.105-1.026.274-1.5z"/></symbol>
+    <symbol id="svg-shopping-cart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></symbol>
+    <symbol id="svg-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></symbol>
+    <symbol id="svg-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></symbol>
+    <symbol id="svg-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></symbol>
+    <symbol id="svg-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></symbol>
+    <symbol id="svg-chevron-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></symbol>
+    <symbol id="svg-box" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></symbol>
+  </svg>
+</head>
+<body>
+  <div class="dashboard" id="app">
+    <!-- Header -->
+    <div class="header-card" id="header-toggle" role="button" tabindex="0">
+      <div class="header-left">
+        <div class="logo"><svg class="svg-icon"><use href="#svg-eye"></use></svg></div>
+        <div class="header-info">
+          <h1>投资性直播</h1>
+          <span>运营终端 <span class="host-badge" id="current-host-id">host_0</span></span>
+        </div>
+      </div>
+      <div class="header-center">
+        <div class="header-time" id="world-time">---- --:--</div>
+        <div class="header-date" id="world-date">----年--月--日</div>
+      </div>
+      <div class="header-right">
+        <button class="header-btn" id="toggle-theme" title="切换主题">
+          <svg class="svg-icon svg-theme" id="theme-icon"><use href="#svg-moon"></use></svg>
+        </button>
+      </div>
+      <div class="header-summary" id="header-summary">
+        <div class="header-chip"><span class="chip-label">地点</span><span class="chip-value" id="hdr-location">未知</span></div>
+        <div class="header-chip"><span class="chip-label">天气</span><span class="chip-value" id="hdr-weather">--</span></div>
+        <div class="header-chip"><span class="chip-label">在线</span><span class="chip-value" id="hdr-viewers">0</span></div>
+        <div class="header-chip"><span class="chip-label">性币</span><span class="chip-value gold" id="hdr-coins">0</span></div>
+      </div>
+    </div>
+
+    <!-- World & Host Panel -->
+    <div class="card" id="card-host">
+      <div class="card-header expanded" data-target="card-host-body">
+        <div class="card-title"><svg class="svg-icon"><use href="#svg-eye"></use></svg> 主播状态</div>
+        <svg class="card-chevron"><use href="#svg-chevron-up"></use></svg>
+      </div>
+      <div class="card-body" id="card-host-body">
+        <div class="host-top">
+          <div class="host-avatar" id="host-avatar">?</div>
+          <div class="host-meta">
+            <div class="host-name" id="host-name">待定</div>
+            <div class="host-identity" id="host-identity">身份未知</div>
+            <div class="host-thought" id="host-thought">...</div>
+          </div>
+        </div>
+        <!-- Three-axis -->
+        <div class="axis-grid">
+          <div class="axis-item">
+            <div class="axis-label"><svg class="svg-icon axis-icon shield-icon"><use href="#svg-shield"></use></svg> 坚守度</div>
+            <div class="axis-bar-wrap"><div class="axis-bar" id="axis-坚守度-bar" style="width:100%"></div></div>
+            <div class="axis-num" id="axis-坚守度-num">100</div>
+          </div>
+          <div class="axis-item">
+            <div class="axis-label"><svg class="svg-icon axis-icon brain-icon"><use href="#svg-brain"></use></svg> 崩坏度</div>
+            <div class="axis-bar-wrap"><div class="axis-bar corruption" id="axis-崩坏度-bar" style="width:0%"></div></div>
+            <div class="axis-num" id="axis-崩坏度-num">0</div>
+          </div>
+          <div class="axis-item">
+            <div class="axis-label"><svg class="svg-icon axis-icon"><use href="#svg-heart"></use></svg> 服从度</div>
+            <div class="axis-bar-wrap"><div class="axis-bar obedience" id="axis-服从度-bar" style="width:0%"></div></div>
+            <div class="axis-num" id="axis-服从度-num">0</div>
+          </div>
+        </div>
+        <!-- Training levels -->
+        <div class="train-grid" id="train-grid"></div>
+        <!-- Clothing & Fetish -->
+        <div class="meta-row">
+          <div class="meta-tags" id="host-clothing"><span class="tag-label">服装:</span></div>
+          <div class="meta-tags" id="host-fetish"><span class="tag-label">性癖:</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Streaming Room -->
+    <div class="card" id="card-stream">
+      <div class="card-header expanded" data-target="card-stream-body">
+        <div class="card-title"><svg class="svg-icon"><use href="#svg-flame"></use></svg> 直播间</div>
+        <svg class="card-chevron"><use href="#svg-chevron-up"></use></svg>
+      </div>
+      <div class="card-body" id="card-stream-body">
+        <div class="stat-grid">
+          <div class="stat-item"><div class="stat-val" id="stream-duration">00:00:00</div><div class="stat-lbl">时长</div></div>
+          <div class="stat-item"><div class="stat-val" id="stream-viewers">0</div><div class="stat-lbl">在线</div></div>
+          <div class="stat-item"><div class="stat-val" id="stream-likes">0</div><div class="stat-lbl">点赞</div></div>
+          <div class="stat-item"><div class="stat-val gold" id="stream-gifts">0</div><div class="stat-lbl">礼物总额</div></div>
+        </div>
+        <div class="danmaku-box" id="danmaku-box">
+          <div class="danmaku-title">弹幕预览</div>
+          <div class="danmaku-list" id="danmaku-list"><span class="dim">暂无弹幕</span></div>
+        </div>
+        <div class="sc-box" id="sc-box">
+          <div class="sc-title"><svg class="svg-icon"><use href="#svg-star"></use></svg> 超级留言</div>
+          <div class="sc-list" id="sc-list"><span class="dim">暂无</span></div>
+        </div>
+        <div class="sc-box" id="gift-box">
+          <div class="sc-title"><svg class="svg-icon"><use href="#svg-gift"></use></svg> 礼物记录</div>
+          <div class="sc-list" id="gift-list"><span class="dim">暂无</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Operations -->
+    <div class="card" id="card-ops">
+      <div class="card-header" data-target="card-ops-body">
+        <div class="card-title"><svg class="svg-icon"><use href="#svg-coin"></use></svg> 运营</div>
+        <svg class="card-chevron"><use href="#svg-chevron-up"></use></svg>
+      </div>
+      <div class="card-body" id="card-ops-body">
+        <div class="stat-grid">
+          <div class="stat-item"><div class="stat-val gold" id="ops-coins">0</div><div class="stat-lbl">性币</div></div>
+          <div class="stat-item"><div class="stat-val" id="ops-fans">0</div><div class="stat-lbl">粉丝</div></div>
+        </div>
+        <div class="section-title"><svg class="svg-icon"><use href="#svg-box"></use></svg> 已持有道具</div>
+        <div class="item-grid" id="item-grid"><span class="dim">无</span></div>
+        <div class="section-title"><svg class="svg-icon"><use href="#svg-shopping-cart"></use></svg> 商店价格表</div>
+        <div class="shop-grid" id="shop-grid"></div>
+      </div>
+    </div>
+
+    <!-- System Log -->
+    <div class="card" id="card-log">
+      <div class="card-header" data-target="card-log-body">
+        <div class="card-title"><svg class="svg-icon"><use href="#svg-list"></use></svg> 系统日志</div>
+        <svg class="card-chevron"><use href="#svg-chevron-up"></use></svg>
+      </div>
+      <div class="card-body" id="card-log-body">
+        <div class="log-list" id="log-list"><span class="dim">暂无事件</span></div>
+      </div>
+    </div>
+  </div>
+  <script type="module">
+(() => {
+  'use strict';
+
+  let currentMsgId = null;
+
+  function getStatData() {
+    try {
+      const r = currentMsgId != null
+        ? Mvu.getMvuData({ type: 'message', message_id: currentMsgId })
+        : Mvu.getMvuData({ type: 'message' });
+      const sd = r && r.stat_data;
+      if (sd && Object.keys(sd).length > 0) return sd;
+    } catch {}
+    try {
+      const r = Mvu.getMvuData({ type: 'message', message_id: -1 });
+      const sd = r && r.stat_data;
+      if (sd && Object.keys(sd).length > 0) return sd;
+    } catch {}
+    return {};
+  }
+
+  function get(obj, path, fallback) {
+    try {
+      const keys = String(path).split('.');
+      let cur = obj;
+      for (const k of keys) {
+        if (cur == null || typeof cur !== 'object') return fallback;
+        cur = cur[k];
+      }
+      return cur !== undefined ? cur : fallback;
+    } catch { return fallback }
+  }
+
+  function setText(id, text) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text;
+  }
+
+  const trainKeys = ['屁眼开发度','乳头开发度','口腔开发度','阴茎开发度','淫语开发度','露出开发度','敏感体质','身体记忆'];
+
+  function render() {
+    const s = getStatData();
+    if (!s || Object.keys(s).length === 0) return;
+
+    const world = get(s, '世界', {});
+    const global_ = get(s, '全局', {});
+    const hostId = get(global_, '当前主播ID', 'host_0');
+    const host = get(s, `主播池.${hostId}`, {});
+    const ops = get(s, '运营号', {});
+    const stream = get(s, '直播间', {});
+    const shop = get(s, '商店', {});
+    const logs = get(s, '系统日志', []);
+
+    // Header
+    setText('current-host-id', hostId);
+    setText('world-time', get(world, '当前时间', '--').slice(11, 16) || get(world, '当前时间', '--'));
+    setText('world-date', get(world, '当前时间', '----').slice(0, 10) || '----');
+    setText('hdr-location', get(world, '当前地点', '未知'));
+    setText('hdr-weather', `${get(world, '天气', '--')} ${get(world, '温度', '')}°C`);
+    setText('hdr-viewers', get(stream, '在线人数', 0));
+    setText('hdr-coins', get(ops, '账户资产.性币', 0));
+
+    // Host info
+    setText('host-avatar', (get(host, '基本信息.名字', '?') || '?')[0]);
+    setText('host-name', get(host, '基本信息.名字', '待定'));
+    setText('host-identity', `${get(host, '基本信息.身份', '身份未知')} · ${get(host, '基本信息.性别', '?')}${get(host, '基本信息.年龄', '')}`);
+    setText('host-thought', get(host, '内心想法', '...'));
+
+    // Three-axis
+    const cs = get(host, '核心状态', {});
+    ['坚守度','崩坏度','服从度'].forEach(k => {
+      const v = Math.min(100, Math.max(0, Number(get(cs, k, 0)) || 0));
+      setText(`axis-${k}-num`, v);
+      const bar = document.getElementById(`axis-${k}-bar`);
+      if (bar) bar.style.width = `${v}%`;
+    });
+
+    // Training
+    const train = get(host, '调教开发', {});
+    const tg = document.getElementById('train-grid');
+    if (tg) {
+      tg.innerHTML = trainKeys.map(k => {
+        const v = Math.min(100, Math.max(0, Number(get(train, k, 0)) || 0));
+        return `<div class="train-item"><span class="train-label">${k}</span><div class="train-bar-wrap"><div class="train-bar" style="width:${v}%"></div></div><span class="train-num">${v}</span></div>`;
+      }).join('');
+    }
+
+    // Clothing & Fetish
+    const clothing = get(host, '服装信息', {});
+    const fetish = get(host, '性癖', {});
+    const clothEl = document.getElementById('host-clothing');
+    const fetEl = document.getElementById('host-fetish');
+    if (clothEl) {
+      const items = Object.entries(clothing).map(([k,v]) => `${k}:${v}`).join(', ');
+      clothEl.innerHTML = `<span class="tag-label">服装:</span> ${items || '无'}`;
+    }
+    if (fetEl) {
+      const fets = Object.keys(fetish).join(', ');
+      fetEl.innerHTML = `<span class="tag-label">性癖:</span> ${fets || '无'}`;
+    }
+
+    // Stream
+    setText('stream-duration', get(stream, '直播时长', '00:00:00'));
+    setText('stream-viewers', get(stream, '在线人数', 0));
+    setText('stream-likes', get(stream, '点赞数', 0));
+    setText('stream-gifts', get(stream, '礼物总额', 0));
+
+    // Danmaku
+    const dm = get(stream, '弹幕', []);
+    const dl = document.getElementById('danmaku-list');
+    if (dl) {
+      if (dm.length === 0) {
+        dl.innerHTML = '<span class="dim">暂无弹幕</span>';
+      } else {
+        dl.innerHTML = dm.slice(-8).map(d =>
+          `<div><span class="dm-sender">${d.发送者||'观众'}:</span> ${d.内容||''}</div>`
+        ).join('');
+      }
+    }
+
+    // Super chats — 兼容 record 格式和扁平合并格式
+    const sc = get(stream, '超级留言', {});
+    const scl = document.getElementById('sc-list');
+    if (scl) {
+      let scItems;
+      if (sc.发送者) {
+        // 扁平合并格式（AI 误用 2 参数 insert）
+        scItems = [sc];
+      } else {
+        scItems = Object.values(sc);
+      }
+      if (scItems.length === 0) {
+        scl.innerHTML = '<span class="dim">暂无</span>';
+      } else {
+        scl.innerHTML = scItems.slice(-5).map(item =>
+          `<div class="sc-item"><span class="sc-sender">${item.发送者||'匿名'}</span><span class="sc-amount">¥${item.金额||item.价值||0}</span><div class="sc-text">${item.内容||''}</div></div>`
+        ).join('');
+      }
+    }
+
+    // Gift records — 兼容 record 格式和扁平合并格式
+    const gr = get(stream, '礼物记录', {});
+    const gl = document.getElementById('gift-list');
+    if (gl) {
+      let grItems;
+      if (gr.发送者) {
+        grItems = [gr];
+      } else {
+        grItems = Object.values(gr);
+      }
+      if (grItems.length === 0) {
+        gl.innerHTML = '<span class="dim">暂无</span>';
+      } else {
+        grItems = grItems.slice(-5).map(item =>
+          `<div class="gift-item"><span class="gift-sender">${item.发送者||'匿名'}</span><span class="gift-name">${item.礼物名||'礼物'}</span><span class="gift-amount">¥${item.价值||0}</span></div>`
+        ).join('');
+        gl.innerHTML = grItems;
+      }
+    }
+
+    // Ops
+    setText('ops-coins', get(ops, '账户资产.性币', 0));
+    setText('ops-fans', get(ops, '人气数据.粉丝数量', 0));
+
+    // Items
+    const items = get(ops, '持有道具', {});
+    const ig = document.getElementById('item-grid');
+    if (ig) {
+      const entries = Object.entries(items);
+      if (entries.length === 0) {
+        ig.innerHTML = '<span class="dim">无</span>';
+      } else {
+        ig.innerHTML = entries.map(([id, item]) =>
+          `<span class="inv-item">${item.名称||id}</span>`
+        ).join('');
+      }
+    }
+
+    // Shop
+    const sg = document.getElementById('shop-grid');
+    if (sg) {
+      const shopItems = Object.entries(shop);
+      if (shopItems.length === 0) {
+        sg.innerHTML = '<span class="dim">暂无上架</span>';
+      } else {
+        sg.innerHTML = shopItems.map(([id, item]) =>
+          `<span class="shop-item"><span class="sname">${item.名称||id}</span> <span class="price">¥${item.价格||0}</span> <span class="scat">${item.分类||''}</span></span>`
+        ).join('');
+      }
+    }
+
+    // Logs
+    const ll = document.getElementById('log-list');
+    if (ll) {
+      const arr = Array.isArray(logs) ? logs : [];
+      if (arr.length === 0) {
+        ll.innerHTML = '<span class="dim">暂无事件</span>';
+      } else {
+        ll.innerHTML = arr.slice(-10).map(l =>
+          `<div class="log-item"><span class="log-time">${l.时间||''}</span><span class="log-type">${l.事件类型||''}</span><span class="log-desc">${l.描述||''}</span></div>`
+        ).join('');
+      }
+    }
+  }
+
+  /* Collapsible panels */
+  function initPanels() {
+    document.querySelectorAll('.card-header').forEach(h => {
+      h.addEventListener('click', () => {
+        h.classList.toggle('expanded');
+        const body = h.nextElementSibling;
+        if (body && body.classList.contains('card-body')) {
+          body.style.display = h.classList.contains('expanded') ? '' : 'none';
+        }
+        try { localStorage.setItem('zs_panels', JSON.stringify(
+          [...document.querySelectorAll('.card-header')].map(el => el.classList.contains('expanded'))
+        )); } catch {}
+      });
+    });
+    try {
+      const saved = JSON.parse(localStorage.getItem('zs_panels'));
+      if (saved) {
+        document.querySelectorAll('.card-header').forEach((h, i) => {
+          if (saved[i] === false) {
+            h.classList.remove('expanded');
+            const body = h.nextElementSibling;
+            if (body && body.classList.contains('card-body')) body.style.display = 'none';
+          }
+        });
+      }
+    } catch {}
+  }
+
+  /* Theme */
+  function initTheme() {
+    const app = document.getElementById('app');
+    try {
+      const th = localStorage.getItem('zs_theme') || 'theme-livestream';
+      const dark = localStorage.getItem('zs_dark');
+      app.className = 'dashboard ' + th;
+      const addDark = dark === '1' || (dark === null && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      if (addDark) { app.classList.add('dark'); document.documentElement.classList.add('dark'); }
+      else { app.classList.remove('dark'); document.documentElement.classList.remove('dark'); }
+    } catch {}
+    const btn = document.getElementById('toggle-theme');
+    if (btn) btn.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+      app.classList.toggle('dark');
+      const isDark = document.documentElement.classList.contains('dark');
+      try { localStorage.setItem('zs_dark', isDark ? '1' : '0'); } catch {}
+    });
+  }
+
+  /* Init */
+  function init() {
+    initTheme();
+    initPanels();
+    render();
+    setInterval(render, 3000);
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+
+</script>
+</body>
+</html>
