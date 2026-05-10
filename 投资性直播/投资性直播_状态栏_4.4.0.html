@@ -2206,7 +2206,7 @@
         }
         prevGifts = gifts;
 
-        const scs = _.values(_.get(s, '直播间.超级留言', {}));
+        const scs = _.values(_.omit(_.get(s, '直播间.超级留言', {}), '_seed'));
         q('#list-sc').innerHTML = scs.length > 0
           ? scs.slice(-5).map(sc => {
               const timeStr = sc.$time ? `<span class="msg-time">${sc.$time.slice(11,19)}</span>` : '';
@@ -2227,7 +2227,7 @@
             }).join('')
           : '<div class="empty-state"><div class="empty-state-icon"><i class="fa-solid fa-pen-to-square"></i></div>暂无弹幕</div>';
 
-        const giftLog = _.values(_.get(s, '直播间.礼物记录', {}));
+        const giftLog = _.values(_.omit(_.get(s, '直播间.礼物记录', {}), '_seed'));
         if (giftLog.length > 0) {
           q('#gift-log-section').style.display = 'block';
           q('#list-gifts').innerHTML = giftLog.slice(-3).map(g =>
