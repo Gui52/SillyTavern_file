@@ -2195,7 +2195,6 @@
         q('#val-likes').textContent = formatNumber(likes);
         q('#val-gifts').textContent = formatNumber(gifts);
 
-        // Animated delta — if gifts changed
         if (prevGifts !== null && gifts > prevGifts) {
           const delta = gifts - prevGifts;
           q('#val-gifts-delta').textContent = `+${formatNumber(delta)}`;
@@ -2207,7 +2206,6 @@
         }
         prevGifts = gifts;
 
-        // Super Chats
         const scs = _.values(_.get(s, '直播间.超级留言', {}));
         q('#list-sc').innerHTML = scs.length > 0
           ? scs.slice(-5).map(sc => {
@@ -2221,7 +2219,6 @@
             }).join('')
           : '<div class="empty-state"><div class="empty-state-icon"><i class="fa-solid fa-comment"></i></div>暂无超级留言</div>';
 
-        // Danmaku
         const dms = _.get(s, '直播间.弹幕', []);
         q('#list-dm').innerHTML = dms.length > 0
           ? dms.slice(-10).map(d => {
@@ -2230,7 +2227,6 @@
             }).join('')
           : '<div class="empty-state"><div class="empty-state-icon"><i class="fa-solid fa-pen-to-square"></i></div>暂无弹幕</div>';
 
-        // Gift log — latest 3
         const giftLog = _.values(_.get(s, '直播间.礼物记录', {}));
         if (giftLog.length > 0) {
           q('#gift-log-section').style.display = 'block';
@@ -2261,7 +2257,6 @@
           ? tags.map(t => `<span class="tag">${escHtml(t)}</span>`).join('')
           : '<span style="color:var(--text-muted);font-size:0.78em;">无</span>';
 
-        // 平台认知指示器
         const cog = _.get(host, '主播认知', {});
         const isKnown = _.get(cog, '是否知情', false);
         const cogTime = _.get(cog, '认知突破时间', '');
@@ -2282,7 +2277,6 @@
           cogTimeEl.style.display = 'none';
         }
 
-        // 三轴状态
         const stick = _.clamp(_.get(host, '核心状态.坚守度', 100), 0, 100);
         const ruin = _.clamp(_.get(host, '核心状态.崩坏度', 0), 0, 100);
         const obey = _.clamp(_.get(host, '核心状态.服从度', 0), 0, 100);
@@ -2291,7 +2285,6 @@
         q('#val-ruin').textContent = `${ruin}%`;
         q('#val-obey').textContent = `${obey}%`;
 
-        // 坚守度进度条
         const barStick = q('#bar-stick');
         barStick.style.width = `${stick}%`;
         barStick.className = 'pbar-fill';
@@ -2299,7 +2292,6 @@
         else if (stick <= 60) barStick.classList.add('gold');
         else barStick.classList.add('accent');
 
-        // 崩坏度进度条
         const barRuin = q('#bar-ruin');
         barRuin.style.width = `${ruin}%`;
         barRuin.className = 'pbar-fill';
@@ -2307,7 +2299,6 @@
         else if (ruin >= 30) barRuin.classList.add('gold');
         else barRuin.classList.add('accent');
 
-        // 服从度进度条
         const barObey = q('#bar-obey');
         barObey.style.width = `${obey}%`;
         barObey.className = 'pbar-fill';
@@ -2315,7 +2306,6 @@
         else if (obey >= 40) barObey.classList.add('gold');
         else barObey.classList.add('accent');
 
-        // Inner thoughts
         q('#val-mind').textContent = _.get(host, '内心想法', '暂无想法');
         if (_.get(host, '内心想法', '') === '') {
           q('#val-mind').textContent = '暂无想法';
@@ -2324,7 +2314,6 @@
           q('#val-mind').style.color = '';
         }
 
-        // Clothing — dynamic iteration
         const clothes = _.get(host, '服装信息', {});
         const entries = Object.entries(clothes);
         q('#list-clothes').innerHTML = entries.length > 0
@@ -2333,7 +2322,6 @@
             ).join('')
           : '<li style="color:var(--text-muted);justify-content:center;">未穿着任何衣物</li>';
 
-        // Fetishes
         const fetish = _.get(host, '性癖', {});
         const fetishEntries = Object.entries(fetish);
         q('#list-fetish').innerHTML = fetishEntries.length > 0
@@ -2344,7 +2332,6 @@
 
         drawRadar(host);
 
-        // Sync cheat inputs
         const coins = _.get(s, '运营号.账户资产.性币', 0);
         const fans = _.get(s, '运营号.人气数据.粉丝数量', 0);
         const ci = q('#cheat-coins'); if (ci && document.activeElement !== ci) ci.value = coins;
@@ -2374,7 +2361,6 @@
         const cx = 130, cy = 130, R = 95, n = 8, off = -Math.PI / 2;
         let html = '';
 
-        // Grid pentagons
         for (let lv = 1; lv <= 5; lv++) {
           const r = (R / 5) * lv;
           const pts = Array.from({length: n}, (_, i) => {
@@ -2384,13 +2370,11 @@
           html += `<polygon points="${pts}" class="radar-grid"/>`;
         }
 
-        // Axes
         for (let i = 0; i < n; i++) {
           const a = off + (2 * Math.PI * i) / n;
           html += `<line x1="${cx}" y1="${cy}" x2="${cx + R * Math.cos(a)}" y2="${cy + R * Math.sin(a)}" class="radar-axis"/>`;
         }
 
-        // Data area
         const dataPts = values.map((v, i) => {
           const a = off + (2 * Math.PI * i) / n;
           const r = (v / 100) * R;
@@ -2398,13 +2382,11 @@
         });
         html += `<polygon points="${dataPts.join(' ')}" class="radar-area"/>`;
 
-        // Dots
         dataPts.forEach(p => {
           const [x, y] = p.split(',');
           html += `<circle cx="${x}" cy="${y}" r="5" class="radar-dot"/>`;
         });
 
-        // Labels
         values.forEach((v, i) => {
           const a = off + (2 * Math.PI * i) / n;
           const lr = R + 18;
@@ -2422,7 +2404,6 @@
         q('#val-coins').textContent = formatNumber(coins);
         q('#val-fans').textContent = formatNumber(fans);
 
-        // Deltas
         if (prevCoins !== null && coins !== prevCoins) {
           const delta = coins - prevCoins;
           const el = q('#val-coins-delta');
@@ -2447,25 +2428,14 @@
         renderDescentPanel(s);
       }
 
-
-
-      /* ─── Rules Tab ─── */
+      /* ─── Rules Tab (v4.4: 已部署规则 = {宇宙ID: {规则键: {规则内容, 购买时间}}} ─── */
       function renderRulesTab(s) {
         const universeRules = _.get(s, '运营号.已部署规则', {});
-        const hostId = _.get(s, '全局.当前主播ID', 'host_1');
-        // 尝试找当前宇宙的规则（取第一个非空key，或当前主播所在宇宙）
         const universeIds = Object.keys(universeRules);
-        let currentUniverse = '';
-        // 从主播关联或存档推断当前宇宙ID
-        const associations = _.get(s, '全局.主播关联', {});
-        const assoc = associations[hostId];
-        if (assoc && assoc.length > 0 && assoc[0].目标主播ID) {
-          // 尝试从关联关系找世界观ID - 简化处理：取第一个关联的世界观
-        }
-        // 取第一个有规则的宇宙，或空显示
         const activeUniverse = universeIds[0] || '当前宇宙';
-        const rules = universeRules[activeUniverse] || [];
-        const count = rules.length;
+        const rulesObj = universeRules[activeUniverse] || {};
+        const ruleEntries = Object.entries(rulesObj);
+        const count = ruleEntries.length;
 
         const container = q('#rules-list');
         const label = q('#rule-count-label');
@@ -2474,44 +2444,44 @@
         if (!container) return;
         if (count === 0) {
           container.innerHTML = '<div class="empty-state"><div class="empty-state-icon"><i class="fa-solid fa-gavel"></i></div>当前宇宙尚未部署规则</div>';
+          deployBtnState(false);
           return;
         }
 
-        container.innerHTML = rules.map((rule, idx) => {
+        container.innerHTML = ruleEntries.map(([ruleKey, rule]) => {
           const timeStr = rule.购买时间 ? rule.购买时间.slice(0, 16) : '';
-          return `<div class="item-card" data-rule-idx="${idx}" data-universe="${escHtml(activeUniverse)}">
+          return `<div class="item-card" data-rule-key="${escHtml(ruleKey)}" data-universe="${escHtml(activeUniverse)}">
             <div class="item-info" style="flex:1;">
               <div class="item-header">
-                <span class="item-name" style="font-size:0.95em;">规则 #${idx+1}</span>
+                <span class="item-name" style="font-size:0.95em;">规则</span>
                 <span class="shop-tag type-timed">宇宙规则</span>
               </div>
               <div style="font-size:0.84em;color:var(--text-primary);margin-top:4px;line-height:1.4;white-space:pre-wrap;">${escHtml(rule.规则内容 || '')}</div>
               ${timeStr ? `<div style="font-size:0.7em;color:var(--text-muted);margin-top:4px;">部署时间: ${escHtml(timeStr)}</div>` : ''}
             </div>
-            <button class="btn btn-sm btn-outline" data-action="delete-rule" data-rule-idx="${idx}" data-universe="${escHtml(activeUniverse)}" style="color:var(--danger);border-color:var(--danger);">
+            <button class="btn btn-sm btn-outline" data-action="delete-rule" data-rule-key="${escHtml(ruleKey)}" data-universe="${escHtml(activeUniverse)}" style="color:var(--danger);border-color:var(--danger);">
               <i class="fa-solid fa-trash-can"></i> 删除
             </button>
           </div>`;
         }).join('');
 
-        // 检查当前宇宙是否已满
-        const deployBtn = q('#rule-deploy-btn');
-        const statusMsg = q('#rule-status-msg');
-        if (deployBtn) {
-          if (count >= 3) {
-            deployBtn.disabled = true;
-            deployBtn.style.opacity = '0.4';
-            if (statusMsg) statusMsg.textContent = '该宇宙规则已达上限（3条），请先删除一条';
-          } else {
-            deployBtn.disabled = false;
-            deployBtn.style.opacity = '';
-            if (statusMsg) statusMsg.textContent = '';
-          }
-        }
+        deployBtnState(count >= 3);
       }
 
-      /* ─── Shop Tab ─── */
-
+      function deployBtnState(atLimit) {
+        const deployBtn = q('#rule-deploy-btn');
+        const statusMsg = q('#rule-status-msg');
+        if (!deployBtn) return;
+        if (atLimit) {
+          deployBtn.disabled = true;
+          deployBtn.style.opacity = '0.4';
+          if (statusMsg) statusMsg.textContent = '该宇宙规则已达上限（3条），请先删除一条';
+        } else {
+          deployBtn.disabled = false;
+          deployBtn.style.opacity = '';
+          if (statusMsg) statusMsg.textContent = '';
+        }
+      }
 
       /* ═══════════════════════════════════════════════════════════
          Helpers
@@ -2545,6 +2515,11 @@
 
       function resolveCheatPath(path, hostId) {
         return path.replace('{id}', hostId);
+      }
+
+      function getCurrentUniverse(allData) {
+        const universeRules = _.get(allData, 'stat_data.运营号.已部署规则', {});
+        return Object.keys(universeRules)[0] || 'current';
       }
 
       /* ═══════════════════════════════════════════════════════════
@@ -2586,8 +2561,6 @@
           toastr.success(`${path.split('.').pop()} ${delta > 0 ? '+' : ''}${delta} = ${final}`);
         } catch (e) { console.error('cheatDelta error:', e); toastr.error('操作失败'); }
       }
-
-
 
       /* ─── Descent ─── */
       function doDescent() {
@@ -2719,14 +2692,17 @@
 
         all.stat_data.运营号.账户资产.性币 = coins - amount;
         const localCoins = amount * 100;
-        // 转换后的本地货币不存储在变量中，而是由 AI 在叙事中自然体现
 
         Mvu.replaceMvuData(all, { type: 'message', message_id: currentMsgId });
         scheduleRender();
         toastr.success(`已转换 ${amount} 性币 → ${localCoins.toLocaleString()} 本地货币`);
       }
 
-      /* ─── Rules Deploy & Delete ─── */
+      /* ─── Rules Deploy & Delete (v4.4: 已部署规则 = {宇宙ID: {规则键: {规则内容, 购买时间}}} ─── */
+      function generateRuleKey() {
+        return 'rule_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 6);
+      }
+
       function deployRule() {
         const input = q('#rule-input');
         if (!input) return;
@@ -2738,19 +2714,19 @@
         const coins = _.get(s, '运营号.账户资产.性币', 0);
         if (coins < 50000) { toastr.error('性币不足，部署规则需要50,000性币'); return; }
 
-        const universeRules = _.get(s, '运营号.已部署规则', {});
-        const universeIds = Object.keys(universeRules);
-        const currentUniverse = universeIds[0] || 'current';
-        const currentRules = universeRules[currentUniverse] || [];
-        if (currentRules.length >= 3) { toastr.error('当前宇宙规则已达上限（3条），请先删除一条'); return; }
+        const universe = getCurrentUniverse(all);
+        const rulesObj = _.get(all.stat_data, ['运营号.已部署规则', universe], {});
+        if (Object.keys(rulesObj).length >= 3) { toastr.error('当前宇宙规则已达上限（3条），请先删除一条'); return; }
 
         all.stat_data.运营号.账户资产.性币 = coins - 50000;
         if (!all.stat_data.运营号.已部署规则) all.stat_data.运营号.已部署规则 = {};
-        if (!all.stat_data.运营号.已部署规则[currentUniverse]) all.stat_data.运营号.已部署规则[currentUniverse] = [];
-        all.stat_data.运营号.已部署规则[currentUniverse].push({
+        if (!all.stat_data.运营号.已部署规则[universe]) all.stat_data.运营号.已部署规则[universe] = {};
+
+        const ruleKey = generateRuleKey();
+        all.stat_data.运营号.已部署规则[universe][ruleKey] = {
           规则内容: ruleText,
           购买时间: getMvuTime(all) || formatNow(),
-        });
+        };
 
         Mvu.replaceMvuData(all, { type: 'message', message_id: currentMsgId });
         input.value = '';
@@ -2758,16 +2734,15 @@
         toastr.success('规则已部署！消耗50,000性币。AI将在下一轮叙事中遵循该规则。');
       }
 
-      function deleteRule(universe, idx) {
+      function deleteRule(universe, ruleKey) {
         if (!confirm('确认删除此规则？删除后不退款。')) return;
         const all = getMvuDataSafe({ type: 'message', message_id: currentMsgId });
         const universeRules = _.get(all.stat_data, '运营号.已部署规则', {});
-        const rules = universeRules[universe];
-        if (!rules || idx < 0 || idx >= rules.length) { toastr.error('规则不存在'); return; }
+        const rulesObj = universeRules[universe];
+        if (!rulesObj || !rulesObj[ruleKey]) { toastr.error('规则不存在'); return; }
 
-        const deletedText = rules[idx].规则内容 || '';
-        rules.splice(idx, 1);
-        if (rules.length === 0) delete universeRules[universe];
+        delete rulesObj[ruleKey];
+        if (Object.keys(rulesObj).length === 0) delete universeRules[universe];
         all.stat_data.运营号.已部署规则 = universeRules;
 
         Mvu.replaceMvuData(all, { type: 'message', message_id: currentMsgId });
@@ -2781,7 +2756,6 @@
         const wrap = q('.host-switch-wrap');
         if (!wrap) return;
 
-        // 【优化】始终显示按钮，即使存档为空
         wrap.style.display = 'flex';
 
         const archiveEntries = Object.entries(archive);
@@ -2794,10 +2768,8 @@
         const hostDropdown = q('#host-dropdown');
         if (!hostDropdown) return;
 
-        // 按钮文字显示存档数量
         q('#host-switch-btn').innerHTML = `<i class="fa-solid fa-right-left"></i> 切换 (${archiveEntries.length})`;
 
-        // 无存档时显示空状态提示
         if (archiveEntries.length === 0) {
           hostDropdown.innerHTML = `<div class="host-dropdown-item disabled" style="justify-content:center; cursor:default;">
             <div class="host-name" style="text-align:center;">📭 暂无其他主播存档</div>
@@ -2843,7 +2815,6 @@
         await waitUntil(() => _.has(getVariables({type: 'message'}), 'stat_data'));
         currentMsgId = (() => { try { return SillyTavern.getContext().getCurrentMessageId(); } catch(e) {} try { return document.querySelector('#mvu-status-bar')?.closest('.mes')?.dataset?.messageId; } catch(e) {} return null; })();
 
-        // Restore cached theme & dark mode
         try {
           const savedTheme = localStorage.getItem('mvu_theme');
           if (savedTheme) {
@@ -2860,38 +2831,27 @@
           }
         } catch (e) {}
 
-        // ── Global one-time event delegation ──
         if (!window.__mvuEventsSetup) {
           window.__mvuEventsSetup = true;
 
           document.addEventListener('click', e => {
-            // Tab switching
             const navItem = e.target.closest('.nav-item');
             if (navItem) switchTab(navItem.dataset.tab);
 
-            // Theme card
             const themeCard = e.target.closest('.theme-card');
             if (themeCard) switchTheme(themeCard.dataset.theme);
 
-            // Dark toggle
             if (e.target.closest('#dark-toggle')) toggleDark();
 
-            // Cheat: coins set
             if (e.target.closest('#cheat-coins-set')) cheatSet('运营号.账户资产.性币', 'cheat-coins', v => Math.max(0, v));
-            // Cheat: coins add
             if (e.target.closest('#cheat-coins-add')) cheatDelta('运营号.账户资产.性币', 'cheat-coins', 100);
-            // Cheat: coins sub
             if (e.target.closest('#cheat-coins-sub')) cheatDelta('运营号.账户资产.性币', 'cheat-coins', -100);
-            // Cheat: fans set
             if (e.target.closest('#cheat-fans-set')) cheatSet('运营号.人气数据.粉丝数量', 'cheat-fans', v => Math.max(0, v));
-            // Cheat: 三轴设置
             if (e.target.closest('#cheat-stick-set')) cheatSet('主播池.{id}.核心状态.坚守度', 'cheat-stick', v => _.clamp(v, 0, 100));
             if (e.target.closest('#cheat-ruin-set')) cheatSet('主播池.{id}.核心状态.崩坏度', 'cheat-ruin', v => _.clamp(v, 0, 100));
             if (e.target.closest('#cheat-obey-set')) cheatSet('主播池.{id}.核心状态.服从度', 'cheat-obey', v => _.clamp(v, 0, 100));
-            // Currency convert
             if (e.target.closest('#cheat-convert-btn')) convertCurrency();
 
-            // Live update convert result
             const convertInput = e.target.closest('#cheat-convert-coins');
             if (convertInput) {
               const val = parseInt(convertInput.value, 10) || 0;
@@ -2899,32 +2859,26 @@
               if (result) result.textContent = (val * 100).toLocaleString();
             }
 
-            // Cheat collapsible
             if (e.target.closest('#cheat-header')) {
               document.querySelectorAll('#cheat-header, #cheat-body').forEach(el => el.classList.toggle('collapsed'));
             }
 
-            // Descent
             if (e.target.closest('#descent-btn')) doDescent();
 
-            // Rule deploy
             if (e.target.closest('#rule-deploy-btn')) deployRule();
 
-            // Rule delete
             if (e.target.closest('[data-action="delete-rule"]')) {
               const btn = e.target.closest('[data-action="delete-rule"]');
-              const idx = parseInt(btn.dataset.ruleIdx, 10);
+              const ruleKey = btn.dataset.ruleKey;
               const universe = btn.dataset.universe;
-              if (!isNaN(idx)) deleteRule(universe, idx);
+              if (ruleKey) deleteRule(universe, ruleKey);
             }
 
-            // Host switch toggle
             if (e.target.closest('#host-switch-btn')) {
               q('#host-dropdown').classList.toggle('show');
               return;
             }
 
-            // Host switch — select host
             const hostItem = e.target.closest('.host-dropdown-item');
             if (hostItem) {
               const hostId = hostItem.dataset.hostId;
@@ -2941,13 +2895,11 @@
               return;
             }
 
-            // Close host dropdown when clicking outside
             if (!e.target.closest('.host-switch-wrap')) {
               q('#host-dropdown')?.classList.remove('show');
             }
           });
 
-          // Ctrl+Shift+K easter egg
           document.addEventListener('keydown', e => {
             if (e.ctrlKey && e.shiftKey && e.key === 'K') {
               e.preventDefault();
@@ -2959,7 +2911,6 @@
         renderData();
         (() => { try { SillyTavern.getContext().eventOn(Mvu.events.VARIABLE_UPDATE_ENDED, () => scheduleRender()); } catch(e) { try { Mvu?.events?.on?.(Mvu.events.VARIABLE_UPDATE_ENDED, () => scheduleRender()); } catch(e2) { console.warn('StatusBar: cannot subscribe to VARIABLE_UPDATE_ENDED'); } } })();
 
-        // Fallback render for late-arriving variable data
         setTimeout(() => scheduleRender(), 500);
       }
 
