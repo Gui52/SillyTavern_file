@@ -358,20 +358,11 @@ html, body {
 (() => {
   'use strict';
 
-  let currentMsgId = null;
-
   function getStatData() {
     try {
-      const r = currentMsgId != null
-        ? Mvu.getMvuData({ type: 'message', message_id: currentMsgId })
-        : Mvu.getMvuData({ type: 'message' });
+      const r = Mvu.getMvuData({ type: 'message', message_id: 'latest' });
       const sd = r && r.stat_data;
-      if (sd && Object.keys(sd).length > 0) return sd;
-    } catch {}
-    try {
-      const r = Mvu.getMvuData({ type: 'message', message_id: -1 });
-      const sd = r && r.stat_data;
-      if (sd && Object.keys(sd).length > 0) return sd;
+      if (sd && typeof sd === 'object' && Object.keys(sd).length > 0) return sd;
     } catch {}
     return {};
   }
