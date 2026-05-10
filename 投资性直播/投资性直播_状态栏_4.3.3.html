@@ -131,12 +131,12 @@ html, body {
 .axis-num { font-size: 12px; font-weight: 700; width: 30px; text-align: right; }
 
 /* Training grid */
-.train-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 12px; margin-bottom: 8px; }
-.train-item { display: flex; align-items: center; gap: 4px; }
-.train-label { font-size: 10px; color: var(--text-muted); width: 64px; flex-shrink: 0; }
-.train-bar-wrap { flex: 1; height: 8px; background: rgba(255,255,255,0.04); border-radius: 4px; overflow: hidden; }
+.train-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px 16px; margin-bottom: 8px; }
+.train-item { display: flex; align-items: center; gap: 6px; min-width: 0; }
+.train-label { font-size: 10px; color: var(--text-muted); white-space: nowrap; flex-shrink: 0; max-width: 60px; overflow: hidden; text-overflow: ellipsis; }
+.train-bar-wrap { flex: 1; min-width: 40px; height: 8px; background: rgba(255,255,255,0.04); border-radius: 4px; overflow: hidden; }
 .train-bar { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--accent), var(--corruption)); transition: width 0.5s ease; }
-.train-num { font-size: 10px; color: var(--text-sub); width: 24px; text-align: right; }
+.train-num { font-size: 10px; color: var(--text-sub); width: 24px; text-align: right; flex-shrink: 0; }
 
 /* Meta row */
 .meta-row { display: flex; flex-direction: column; gap: 4px; }
@@ -475,31 +475,43 @@ html, body {
       }
     }
 
-    // Super chats
+    // Super chats — 兼容 record 格式和扁平合并格式
     const sc = get(stream, '超级留言', {});
     const scl = document.getElementById('sc-list');
     if (scl) {
-      const scEntries = Object.entries(sc);
-      if (scEntries.length === 0) {
+      let scItems;
+      if (sc.发送者) {
+        // 扁平合并格式（AI 误用 2 参数 insert）
+        scItems = [sc];
+      } else {
+        scItems = Object.values(sc);
+      }
+      if (scItems.length === 0) {
         scl.innerHTML = '<span class="dim">暂无</span>';
       } else {
-        scl.innerHTML = scEntries.slice(-5).map(([id, item]) =>
+        scl.innerHTML = scItems.slice(-5).map(item =>
           `<div class="sc-item"><span class="sc-sender">${item.发送者||'匿名'}</span><span class="sc-amount">¥${item.金额||item.价值||0}</span><div class="sc-text">${item.内容||''}</div></div>`
         ).join('');
       }
     }
 
-    // Gift records
+    // Gift records — 兼容 record 格式和扁平合并格式
     const gr = get(stream, '礼物记录', {});
     const gl = document.getElementById('gift-list');
     if (gl) {
-      const grEntries = Object.entries(gr);
-      if (grEntries.length === 0) {
+      let grItems;
+      if (gr.发送者) {
+        grItems = [gr];
+      } else {
+        grItems = Object.values(gr);
+      }
+      if (grItems.length === 0) {
         gl.innerHTML = '<span class="dim">暂无</span>';
       } else {
-        gl.innerHTML = grEntries.slice(-5).map(([id, item]) =>
+        grItems = grItems.slice(-5).map(item =>
           `<div class="gift-item"><span class="gift-sender">${item.发送者||'匿名'}</span><span class="gift-name">${item.礼物名||'礼物'}</span><span class="gift-amount">¥${item.价值||0}</span></div>`
         ).join('');
+        gl.innerHTML = grItems;
       }
     }
 
