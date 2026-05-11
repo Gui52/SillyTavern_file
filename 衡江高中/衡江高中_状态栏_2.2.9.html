@@ -667,11 +667,34 @@ html, body {
 .guide-tab:hover { background: rgba(255,255,255,0.15); transform: translateY(-2px); }
 .guide-tab.active { background: rgba(255,255,255,0.9); color: var(--primary-dark); font-weight: 600; transform: scale(1.05); }
 
+.guide-tag-bar {
+  display: flex; gap: 4px; justify-content: center;
+  padding: 8px 16px 4px;
+  flex-wrap: wrap;
+}
+.guide-tag-btn {
+  padding: 3px 10px; border: 1px solid var(--border-color);
+  background: var(--card-bg); color: var(--text-sub); border-radius: 12px;
+  font-size: 11px; cursor: pointer; transition: all 0.25s ease;
+}
+.guide-tag-btn:hover { border-color: var(--primary-color); color: var(--primary-color); transform: scale(1.05); }
+.guide-tag-btn.active { background: var(--primary-color); color: #fff; border-color: var(--primary-color); font-weight: 600; }
+
 .guide-search {
   padding: 12px 16px;
   border-bottom: 1px solid var(--border-color);
   animation: searchIn 0.4s ease;
+  display: flex; align-items: center; gap: 8px;
 }
+.guide-search-input { flex: 1; }
+.guide-settings-btn {
+  width: 32px; height: 32px; border-radius: var(--radius-sm);
+  background: var(--card-bg); border: 1px solid var(--border-color);
+  color: var(--text-sub); cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s; flex-shrink: 0;
+}
+.guide-settings-btn:hover { border-color: var(--primary-color); color: var(--primary-color); transform: scale(1.1); }
+.guide-settings-btn .svg-icon { width: 16px; height: 16px; }
 @keyframes searchIn {
   from { opacity: 0; transform: translateY(-10px); }
   to { opacity: 1; transform: translateY(0); }
@@ -720,16 +743,7 @@ html, body {
 .guide-char-card:active { transform: translateY(-2px) scale(1.01); }
 .guide-char-card.unmet { opacity: 0.6; }
 
-.guide-char-avatar {
-  width: 48px; height: 48px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-  display: flex; align-items: center; justify-content: center;
-  font-size: 20px; font-weight: 700; color: #fff;
-  margin-bottom: 8px;
-  transition: transform 0.3s ease;
-}
-.guide-char-card:hover .guide-char-avatar { transform: scale(1.1) rotate(5deg); }
-.guide-char-card.unmet .guide-char-avatar { background: linear-gradient(135deg, var(--text-muted), var(--text-sub)); }
+.guide-char-card:hover .guide-char-avatar-wrap { transform: scale(1.1) rotate(5deg); }
 
 .guide-char-name { font-size: 13px; font-weight: 600; margin-bottom: 4px; transition: color 0.3s; }
 .guide-char-card:hover .guide-char-name { color: var(--primary-color); }
@@ -745,9 +759,83 @@ html, body {
 .guide-char-fav .svg-fav.svg-fav-empty { color: var(--text-muted); opacity: 0.4; }
 .guide-char-fav .svg-fav:hover { transform: scale(1.3); opacity: 1; }
 .guide-char-card { position: relative; }
+
+.guide-char-tags {
+  display: flex; flex-wrap: wrap; gap: 3px; justify-content: center;
+  margin-bottom: 4px;
+}
+.guide-char-tag {
+  font-size: 9px; padding: 1px 5px; border-radius: 6px;
+  background: var(--border-color); color: var(--text-muted);
+}
+
+.guide-char-avatar-wrap {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 8px; overflow: hidden;
+  transition: transform 0.3s ease;
+}
+.guide-char-card.unmet .guide-char-avatar-wrap { background: linear-gradient(135deg, var(--text-muted), var(--text-sub)); }
+.guide-char-card:hover .guide-char-avatar-wrap { transform: scale(1.1) rotate(5deg); }
+.guide-char-avatar-text {
+  font-size: 20px; font-weight: 700; color: #fff;
+}
+.guide-char-avatar-img {
+  width: 100%; height: 100%; object-fit: cover;
+}
+
+.guide-settings-modal-content {
+  max-width: 420px;
+  max-height: 75vh;
+  display: flex; flex-direction: column;
+  animation: modalSlideUp 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.guide-settings-header {
+  padding: 16px 20px 12px;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: #fff; position: relative;
+}
+.guide-settings-header .guide-title { font-size: 16px; font-weight: 700; text-align: center; margin-bottom: 0; }
+.guide-settings-body {
+  flex: 1; overflow-y: auto; padding: 16px;
+}
+.guide-settings-section {
+  margin-bottom: 20px; padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-color);
+}
+.guide-settings-section:last-child { border-bottom: none; margin-bottom: 0; }
+.guide-settings-section-title {
+  font-size: 13px; font-weight: 600; margin-bottom: 4px; color: var(--text-main);
+}
+.guide-settings-section-desc {
+  font-size: 11px; color: var(--text-muted); margin-bottom: 8px; line-height: 1.4;
+}
+.guide-settings-textarea {
+  width: 100%; height: 100px; padding: 8px;
+  background: var(--card-bg); border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm); color: var(--text-main);
+  font-size: 12px; font-family: monospace; resize: vertical; outline: none;
+}
+.guide-settings-textarea:focus { border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(56,178,232,0.15); }
+.guide-settings-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+.guide-settings-btn-import, .guide-settings-btn-export {
+  padding: 6px 14px; border-radius: var(--radius-sm);
+  background: var(--primary-color); color: #fff; border: none;
+  font-size: 12px; cursor: pointer; transition: all 0.2s;
+}
+.guide-settings-btn-import:hover, .guide-settings-btn-export:hover { background: var(--secondary-color); transform: translateY(-1px); }
+.guide-settings-btn-file, .guide-settings-btn-import-file {
+  padding: 6px 14px; border-radius: var(--radius-sm);
+  background: var(--card-bg); color: var(--text-main); border: 1px solid var(--border-color);
+  font-size: 12px; cursor: pointer; transition: all 0.2s;
+}
+.guide-settings-btn-file:hover, .guide-settings-btn-import-file:hover { border-color: var(--primary-color); color: var(--primary-color); }
+
 .guide-char-card.disabled { opacity: 0.45; filter: grayscale(0.7); }
 .guide-char-card.disabled:hover { opacity: 0.6; filter: grayscale(0.4); }
-.guide-char-card.disabled .guide-char-avatar { background: linear-gradient(135deg, var(--text-muted), var(--text-sub)); }
+.guide-char-card.disabled .guide-char-avatar-wrap { background: linear-gradient(135deg, var(--text-muted), var(--text-sub)); }
+.guide-char-card.disabled .guide-char-avatar-text { opacity: 0.5; }
 .guide-char-card.met .guide-char-relation { background: var(--accent-color); color: #fff; animation: relationGlow 2s ease infinite; }
 @keyframes relationGlow {
   0%, 100% { box-shadow: 0 0 2px var(--accent-color); }
@@ -1184,10 +1272,20 @@ html, body {
           <button class="guide-tab" data-filter="met">已相遇</button>
           <button class="guide-tab" data-filter="unmet">未相遇</button>
         </div>
+        <div class="guide-tag-bar" id="guide-tag-bar">
+          <button class="guide-tag-btn active" data-tag="all">全部</button>
+          <button class="guide-tag-btn" data-tag="正太">正太</button>
+          <button class="guide-tag-btn" data-tag="青年">青年</button>
+          <button class="guide-tag-btn" data-tag="成男">成男</button>
+          <button class="guide-tag-btn" data-tag="熟男">熟男</button>
+        </div>
       </div>
       <div class="guide-search">
         <svg class="svg-icon search-icon"><use href="#svg-search"></use></svg>
         <input type="text" class="guide-search-input" id="guide-search" placeholder="搜索角色名称...">
+        <button class="guide-settings-btn" id="guide-settings-btn" title="图鉴设置">
+          <svg class="svg-icon"><use href="#svg-bolt"></use></svg>
+        </button>
       </div>
       <div class="guide-body" id="guide-body">
         <div class="guide-char-grid" id="guide-char-grid"></div>
@@ -1196,6 +1294,44 @@ html, body {
             <svg class="svg-icon"><use href="#svg-search"></use></svg>
           </div>
           <div class="guide-empty-text">暂无匹配角色</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="guide-settings-modal">
+    <div class="modal-content guide-settings-modal-content" role="dialog" aria-modal="true">
+      <div class="guide-settings-header">
+        <button class="modal-close" id="guide-settings-close">
+          <svg class="svg-icon"><use href="#svg-close"></use></svg>
+        </button>
+        <h2 class="guide-title">
+          <svg class="svg-icon"><use href="#svg-bolt"></use></svg> 图鉴设置
+        </h2>
+      </div>
+      <div class="guide-settings-body">
+        <div class="guide-settings-section">
+          <h3 class="guide-settings-section-title">批量导入头像 (URL)</h3>
+          <p class="guide-settings-section-desc">每行一个，格式: 角色名,头像URL</p>
+          <textarea class="guide-settings-textarea" id="guide-avatar-url-input" placeholder="例如:&#10;顾朝阳,https://example.com/avatar1.png&#10;沈清越,https://example.com/avatar2.png"></textarea>
+          <div class="guide-settings-actions">
+            <button class="guide-settings-btn-import" id="guide-avatar-url-import">导入URL</button>
+          </div>
+        </div>
+        <div class="guide-settings-section">
+          <h3 class="guide-settings-section-title">批量导入头像 (文件)</h3>
+          <p class="guide-settings-section-desc">选择包含 JSON 文件的文件夹，每行一个头像</p>
+          <input type="file" id="guide-avatar-file-input" accept=".json" style="display:none">
+          <button class="guide-settings-btn-file" id="guide-avatar-file-btn">选择 JSON 文件</button>
+        </div>
+        <div class="guide-settings-section">
+          <h3 class="guide-settings-section-title">导出/导入图鉴数据</h3>
+          <p class="guide-settings-section-desc">包含头像URL、收藏、禁用状态，可用于备份或分享</p>
+          <div class="guide-settings-actions">
+            <button class="guide-settings-btn-export" id="guide-export-btn">导出配置</button>
+            <button class="guide-settings-btn-import-file" id="guide-import-btn">导入配置</button>
+          </div>
+          <input type="file" id="guide-import-file-input" accept=".json" style="display:none">
         </div>
       </div>
     </div>
@@ -1401,47 +1537,52 @@ html, body {
     setText('summary-social', getText('social-count'));
   }
 
+  const TAG_CATEGORIES = ['正太', '青年', '成男', '熟男'];
+  const AVATAR_KEY = 'hengjiang-avatars';
+  const EXPORT_KEY = 'hengjiang-guide-export';
+
   const allCharacters = [
-    { name: '顾朝阳', identity: '体育学院·体(1)班', age: 17 },
-    { name: '沈清越', identity: '数学老师·班主任', age: 28 },
-    { name: '陈默', identity: '文科学院·文(2)班', age: 17 },
-    { name: '林何', identity: '理科学院·理(3)班', age: 17 },
-    { name: '叶辞', identity: '文科学院', age: 16 },
-    { name: '顾盼', identity: '体育学院', age: 17 },
-    { name: '林宇', identity: '理科学院', age: 17 },
-    { name: '陆屿', identity: '体育学院', age: 17 },
-    { name: '陆时', identity: '文科学院', age: 17 },
-    { name: '江晏', identity: '副校长', age: 42 },
-    { name: '厉渊', identity: '警察', age: 30 },
-    { name: '周野', identity: '体育学院', age: 17 },
-    { name: '凌曜', identity: '体育学院', age: 18 },
-    { name: '秦放', identity: '理科学院', age: 17 },
-    { name: '石磊', identity: '体育学院', age: 17 },
-    { name: '温景辞', identity: '校医院', age: 26 },
-    { name: '萧立', identity: '理科学院', age: 17 },
-    { name: '谢书砚', identity: '文科学院·年级第一', age: 17 },
-    { name: '许知言', identity: '音乐学院', age: 18 },
-    { name: '时年', identity: '美术学院', age: 17 },
-    { name: '苏沐辰', identity: '物理老师', age: 32 },
-    { name: '季川', identity: '图书馆管理员', age: 35 },
-    { name: '方屿', identity: '美术老师', age: 29 },
-    { name: '裴烬', identity: '理科学院·年级第一', age: 18 },
-    { name: '纪淮', identity: '文科学院·班长', age: 17 },
-    { name: '白鹿', identity: '理科学院·跳级新生', age: 15 },
-    { name: '向南', identity: '体育学院·短跑特长生', age: 16 },
-    { name: '王铁柱', identity: '食堂', age: 45 },
-    { name: '杰克', identity: '交换生·橄榄球', age: 18 },
-    { name: '布雷迪', identity: '交换生·摔跤', age: 18 },
-    { name: '迪伦', identity: '交换生', age: 17 },
-    { name: '小野健太', identity: '交换生·棒球', age: 17 },
-    { name: '陆沉', identity: '教导主任', age: 38 },
-    { name: '顾衍', identity: '田径教练', age: 34 },
-    { name: '沈知远', identity: '校长', age: 55 },
-    { name: '柳善宇', identity: '体育学院·游泳', age: 17 },
+    { name: '顾朝阳', identity: '体育学院·体(1)班', age: 17, tags: ['青年', '体育生'], avatar: '' },
+    { name: '沈清越', identity: '数学老师·班主任', age: 28, tags: ['成男', '老师'], avatar: '' },
+    { name: '陈默', identity: '文科学院·文(2)班', age: 17, tags: ['青年', '糙汉'], avatar: '' },
+    { name: '林何', identity: '理科学院·理(3)班', age: 17, tags: ['青年'], avatar: '' },
+    { name: '叶辞', identity: '文科学院', age: 16, tags: ['正太'], avatar: '' },
+    { name: '顾盼', identity: '体育学院', age: 17, tags: ['青年', '体育生'], avatar: '' },
+    { name: '林宇', identity: '理科学院', age: 17, tags: ['青年'], avatar: '' },
+    { name: '陆屿', identity: '体育学院', age: 17, tags: ['青年', '体育生'], avatar: '' },
+    { name: '陆时', identity: '文科学院', age: 17, tags: ['青年'], avatar: '' },
+    { name: '江晏', identity: '副校长', age: 42, tags: ['熟男'], avatar: '' },
+    { name: '厉渊', identity: '警察', age: 30, tags: ['成男'], avatar: '' },
+    { name: '周野', identity: '体育学院', age: 17, tags: ['青年', '体育生'], avatar: '' },
+    { name: '凌曜', identity: '体育学院', age: 18, tags: ['青年', '体育生'], avatar: '' },
+    { name: '秦放', identity: '理科学院', age: 17, tags: ['青年'], avatar: '' },
+    { name: '石磊', identity: '体育学院', age: 17, tags: ['青年', '体育生', '糙汉'], avatar: '' },
+    { name: '温景辞', identity: '校医院', age: 26, tags: ['成男'], avatar: '' },
+    { name: '萧立', identity: '理科学院', age: 17, tags: ['青年'], avatar: '' },
+    { name: '谢书砚', identity: '文科学院·年级第一', age: 17, tags: ['青年'], avatar: '' },
+    { name: '许知言', identity: '音乐学院', age: 18, tags: ['青年'], avatar: '' },
+    { name: '时年', identity: '美术学院', age: 17, tags: ['青年'], avatar: '' },
+    { name: '苏沐辰', identity: '物理老师', age: 32, tags: ['成男', '老师'], avatar: '' },
+    { name: '季川', identity: '图书馆管理员', age: 35, tags: ['熟男'], avatar: '' },
+    { name: '方屿', identity: '美术老师', age: 29, tags: ['成男', '老师'], avatar: '' },
+    { name: '裴烬', identity: '理科学院·年级第一', age: 18, tags: ['青年'], avatar: '' },
+    { name: '纪淮', identity: '文科学院·班长', age: 17, tags: ['青年'], avatar: '' },
+    { name: '白鹿', identity: '理科学院·跳级新生', age: 15, tags: ['正太'], avatar: '' },
+    { name: '向南', identity: '体育学院·短跑特长生', age: 16, tags: ['正太', '体育生'], avatar: '' },
+    { name: '王铁柱', identity: '食堂', age: 45, tags: ['熟男', '糙汉'], avatar: '' },
+    { name: '杰克', identity: '交换生·橄榄球', age: 18, tags: ['青年', '体育生', '交换生'], avatar: '' },
+    { name: '布雷迪', identity: '交换生·摔跤', age: 18, tags: ['青年', '体育生', '交换生'], avatar: '' },
+    { name: '迪伦', identity: '交换生', age: 17, tags: ['青年', '交换生'], avatar: '' },
+    { name: '小野健太', identity: '交换生·棒球', age: 17, tags: ['青年', '体育生', '交换生'], avatar: '' },
+    { name: '陆沉', identity: '教导主任', age: 38, tags: ['熟男'], avatar: '' },
+    { name: '顾衍', identity: '田径教练', age: 34, tags: ['成男', '老师'], avatar: '' },
+    { name: '沈知远', identity: '校长', age: 55, tags: ['熟男'], avatar: '' },
+    { name: '柳善宇', identity: '体育学院·游泳', age: 17, tags: ['青年', '体育生'], avatar: '' },
   ];
 
   let guideData = [];
   let currentFilter = 'all';
+  let currentTagFilter = 'all';
   let currentSearch = '';
 
   const WORLDBOOK_NAME = '衡江高中';
@@ -1461,6 +1602,51 @@ html, body {
   }
   function saveDisabled(set) {
     try { localStorage.setItem(DISABLED_KEY, JSON.stringify([...set])) } catch {}
+  }
+
+  function loadAvatars() {
+    try { return JSON.parse(localStorage.getItem(AVATAR_KEY) || '{}') } catch { return {} }
+  }
+  function saveAvatars(map) {
+    try { localStorage.setItem(AVATAR_KEY, JSON.stringify(map)) } catch {}
+  }
+  function getAvatar(charName) {
+    const avatars = loadAvatars();
+    return avatars[charName] || '';
+  }
+  function setAvatar(charName, url) {
+    const avatars = loadAvatars();
+    if (url) {
+      avatars[charName] = url;
+    } else {
+      delete avatars[charName];
+    }
+    saveAvatars(avatars);
+  }
+  function exportGuideData() {
+    const avatars = loadAvatars();
+    const favSet = loadFavorites();
+    const disabledSet = loadDisabled();
+    const data = {
+      version: 1,
+      exportedAt: new Date().toISOString(),
+      avatars,
+      favorites: [...favSet],
+      disabled: [...disabledSet],
+    };
+    return data;
+  }
+  function importGuideData(jsonStr) {
+    try {
+      const data = JSON.parse(jsonStr);
+      if (!data.version) throw new Error('无效格式');
+      if (data.avatars) saveAvatars(data.avatars);
+      if (data.favorites) saveFavorites(new Set(data.favorites));
+      if (data.disabled) saveDisabled(new Set(data.disabled));
+      return { success: true, msg: '导入成功' };
+    } catch (e) {
+      return { success: false, msg: '导入失败: ' + e.message };
+    }
   }
 
   function showConfirmModal(title, message, onOk, iconType = 'ban') {
@@ -1500,17 +1686,21 @@ html, body {
     const charsData = get(s, '角色', {});
     const favSet = loadFavorites();
     const disabledSet = loadDisabled();
+    const avatars = loadAvatars();
     guideData = allCharacters.map(char => {
       const charInfo = charsData[char.name] || {};
+      const avatar = avatars[char.name] || '';
       return {
         name: char.name,
         identity: char.identity,
         age: char.age,
+        tags: char.tags || [],
         met: charInfo.已相遇 === true,
         affection: charInfo.好感度 || 0,
         relation: charInfo.关系状态 || '陌生人',
         favorite: favSet.has(char.name),
         disabled: disabledSet.has(char.name),
+        avatar,
       };
     });
   }
@@ -1538,6 +1728,10 @@ html, body {
     if (currentFilter === 'met') filtered = filtered.filter(c => c.met);
     else if (currentFilter === 'unmet') filtered = filtered.filter(c => !c.met);
 
+    if (currentTagFilter !== 'all') {
+      filtered = filtered.filter(c => c.tags && c.tags.includes(currentTagFilter));
+    }
+
     if (currentSearch) {
       const q = currentSearch.toLowerCase();
       filtered = filtered.filter(c => c.name.toLowerCase().includes(q) || c.identity.toLowerCase().includes(q));
@@ -1557,11 +1751,18 @@ html, body {
       const favIcon = char.favorite
         ? '<svg class="svg-icon svg-fav"><use href="#svg-star-filled"></use></svg>'
         : '<svg class="svg-icon svg-fav svg-fav-empty"><use href="#svg-star"></use></svg>';
+      const avatarContent = char.avatar
+        ? `<img src="${char.avatar}" alt="${char.name}" class="guide-char-avatar-img" onerror="this.parentElement.innerHTML='${initial}'">`
+        : `<div class="guide-char-avatar-text">${initial}</div>`;
+      const tagsHtml = char.tags && char.tags.length > 0
+        ? `<div class="guide-char-tags">${char.tags.slice(0, 3).map(t => `<span class="guide-char-tag">${t}</span>`).join('')}</div>`
+        : '';
       return `
         <div class="guide-char-card ${metClass} ${disabledClass}" data-name="${char.name}" data-affection="${char.affection}" data-relation="${char.relation}" data-disabled="${char.disabled}" role="button" tabindex="0" style="animation-delay: ${idx * 0.05}s">
-          <div class="guide-char-avatar">${initial}</div>
+          <div class="guide-char-avatar-wrap">${avatarContent}</div>
           <div class="guide-char-name">${char.name}</div>
           <div class="guide-char-identity">${char.identity}</div>
+          ${tagsHtml}
           <div class="guide-char-age">${char.age}岁</div>
           <div class="guide-char-relation">${char.met ? char.relation : '未相遇'}</div>
           <div class="guide-char-fav">${favIcon}</div>
@@ -1745,9 +1946,8 @@ html, body {
             updateWorldbookWith(WORLDBOOK_NAME, worldbook => {
               const entry = worldbook.find(e => e.name === charName);
               if (entry) {
-                entry.enabled = isDisabled;
-                const action = isDisabled ? '启用' : '禁用';
-                showToast(`「${charName}」${action}，世界书「${entry.name}」已${action}`, 'success');
+                entry.enabled = !isDisabled;
+                showToast(`「${charName}」${isDisabled ? '启用' : '禁用'}，世界书「${entry.name}」已${isDisabled ? '启用' : '禁用'}`, 'success');
               } else {
                 showToast(`角色「${charName}」已${isDisabled ? '启用' : '禁用'}，但未找到对应世界书条目`, 'warning');
               }
@@ -1806,6 +2006,111 @@ html, body {
       });
     });
 
+    document.querySelectorAll('.guide-tag-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.guide-tag-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentTagFilter = btn.dataset.tag;
+        renderGuideGrid();
+      });
+    });
+
+    document.getElementById('guide-settings-btn')?.addEventListener('click', () => {
+      document.getElementById('guide-settings-modal')?.classList.add('active');
+    });
+    document.getElementById('guide-settings-close')?.addEventListener('click', () => {
+      document.getElementById('guide-settings-modal')?.classList.remove('active');
+    });
+    document.getElementById('guide-settings-modal')?.addEventListener('click', e => {
+      if (e.target === e.currentTarget) document.getElementById('guide-settings-modal')?.classList.remove('active');
+    });
+
+    document.getElementById('guide-avatar-url-import')?.addEventListener('click', () => {
+      const input = document.getElementById('guide-avatar-url-input');
+      if (!input || !input.value.trim()) {
+        showToast('请输入头像URL数据', 'warning');
+        return;
+      }
+      const lines = input.value.trim().split('\n');
+      let imported = 0;
+      lines.forEach(line => {
+        const parts = line.split(',');
+        if (parts.length >= 2) {
+          const name = parts[0].trim();
+          const url = parts.slice(1).join(',').trim();
+          if (name && url) {
+            setAvatar(name, url);
+            imported++;
+          }
+        }
+      });
+      showToast(`成功导入 ${imported} 个头像`, 'success');
+      input.value = '';
+      updateGuideData(getStatData());
+      renderGuideGrid();
+    });
+
+    document.getElementById('guide-avatar-file-btn')?.addEventListener('click', () => {
+      document.getElementById('guide-avatar-file-input')?.click();
+    });
+    document.getElementById('guide-avatar-file-input')?.addEventListener('change', async (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      try {
+        const text = await file.text();
+        const data = JSON.parse(text);
+        let imported = 0;
+        if (typeof data === 'object' && !Array.isArray(data)) {
+          Object.keys(data).forEach(name => {
+            if (data[name]) {
+              setAvatar(name, data[name]);
+              imported++;
+            }
+          });
+        }
+        showToast(`成功导入 ${imported} 个头像`, 'success');
+        e.target.value = '';
+        updateGuideData(getStatData());
+        renderGuideGrid();
+      } catch {
+        showToast('文件解析失败', 'error');
+      }
+    });
+
+    document.getElementById('guide-export-btn')?.addEventListener('click', () => {
+      const data = exportGuideData();
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'hengjiang-guide-export.json';
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('配置已导出', 'success');
+    });
+
+    document.getElementById('guide-import-btn')?.addEventListener('click', () => {
+      document.getElementById('guide-import-file-input')?.click();
+    });
+    document.getElementById('guide-import-file-input')?.addEventListener('change', async (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      try {
+        const text = await file.text();
+        const result = importGuideData(text);
+        if (result.success) {
+          showToast(result.msg, 'success');
+          updateGuideData(getStatData());
+          renderGuideGrid();
+        } else {
+          showToast(result.msg, 'error');
+        }
+        e.target.value = '';
+      } catch {
+        showToast('文件读取失败', 'error');
+      }
+    });
+
     document.getElementById('guide-search')?.addEventListener('input', e => {
       currentSearch = e.target.value.trim();
       renderGuideGrid();
@@ -1855,9 +2160,8 @@ html, body {
             updateWorldbookWith(WORLDBOOK_NAME, worldbook => {
               const entry = worldbook.find(e => e.name === charName);
               if (entry) {
-                entry.enabled = isDisabled;
-                const action = isDisabled ? '启用' : '禁用';
-                showToast(`「${charName}」${action}，世界书「${entry.name}」已${action}`, 'success');
+                entry.enabled = !isDisabled;
+                showToast(`「${charName}」${isDisabled ? '启用' : '禁用'}，世界书「${entry.name}」已${isDisabled ? '启用' : '禁用'}`, 'success');
               } else {
                 showToast(`角色「${charName}」已${isDisabled ? '启用' : '禁用'}，但未找到对应世界书条目`, 'warning');
               }
