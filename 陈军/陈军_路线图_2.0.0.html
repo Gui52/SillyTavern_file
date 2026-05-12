@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>陈军 · 关系路线图</title>
+  <style>
+/* ===== 主题系统 - CSS 自定义属性 ===== */
+.theme-default {
+  --bg-base: #0d0d1a;
+  --bg-surface: #16162a;
+  --bg-elevated: #1e1e3a;
+  --bg-glass: rgba(22, 22, 42, 0.7);
+  --border-subtle: #2a2a4a;
+  --border-moderate: #3a3a5a;
+  --text-primary: #e8e6f0;
+  --text-secondary: #a8a0c8;
+  --text-muted: #6a6478;
+  --accent: #7c5cfc;
+  --accent-glow: rgba(124, 92, 252, 0.4);
+  --accent-secondary: #5ce0c8;
+  --gold: #f0b840;
+  --gold-glow: rgba(240, 184, 64, 0.4);
+  --danger: #e8465e;
+  --danger-glow: rgba(232, 70, 94, 0.4);
+  --success: #3cc878;
+  --scroll-thumb: #3a3a5a;
+  --pbar-bg: #2a2a4a;
+  --tag-accent-bg: rgba(124, 92, 252, 0.15);
+  --tag-accent-color: #a08cfc;
+  --tag-gold-bg: rgba(240, 184, 64, 0.15);
+  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+.theme-default:not(.dark),
+.theme-default.light {
+  --bg-base: #f0ecf5;
+  --bg-surface: #e0daf0;
+  --bg-elevated: #d0cae0;
+  --bg-glass: rgba(224, 218, 240, 0.7);
+  --border-subtle: #ccc8d8;
+  --border-moderate: #b0a8c0;
+  --text-primary: #1a1630;
+  --text-secondary: #5a5478;
+  --text-muted: #8a84a0;
+  --accent: #6c48e4;
+  --accent-glow: rgba(108, 72, 228, 0.3);
+  --accent-secondary: #48b4a0;
+  --gold: #b08020;
+  --gold-glow: rgba(176, 128, 32, 0.3);
+  --danger: #c0405a;
+  --danger-glow: rgba(192, 64, 90, 0.3);
+  --success: #30a068;
+  --scroll-thumb: #b0a8c0;
+  --pbar-bg: #d8d4e0;
+  --tag-accent-bg: rgba(108, 72, 228, 0.1);
+  --tag-accent-color: #5c38d4;
+  --tag-gold-bg: rgba(176, 128, 32, 0.1);
+  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+</style>
+  <style>
+/* ===== 路线图树状图样式 ===== */
+
+/* ─── 布局 ─── */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body { height: 100%; overflow: hidden; font-family: system-ui, -apple-system, sans-serif; }
+
+#app {
+  display: flex; flex-direction: column; height: 100%;
+  background: var(--bg-base); color: var(--text-primary);
+  transition: background .3s, color .3s;
+  position: relative;
+}
+
+/* ─── 顶部 ─── */
+#header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 16px; background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-subtle); flex-shrink: 0;
+  gap: 12px; flex-wrap: wrap;
+}
+#header h1 { font-size: 16px; font-weight: 600; white-space: nowrap; }
+#header-controls { display: flex; align-items: center; gap: 8px; }
+.tag {
+  font-size: 11px; padding: 2px 8px; border-radius: 4px;
+  background: var(--tag-accent-bg); color: var(--tag-accent-color); white-space: nowrap;
+}
+#theme-toggle {
+  background: none; border: 1px solid var(--border-moderate); border-radius: 6px;
+  padding: 4px 8px; cursor: pointer; font-size: 14px;
+  color: var(--text-primary);
+}
+#theme-toggle:hover { background: var(--bg-elevated); }
+
+/* ─── 图例 ─── */
+#legend {
+  display: flex; gap: 16px; padding: 6px 16px;
+  background: var(--bg-surface); border-bottom: 1px solid var(--border-subtle);
+  flex-shrink: 0; flex-wrap: wrap;
+}
+.legend-item { display: flex; align-items: center; gap: 4px; font-size: 11px; color: var(--text-secondary); }
+.dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+.dot-achieved { background: var(--success); }
+.dot-current { background: var(--gold); box-shadow: 0 0 8px var(--gold-glow); }
+.dot-locked { background: var(--text-muted); opacity: .4; }
+.dot-future { border: 2px dashed var(--border-moderate); background: transparent; }
+
+/* ─── 树容器 ─── */
+#tree-wrap {
+  flex: 1; overflow: auto; position: relative;
+  padding: 24px 16px;
+}
+#tree {
+  display: flex; gap: 0; min-height: 100%;
+  position: relative;
+}
+
+/* ─── 根节点 ─── */
+.root-col {
+  display: flex; flex-direction: column; justify-content: center;
+  align-items: center; flex-shrink: 0; width: 80px;
+  padding-right: 12px;
+}
+.root-node {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700; text-align: center;
+  box-shadow: 0 0 16px var(--accent-glow);
+  line-height: 1.2;
+  position: relative; z-index: 2;
+}
+
+/* ─── 路线列 ─── */
+.route-col {
+  display: flex; flex-direction: column; flex: 1; min-width: 110px; max-width: 140px;
+  position: relative; padding: 0 4px;
+}
+.route-col::before {
+  content: ''; position: absolute; left: 50%; top: 0; bottom: 0;
+  width: 2px; transform: translateX(-50%); z-index: 0;
+}
+.route-header {
+  text-align: center; font-size: 11px; font-weight: 600;
+  padding: 6px 4px; border-radius: 4px 4px 0 0;
+  position: sticky; top: 0; z-index: 3;
+  background: var(--bg-surface);
+  flex-shrink: 0;
+}
+.route-header .route-progress {
+  font-size: 10px; font-weight: 400; opacity: .7;
+}
+
+/* ─── 路线颜色 ─── */
+.route-直男线 { --route-color: #7a8c99; }
+.route-直男线 .route-header { color: #7a8c99; border-bottom: 2px solid #7a8c99; }
+.route-直男线::before { background: rgba(122, 140, 153, .2); }
+
+.route-掰弯线 { --route-color: #e8967a; }
+.route-掰弯线 .route-header { color: #e8967a; border-bottom: 2px solid #e8967a; }
+.route-掰弯线::before { background: rgba(232, 150, 122, .2); }
+
+.route-恶堕线 { --route-color: #8b2252; }
+.route-恶堕线 .route-header { color: #8b2252; border-bottom: 2px solid #8b2252; }
+.route-恶堕线::before { background: rgba(139, 34, 82, .2); }
+
+.route-沉沦线 { --route-color: #c9a96e; }
+.route-沉沦线 .route-header { color: #c9a96e; border-bottom: 2px solid #c9a96e; }
+.route-沉沦线::before { background: rgba(201, 169, 110, .2); }
+
+.route-兄弟线 { --route-color: #5d8a6e; }
+.route-兄弟线 .route-header { color: #5d8a6e; border-bottom: 2px solid #5d8a6e; }
+.route-兄弟线::before { background: rgba(93, 138, 110, .2); }
+
+.route-决裂线 { --route-color: #7a6f8c; }
+.route-决裂线 .route-header { color: #7a6f8c; border-bottom: 2px solid #7a6f8c; }
+.route-决裂线::before { background: rgba(122, 111, 140, .2); }
+
+.route-破镜重圆线 { --route-color: #6b7fb5; }
+.route-破镜重圆线 .route-header { color: #6b7fb5; border-bottom: 2px solid #6b7fb5; }
+.route-破镜重圆线::before { background: rgba(107, 127, 181, .2); }
+
+.route-unavailable .route-header { opacity: .4; }
+.route-unavailable::before { opacity: .1; }
+
+/* ─── 里程碑列 ─── */
+.milestones-col {
+  flex: 1; display: flex; flex-direction: column; gap: 12px;
+  padding: 12px 0;
+}
+
+/* ─── 里程碑节点 ─── */
+.milestone {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 4px; cursor: pointer; position: relative;
+  transition: transform .15s;
+}
+.milestone:hover { transform: scale(1.05); z-index: 5; }
+
+.milestone-node {
+  width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; position: relative;
+  transition: all .3s;
+  border: 2px solid var(--border-moderate);
+  background: var(--bg-surface);
+  flex-shrink: 0;
+}
+
+.milestone .milestone-label {
+  font-size: 9px; text-align: center; line-height: 1.2;
+  max-width: 100px; color: var(--text-secondary);
+  word-break: break-all;
+}
+
+/* 状态: 未触及 */
+.milestone-state-future .milestone-node {
+  border: 2px dashed var(--border-moderate);
+  background: transparent;
+  color: var(--text-muted);
+}
+
+/* 状态: 已达成 */
+.milestone-state-achieved .milestone-node {
+  border-color: var(--success);
+  background: var(--success);
+  color: #fff;
+  box-shadow: 0 0 8px var(--success);
+}
+
+/* 状态: 当前进行中 */
+.milestone-state-current .milestone-node {
+  border-color: var(--gold);
+  background: var(--gold);
+  color: #1a1630;
+  box-shadow: 0 0 14px var(--gold-glow);
+  animation: pulse 1.5s infinite;
+}
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 8px var(--gold-glow); }
+  50% { box-shadow: 0 0 18px var(--gold-glow); }
+}
+
+/* 状态: 已锁定 */
+.milestone-state-locked .milestone-node {
+  border-color: var(--border-subtle);
+  background: var(--bg-surface);
+  color: var(--text-muted);
+  opacity: .35;
+}
+.milestone-state-locked .milestone-node::after {
+  content: '🔒'; font-size: 10px; position: absolute;
+  bottom: -4px; right: -4px;
+}
+
+/* ─── tooltip ─── */
+#tooltip {
+  position: fixed; z-index: 100; pointer-events: none;
+  background: var(--bg-elevated); color: var(--text-primary);
+  border: 1px solid var(--border-moderate); border-radius: 8px;
+  padding: 10px 14px; font-size: 12px; max-width: 240px;
+  box-shadow: var(--shadow-card); line-height: 1.5;
+}
+#tooltip .tt-title { font-weight: 600; margin-bottom: 4px; font-size: 13px; }
+#tooltip .tt-cond { color: var(--text-secondary); font-size: 11px; }
+#tooltip .tt-id { color: var(--text-muted); font-size: 10px; margin-top: 4px; }
+
+/* ─── 详情面板 ─── */
+#detail-panel {
+  position: fixed; top: 0; right: 0; width: 320px; height: 100%;
+  background: var(--bg-surface); border-left: 1px solid var(--border-moderate);
+  z-index: 50; padding: 20px; overflow-y: auto;
+  transition: transform .3s;
+  box-shadow: -4px 0 20px rgba(0,0,0,.2);
+}
+#detail-panel.hidden { transform: translateX(100%); }
+#detail-close {
+  position: absolute; top: 12px; right: 12px;
+  width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;
+  border-radius: 50%; cursor: pointer; font-size: 16px;
+  background: var(--bg-elevated); color: var(--text-secondary);
+  border: none;
+}
+#detail-close:hover { background: var(--border-moderate); color: var(--text-primary); }
+#detail-content { margin-top: 12px; }
+#detail-content h2 { font-size: 16px; margin-bottom: 4px; }
+#detail-content .detail-route { font-size: 12px; color: var(--text-secondary); margin-bottom: 12px; }
+#detail-content .detail-section { margin-bottom: 12px; }
+#detail-content .detail-section h3 { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; text-transform: uppercase; letter-spacing: .5px; }
+#detail-content .detail-section p, #detail-content .detail-section li { font-size: 13px; line-height: 1.6; }
+
+/* ─── 加载 ─── */
+#loading {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  font-size: 14px; color: var(--text-muted); background: var(--bg-base);
+  z-index: 10;
+}
+#loading.hidden { display: none; }
+
+/* ─── 响应式 ─── */
+@media (max-width: 768px) {
+  #tree-wrap { padding: 12px 8px; }
+  #tree { flex-direction: column; }
+  .root-col { width: 100%; flex-direction: row; padding-right: 0; padding-bottom: 12px; }
+  .root-node { width: 44px; height: 44px; font-size: 11px; }
+  .route-col { min-width: auto; max-width: none; flex-direction: row; }
+  .route-col::before { left: 0; top: 50%; width: 100%; height: 2px; transform: translateY(-50%); }
+  .route-header { writing-mode: horizontal-tb; padding: 4px 8px; }
+  .milestones-col { flex-direction: row; padding: 4px 0; gap: 8px; overflow-x: auto; }
+  .milestone { flex-shrink: 0; }
+  #detail-panel { width: 100%; }
+}
+
+</style>
+</head>
+<body>
+  <div id="app" class="theme-default dark">
+    <header id="header">
+      <h1>陈军 · 关系路线图</h1>
+      <div id="header-controls">
+        <span id="route-label" class="tag">路线: --</span>
+        <span id="phase-label" class="tag">阶段: --</span>
+        <span id="status-label" class="tag">状态: --</span>
+        <button id="theme-toggle" title="切换亮暗">🌓</button>
+      </div>
+    </header>
+    <div id="legend">
+      <span class="legend-item"><span class="dot dot-achieved"></span> 已达成</span>
+      <span class="legend-item"><span class="dot dot-current"></span> 进行中</span>
+      <span class="legend-item"><span class="dot dot-locked"></span> 未解锁</span>
+      <span class="legend-item"><span class="dot dot-future"></span> 可达成</span>
+    </div>
+    <div id="tree-wrap">
+      <div id="tree"></div>
+    </div>
+    <div id="detail-panel" class="hidden">
+      <div id="detail-close">✕</div>
+      <div id="detail-content"></div>
+    </div>
+    <div id="tooltip" class="hidden"></div>
+    <div id="loading">加载中...</div>
+  </div>
+  <script type="module">
+/* ===== 陈军 · 关系路线图 ===== */
+
+/* ─── 路线定义数据 ─── */
+const ROUTES = [
+  {
+    id: '直男线', label: '直男线', color: '#7a8c99',
+    milestones: [
+      { id: 'zhinan_01', label: '察觉异样', cond: '好感度>35, 性认知>10' },
+      { id: 'zhinan_02', label: '拒绝深想', cond: '好感度>45, 性认知>20, 抗拒度>65' },
+      { id: 'zhinan_03', label: '保持距离', cond: '主线分支=直男线, 好感度>55' },
+      { id: 'zhinan_04', label: '相亲成家', cond: '主线分支=直男线, 好感度>40' },
+      { id: 'zhinan_05', label: '各自人生', cond: '关系状态=朋友/兄弟, 陈军已婚' },
+    ]
+  },
+  {
+    id: '掰弯线', label: '掰弯线', color: '#e8967a',
+    milestones: [
+      { id: 'zhiwan_01', label: '困惑萌芽', cond: '好感度>30, 性认知>10' },
+      { id: 'zhiwan_02', label: '自我怀疑', cond: '好感度>50, 性认知>25' },
+      { id: 'zhiwan_03', label: '确认心意', cond: '好感度>65, 性认知>40' },
+      { id: 'zhiwan_04', label: '接受自我', cond: '好感度>75, 性认知>55' },
+      { id: 'zhiwan_05', label: '关系确立', cond: '好感度>85, 性认知>70' },
+    ]
+  },
+  {
+    id: '恶堕线', label: '恶堕线', color: '#8b2252',
+    milestones: [
+      { id: 'eduo_01', label: '越界触碰', cond: '亲密接触度>15, 抗拒度>60' },
+      { id: 'eduo_02', label: '无力反抗', cond: '亲密接触度>35, 抗拒度<55' },
+      { id: 'eduo_03', label: '被迫习惯', cond: '亲密接触度>55, 抗拒度<35' },
+      { id: 'eduo_04', label: '羞耻快感', cond: '亲密接触度>70, 羞耻感>50' },
+      { id: 'eduo_05', label: '彻底堕落', cond: '亲密接触度>85, 羞耻感>70' },
+    ]
+  },
+  {
+    id: '沉沦线', label: '沉沦线', color: '#c9a96e',
+    milestones: [
+      { id: 'chenlun_01', label: '温柔试探', cond: '好感度>35, 亲密接触度>5, 抗拒度<75' },
+      { id: 'chenlun_02', label: '卸下防备', cond: '好感度>50, 信任度>55' },
+      { id: 'chenlun_03', label: '懵懂沉溺', cond: '好感度>60, 亲密接触度>30' },
+      { id: 'chenlun_04', label: '依赖滋生', cond: '好感度>75, 依赖度>50' },
+      { id: 'chenlun_05', label: '彻底沦陷', cond: '好感度>85, 依赖度>70' },
+    ]
+  },
+  {
+    id: '兄弟线', label: '兄弟线', color: '#5d8a6e',
+    milestones: [
+      { id: 'xiongdi_01', label: '信任深厚', cond: '信任度>60, 好感度>40' },
+      { id: 'xiongdi_02', label: '肝胆相照', cond: '信任度>70, 好感度>55' },
+      { id: 'xiongdi_03', label: '家人情谊', cond: '好感度>65, 关系状态=兄弟' },
+      { id: 'xiongdi_04', label: '患难与共', cond: '里程碑03达成后触发事件' },
+      { id: 'xiongdi_05', label: '各自人生', cond: '最终状态, 兄弟关系维持' },
+    ]
+  },
+  {
+    id: '决裂线', label: '决裂线', color: '#7a6f8c',
+    milestones: [
+      { id: 'juelie_01', label: '裂痕出现', cond: '内心矛盾>50, 或信任度骤降' },
+      { id: 'juelie_02', label: '冲突爆发', cond: '矛盾>70 后特定事件' },
+      { id: 'juelie_03', label: '关系破裂', cond: '关系状态=破裂' },
+      { id: 'juelie_04', label: '形同陌路', cond: '破裂后持续疏远' },
+    ]
+  },
+  {
+    id: '破镜重圆线', label: '破镜重圆', color: '#6b7fb5',
+    milestones: [
+      { id: 'chongyuan_01', label: '分离反思', cond: '决裂原因触发, 时间推移' },
+      { id: 'chongyuan_02', label: '旧情难忘', cond: '好感度>20(破裂后仍存)' },
+      { id: 'chongyuan_03', label: '主动挽回', cond: '信任度回升到>30' },
+      { id: 'chongyuan_04', label: '冰释前嫌', cond: '信任度>50, 好感度>55' },
+      { id: 'chongyuan_05', label: '破镜重圆', cond: '关系状态=恋人' },
+    ]
+  },
+];
+
+const ROUTE_LABELS = {
+  '未触发': '未触发',
+  '直男线': '直男线', '掰弯线': '掰弯线', '恶堕线': '恶堕线',
+  '沉沦线': '沉沦线', '兄弟线': '兄弟线', '决裂线': '决裂线',
+  '破镜重圆线': '破镜重圆',
+};
+
+/* ─── 工具函数 ─── */
+function get(obj, path, fallback = null) {
+  try {
+    const keys = String(path).split('.');
+    let cur = obj;
+    for (const k of keys) {
+      if (cur == null || typeof cur !== 'object') return fallback;
+      cur = cur[k];
+    }
+    return cur ?? fallback;
+  } catch { return fallback }
+}
+
+function waitMvu() {
+  return new Promise(resolve => {
+    if (window.Mvu?.getMvuData) return resolve();
+    const check = setInterval(() => {
+      if (window.Mvu?.getMvuData) { clearInterval(check); resolve(); }
+    }, 100);
+    setTimeout(() => { clearInterval(check); resolve(); }, 10000);
+  });
+}
+
+/* ─── 状态计算 ─── */
+function calcMilestoneState(milestoneId, data) {
+  const milestone = get(data, `stat_data.里程碑.${milestoneId}`);
+  if (milestone?.是否达成) return 'achieved';
+
+  const route = ROUTES.find(r => r.milestones.some(m => m.id === milestoneId));
+  if (!route) return 'future';
+
+  const routeIndex = ROUTES.indexOf(route);
+  const msIndex = route.milestones.findIndex(m => m.id === milestoneId);
+
+  const currentBranch = get(data, 'stat_data.关系.主线分支', '未触发');
+
+  if (currentBranch === '决裂线' || currentBranch === '破镜重圆线') {
+    if (route.id !== '直男线' && route.id !== '兄弟线') {
+      const anyLoveRouteAchieved = ROUTES.slice(1, 5).some(r =>
+        r.milestones.some(m => get(data, `stat_data.里程碑.${m.id}?.是否达成`))
+      );
+      if (!anyLoveRouteAchieved && route.id !== '决裂线' && route.id !== '破镜重圆线') {
+        return 'locked';
+      }
+    }
+  }
+
+  if (currentBranch !== '未触发' && currentBranch !== route.id) {
+    if (route.id === '决裂线') {
+      const inLoveRoute = ROUTES.slice(1, 5).some(r => r.id === currentBranch);
+      if (inLoveRoute) return 'future';
+      return 'locked';
+    }
+    if (route.id === '破镜重圆线') {
+      if (currentBranch === '决裂线') return 'future';
+      return 'locked';
+    }
+    return 'locked';
+  }
+
+  if (currentBranch === route.id) {
+    const prevDone = msIndex === 0 || route.milestones.slice(0, msIndex).every(m =>
+      get(data, `stat_data.里程碑.${m.id}?.是否达成`)
+    );
+    if (prevDone) return 'current';
+    return 'future';
+  }
+
+  const sameIndexRouteAchieved = route.milestones.slice(0, msIndex).some(m =>
+    get(data, `stat_data.里程碑.${m.id}?.是否达成`)
+  );
+  if (sameIndexRouteAchieved) return 'future';
+
+  return 'future';
+}
+
+function calcRouteProgress(route, data) {
+  const total = route.milestones.length;
+  const done = route.milestones.filter(m =>
+    get(data, `stat_data.里程碑.${m.id}?.是否达成`)
+  ).length;
+  return { done, total, pct: total > 0 ? Math.round(done / total * 100) : 0 };
+}
+
+/* ─── 渲染 ─── */
+function renderTree(data) {
+  const tree = document.getElementById('tree');
+  tree.innerHTML = '';
+
+  const currentBranch = get(data, 'stat_data.关系.主线分支', '未触发');
+  const relationState = get(data, 'stat_data.关系.关系状态', '');
+  const phase = get(data, 'stat_data.关系.心理阶段', '');
+
+  document.getElementById('route-label').textContent = `路线: ${ROUTE_LABELS[currentBranch] || currentBranch}`;
+  document.getElementById('phase-label').textContent = `阶段: ${phase || '--'}`;
+  document.getElementById('status-label').textContent = `关系: ${relationState || '--'}`;
+
+  const rootCol = document.createElement('div');
+  rootCol.className = 'root-col';
+  rootCol.innerHTML = '<div class="root-node">陈军</div>';
+  tree.appendChild(rootCol);
+
+  ROUTES.forEach(route => {
+    const col = document.createElement('div');
+    const progress = calcRouteProgress(route, data);
+    col.className = `route-col route-${route.id}`;
+
+    const header = document.createElement('div');
+    header.className = 'route-header';
+    header.innerHTML = `${route.label} <span class="route-progress">${progress.done}/${progress.total}</span>`;
+    col.appendChild(header);
+
+    const msCol = document.createElement('div');
+    msCol.className = 'milestones-col';
+
+    route.milestones.forEach(ms => {
+      const state = calcMilestoneState(ms.id, data);
+      const el = document.createElement('div');
+      el.className = `milestone milestone-state-${state}`;
+      el.dataset.milestoneId = ms.id;
+      el.dataset.routeId = route.id;
+
+      const node = document.createElement('div');
+      node.className = 'milestone-node';
+      node.textContent = state === 'achieved' ? '✓' : (state === 'current' ? '●' : (state === 'locked' ? '🔒' : ''));
+      el.appendChild(node);
+
+      const label = document.createElement('div');
+      label.className = 'milestone-label';
+      label.textContent = ms.label;
+      el.appendChild(label);
+
+      el.addEventListener('mouseenter', e => showTooltip(e, ms, state));
+      el.addEventListener('mousemove', moveTooltip);
+      el.addEventListener('mouseleave', hideTooltip);
+      el.addEventListener('click', () => showDetail(ms, route, state, data));
+
+      msCol.appendChild(el);
+    });
+
+    col.appendChild(msCol);
+    tree.appendChild(col);
+  });
+}
+
+/* ─── Tooltip ─── */
+const tooltip = document.getElementById('tooltip');
+function showTooltip(e, ms, state) {
+  const stateLabel = { achieved: '已达成', current: '进行中', future: '可达成', locked: '未解锁' }[state] || state;
+  tooltip.innerHTML = `
+    <div class="tt-title">${ms.label}</div>
+    <div class="tt-cond">条件: ${ms.cond}</div>
+    <div class="tt-id">ID: ${ms.id} · ${stateLabel}</div>
+  `;
+  tooltip.classList.remove('hidden');
+  positionTooltip(e);
+}
+function moveTooltip(e) { positionTooltip(e); }
+function positionTooltip(e) {
+  const x = e.clientX + 14, y = e.clientY + 14;
+  const maxX = window.innerWidth - 260, maxY = window.innerHeight - 100;
+  tooltip.style.left = Math.min(x, maxX) + 'px';
+  tooltip.style.top = Math.min(y, maxY) + 'px';
+}
+function hideTooltip() { tooltip.classList.add('hidden'); }
+
+/* ─── 详情面板 ─── */
+const detailPanel = document.getElementById('detail-panel');
+const detailContent = document.getElementById('detail-content');
+function showDetail(ms, route, state, data) {
+  const stateLabel = { achieved: '已达成', current: '进行中', future: '可达成', locked: '未解锁' }[state] || state;
+  const milestoneData = get(data, `stat_data.里程碑.${ms.id}`);
+  const achieveTime = milestoneData?.达成时间 || '';
+
+  detailContent.innerHTML = `
+    <h2>${ms.label}</h2>
+    <div class="detail-route">${route.label} · ${stateLabel}</div>
+    <div class="detail-section">
+      <h3>触发条件</h3>
+      <p>${ms.cond}</p>
+    </div>
+    <div class="detail-section">
+      <h3>里程碑 ID</h3>
+      <p>${ms.id}</p>
+    </div>
+    ${achieveTime ? `<div class="detail-section"><h3>达成时间</h3><p>${achieveTime}</p></div>` : ''}
+    <div class="detail-section">
+      <h3>当前变量</h3>
+      <ul>
+        <li>好感度: ${get(data, 'stat_data.关系.好感度', '--')}</li>
+        <li>信任度: ${get(data, 'stat_data.关系.信任度', '--')}</li>
+        <li>性认知: ${get(data, 'stat_data.关系.性认知', '--')}</li>
+        <li>抗拒度: ${get(data, 'stat_data.关系.抗拒度', '--')}</li>
+        <li>亲密接触度: ${get(data, 'stat_data.关系.亲密接触度', '--')}</li>
+        <li>依赖度: ${get(data, 'stat_data.关系.依赖度', '--')}</li>
+        <li>羞耻感: ${get(data, 'stat_data.关系.羞耻感', '--')}</li>
+        <li>内心矛盾: ${get(data, 'stat_data.关系.内心矛盾', '--')}</li>
+      </ul>
+    </div>
+  `;
+  detailPanel.classList.remove('hidden');
+}
+
+document.getElementById('detail-close').addEventListener('click', () => {
+  detailPanel.classList.add('hidden');
+});
+
+/* ─── 主题 ─── */
+function toggleTheme() {
+  const app = document.getElementById('app');
+  app.classList.toggle('dark');
+  try {
+    localStorage.setItem('chenjun_route_dark', app.classList.contains('dark') ? '1' : '0');
+  } catch {}
+}
+document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+
+function restoreTheme() {
+  try {
+    const dark = localStorage.getItem('chenjun_route_dark');
+    if (dark === '0') document.getElementById('app').classList.remove('dark');
+  } catch {}
+}
+
+/* ─── 主流程 ─── */
+async function main() {
+  restoreTheme();
+
+  await waitMvu();
+  const data = window.Mvu?.getMvuData() || {};
+  document.getElementById('loading').classList.add('hidden');
+
+  if (data && Object.keys(data).length > 0) {
+    renderTree(data);
+  } else {
+    renderTree({});
+  }
+
+  setInterval(() => {
+    try {
+      const d = window.Mvu?.getMvuData();
+      if (d) renderTree(d);
+    } catch {}
+  }, 5000);
+}
+
+main();
+
+</script>
+</body>
+</html>
