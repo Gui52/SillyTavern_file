@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>陈军 - 成就库</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+/* ===== 主题系统 - CSS 自定义属性 ===== */
+.theme-default {
+  --bg-base: #0d0d1a;
+  --bg-surface: #16162a;
+  --bg-elevated: #1e1e3a;
+  --bg-glass: rgba(22, 22, 42, 0.7);
+  --border-subtle: #2a2a4a;
+  --border-moderate: #3a3a5a;
+  --text-primary: #e8e6f0;
+  --text-secondary: #a8a0c8;
+  --text-muted: #6a6478;
+  --accent: #7c5cfc;
+  --accent-glow: rgba(124, 92, 252, 0.4);
+  --accent-secondary: #5ce0c8;
+  --gold: #f0b840;
+  --gold-glow: rgba(240, 184, 64, 0.4);
+  --danger: #e8465e;
+  --danger-glow: rgba(232, 70, 94, 0.4);
+  --success: #3cc878;
+  --scroll-thumb: #3a3a5a;
+  --pbar-bg: #2a2a4a;
+  --tag-accent-bg: rgba(124, 92, 252, 0.15);
+  --tag-accent-color: #a08cfc;
+  --tag-gold-bg: rgba(240, 184, 64, 0.15);
+  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+.theme-default:not(.dark),
+.theme-default.light {
+  --bg-base: #f0ecf5;
+  --bg-surface: #e0daf0;
+  --bg-elevated: #d0cae0;
+  --bg-glass: rgba(224, 218, 240, 0.7);
+  --border-subtle: #ccc8d8;
+  --border-moderate: #b0a8c0;
+  --text-primary: #1a1630;
+  --text-secondary: #5a5478;
+  --text-muted: #8a84a0;
+  --accent: #6c48e4;
+  --accent-glow: rgba(108, 72, 228, 0.3);
+  --accent-secondary: #48b4a0;
+  --gold: #b08020;
+  --gold-glow: rgba(176, 128, 32, 0.3);
+  --danger: #c0405a;
+  --danger-glow: rgba(192, 64, 90, 0.3);
+  --success: #30a068;
+  --scroll-thumb: #b0a8c0;
+  --pbar-bg: #d8d4e0;
+  --tag-accent-bg: rgba(108, 72, 228, 0.1);
+  --tag-accent-color: #5c38d4;
+  --tag-gold-bg: rgba(176, 128, 32, 0.1);
+  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+</style>
+  <style>
+/* ═══════════════════════════════════════════════════════════════
+   成就库样式 — 乡土主题（与状态栏一致）
+   ═══════════════════════════════════════════════════════════════ */
+.theme-earth {
+  --bg-base: #1a1510;
+  --bg-surface: #2a2418;
+  --bg-elevated: #3a3228;
+  --bg-glass: rgba(42, 36, 24, 0.88);
+  --border-subtle: rgba(180, 160, 120, 0.15);
+  --border-moderate: rgba(180, 160, 120, 0.25);
+  --text-primary: #e8e0d0;
+  --text-secondary: #b0a088;
+  --text-muted: #786858;
+  --accent: #c87840;
+  --accent-glow: rgba(200, 120, 64, 0.4);
+  --accent-secondary: #8bb878;
+  --gold: #d4a850;
+  --gold-glow: rgba(212, 168, 80, 0.4);
+  --danger: #c85050;
+  --danger-glow: rgba(200, 80, 80, 0.4);
+  --success: #78a858;
+  --scroll-thumb: rgba(200, 160, 100, 0.35);
+  --pbar-bg: rgba(255, 255, 255, 0.08);
+  --tag-accent-bg: rgba(200, 120, 64, 0.2);
+  --tag-accent-color: #e8a060;
+  --tag-gold-bg: rgba(212, 168, 80, 0.2);
+  --font-family-base: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+  --radius-sm: 4px; --radius-md: 8px; --radius-lg: 12px; --radius-xl: 16px;
+  --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255,255,255,0.05);
+}
+
+.theme-earth:not(.dark) {
+  --bg-base: #f5f0e6;
+  --bg-surface: #e8e0d0;
+  --bg-elevated: #d8d0c0;
+  --bg-glass: rgba(232, 224, 208, 0.88);
+  --border-subtle: rgba(140, 120, 90, 0.15);
+  --border-moderate: rgba(140, 120, 90, 0.25);
+  --text-primary: #2a2418;
+  --text-secondary: #5a5040;
+  --text-muted: #8a8070;
+  --accent: #a86030;
+  --gold: #906820;
+  --danger: #a04040;
+  --success: #508030;
+  --scroll-thumb: rgba(140, 120, 90, 0.3);
+}
+
+/* 主体布局 */
+.alib { min-height: 100vh; background: var(--bg-base); color: var(--text-primary); font-family: var(--font-family-base); }
+
+.alib-header {
+  position: sticky; top: 0; z-index: 10;
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 12px 16px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+
+.header-left { display: flex; align-items: center; gap: 10px; }
+.char-avatar { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--accent); background-size: cover; background-position: center; }
+.header-name { font-size: 16px; font-weight: 600; color: var(--text-primary); }
+.header-sub { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+.achieve-count { font-size: 14px; color: var(--text-secondary); font-family: var(--font-mono); }
+.achieve-count span { color: var(--gold); font-weight: 700; }
+
+.alib-body { padding: 16px; overflow-y: auto; max-height: calc(100vh - 120px); }
+
+.alib-footer {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border-subtle);
+  padding: 12px 16px;
+  display: flex; justify-content: center;
+}
+
+.footer-btn {
+  padding: 10px 24px; border-radius: var(--radius-md);
+  background: var(--accent); color: #fff; border: none;
+  font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 6px;
+  font-family: var(--font-family-base);
+  transition: all 0.2s;
+}
+.footer-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+
+/* 成就网格 */
+.achieve-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+
+/* 成就卡片 */
+.achieve-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  cursor: pointer;
+  transition: all 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+.achieve-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow-card); }
+.achieve-card.locked { opacity: 0.5; }
+.achieve-card.locked:hover { opacity: 0.7; }
+
+.achieve-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--accent);
+}
+.achieve-card.locked::before { background: var(--text-muted); }
+
+.achieve-icon-wrap {
+  width: 44px; height: 44px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 10px;
+  font-size: 20px;
+  background: var(--tag-accent-bg);
+  color: var(--tag-accent-color);
+}
+.achieve-card.locked .achieve-icon-wrap { background: var(--bg-elevated); color: var(--text-muted); }
+
+.achieve-name { font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+.achieve-card.locked .achieve-name { color: var(--text-muted); }
+.achieve-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.5; }
+.achieve-card.locked .achieve-desc { color: var(--text-muted); }
+
+.achieve-badge {
+  position: absolute; top: 10px; right: 10px;
+  font-size: 10px; padding: 2px 6px;
+  border-radius: 4px;
+  background: var(--tag-gold-bg);
+  color: var(--gold);
+  font-weight: 600;
+}
+.achieve-card.locked .achieve-badge { display: none; }
+
+/* 空状态 */
+.empty-state {
+  text-align: center; padding: 60px 20px;
+}
+.empty-icon { font-size: 48px; color: var(--text-muted); margin-bottom: 16px; }
+.empty-text { font-size: 16px; color: var(--text-secondary); margin-bottom: 8px; }
+.empty-hint { font-size: 13px; color: var(--text-muted); }
+
+/* 响应式 */
+@media (max-width: 400px) {
+  .achieve-grid { grid-template-columns: 1fr; }
+}
+
+/* 滚动条 */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-base); }
+::-webkit-scrollbar-thumb { background: var(--scroll-thumb); border-radius: 3px; }
+</style>
+</head>
+<body>
+<div id="achievement-library" class="alib theme-earth">
+
+  <div class="alib-header">
+    <div class="header-left">
+      <div class="char-avatar" id="char-avatar"></div>
+      <div class="header-title">
+        <div class="header-name">陈军</div>
+        <div class="header-sub">成就库</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="achieve-count">
+        <span id="unlocked-count">0</span> / <span id="total-count">0</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="alib-body">
+    <div class="achieve-grid" id="achieve-grid">
+      <!-- 成就卡片通过 JS 渲染 -->
+    </div>
+    <div class="empty-state" id="empty-state" style="display:none;">
+      <div class="empty-icon"><i class="fa-solid fa-trophy"></i></div>
+      <div class="empty-text">尚未解锁任何成就</div>
+      <div class="empty-hint">继续与陈军互动，解锁更多成就吧</div>
+    </div>
+  </div>
+
+  <div class="alib-footer">
+    <button class="footer-btn" id="btn-close">
+      <i class="fa-solid fa-arrow-left"></i> 返回
+    </button>
+  </div>
+
+</div>
+<script src="../../公共/utils.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

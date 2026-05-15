@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>陈军 - 状态栏</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+/* ===== 主题系统 - CSS 自定义属性 ===== */
+.theme-default {
+  --bg-base: #0d0d1a;
+  --bg-surface: #16162a;
+  --bg-elevated: #1e1e3a;
+  --bg-glass: rgba(22, 22, 42, 0.7);
+  --border-subtle: #2a2a4a;
+  --border-moderate: #3a3a5a;
+  --text-primary: #e8e6f0;
+  --text-secondary: #a8a0c8;
+  --text-muted: #6a6478;
+  --accent: #7c5cfc;
+  --accent-glow: rgba(124, 92, 252, 0.4);
+  --accent-secondary: #5ce0c8;
+  --gold: #f0b840;
+  --gold-glow: rgba(240, 184, 64, 0.4);
+  --danger: #e8465e;
+  --danger-glow: rgba(232, 70, 94, 0.4);
+  --success: #3cc878;
+  --scroll-thumb: #3a3a5a;
+  --pbar-bg: #2a2a4a;
+  --tag-accent-bg: rgba(124, 92, 252, 0.15);
+  --tag-accent-color: #a08cfc;
+  --tag-gold-bg: rgba(240, 184, 64, 0.15);
+  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+.theme-default:not(.dark),
+.theme-default.light {
+  --bg-base: #f0ecf5;
+  --bg-surface: #e0daf0;
+  --bg-elevated: #d0cae0;
+  --bg-glass: rgba(224, 218, 240, 0.7);
+  --border-subtle: #ccc8d8;
+  --border-moderate: #b0a8c0;
+  --text-primary: #1a1630;
+  --text-secondary: #5a5478;
+  --text-muted: #8a84a0;
+  --accent: #6c48e4;
+  --accent-glow: rgba(108, 72, 228, 0.3);
+  --accent-secondary: #48b4a0;
+  --gold: #b08020;
+  --gold-glow: rgba(176, 128, 32, 0.3);
+  --danger: #c0405a;
+  --danger-glow: rgba(192, 64, 90, 0.3);
+  --success: #30a068;
+  --scroll-thumb: #b0a8c0;
+  --pbar-bg: #d8d4e0;
+  --tag-accent-bg: rgba(108, 72, 228, 0.1);
+  --tag-accent-color: #5c38d4;
+  --tag-gold-bg: rgba(176, 128, 32, 0.1);
+  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+</style>
+  <style>
+/* ═══════════════════════════════════════════════════════════════
+   Earth Theme — 九十年代乡土中国（温暖大地质感）
+   ═══════════════════════════════════════════════════════════════ */
+.theme-earth {
+  --bg-base: #1a1510;
+  --bg-surface: #2a2418;
+  --bg-elevated: #3a3228;
+  --bg-glass: rgba(42, 36, 24, 0.88);
+  --border-subtle: rgba(180, 160, 120, 0.15);
+  --border-moderate: rgba(180, 160, 120, 0.25);
+  --text-primary: #e8e0d0;
+  --text-secondary: #b0a088;
+  --text-muted: #786858;
+  --accent: #c87840;
+  --accent-glow: rgba(200, 120, 64, 0.4);
+  --accent-secondary: #8bb878;
+  --gold: #d4a850;
+  --gold-glow: rgba(212, 168, 80, 0.4);
+  --danger: #c85050;
+  --danger-glow: rgba(200, 80, 80, 0.4);
+  --success: #78a858;
+  --scroll-thumb: rgba(200, 160, 100, 0.35);
+  --pbar-bg: rgba(255, 255, 255, 0.08);
+  --tag-accent-bg: rgba(200, 120, 64, 0.2);
+  --tag-accent-color: #e8a060;
+  --tag-gold-bg: rgba(212, 168, 80, 0.2);
+  --font-family-base: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+  --radius-sm: 4px; --radius-md: 8px; --radius-lg: 12px; --radius-xl: 16px;
+  --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255,255,255,0.05);
+  --font-mono: 'Georgia', serif;
+  --card-border: 1px solid var(--border-subtle);
+  --card-accent-border: 1px solid rgba(200, 120, 64, 0.5);
+}
+
+/* 亮色模式 - 温暖泛黄 */
+.theme-earth:not(.dark) {
+  --bg-base: #f5f0e6;
+  --bg-surface: #e8e0d0;
+  --bg-elevated: #d8d0c0;
+  --bg-glass: rgba(232, 224, 208, 0.88);
+  --border-subtle: rgba(140, 120, 90, 0.15);
+  --border-moderate: rgba(140, 120, 90, 0.25);
+  --text-primary: #2a2418;
+  --text-secondary: #5a5040;
+  --text-muted: #8a8070;
+  --accent: #a86030;
+  --accent-glow: rgba(168, 96, 48, 0.3);
+  --accent-secondary: #608040;
+  --gold: #906820;
+  --gold-glow: rgba(144, 104, 32, 0.3);
+  --danger: #a04040;
+  --danger-glow: rgba(160, 64, 64, 0.3);
+  --success: #508030;
+  --scroll-thumb: rgba(140, 120, 90, 0.3);
+  --tag-accent-bg: rgba(168, 96, 48, 0.12);
+  --tag-accent-color: #804820;
+  --tag-gold-bg: rgba(144, 104, 32, 0.12);
+  --shadow-card: 0 4px 16px rgba(60, 40, 20, 0.15), inset 0 1px 0 rgba(255,255,255,0.8);
+}
+
+/* 乡土气息装饰 - 纸张纹理感 */
+.theme-earth .sbc::before {
+  background:
+    radial-gradient(ellipse 60% 30% at 20% 0%, rgba(200, 120, 64, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse 40% 25% at 80% 100%, rgba(212, 168, 80, 0.08) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.theme-earth .sbc {
+  border: 1px solid var(--border-moderate);
+  border-radius: var(--radius-lg);
+  font-family: var(--font-family-base);
+}
+
+/* 通用样式 */
+.sbc { position: relative; min-height: 100vh; background: var(--bg-base); color: var(--text-primary); }
+.sbc-body { padding: 12px; overflow-y: auto; max-height: calc(100vh - 60px); }
+.sbc-header { position: sticky; top: 0; z-index: 10; background: var(--bg-surface); border-bottom: 1px solid var(--border-subtle); padding: 8px 12px; }
+
+/* 角色信息头部 */
+.char-info { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.char-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--bg-elevated); border: 2px solid var(--accent); background-size: cover; background-position: center; }
+.char-name { font-size: 16px; font-weight: 600; color: var(--text-primary); }
+.char-status { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+/* 导航 */
+.nav { display: flex; gap: 4px; flex-wrap: wrap; }
+.nav-item { padding: 6px 10px; border-radius: var(--radius-sm); cursor: pointer; font-size: 13px; color: var(--text-secondary); transition: all 0.2s; display: flex; align-items: center; gap: 4px; }
+.nav-item:hover { background: var(--bg-elevated); color: var(--text-primary); }
+.nav-item.active { background: var(--accent); color: #fff; }
+
+/* 卡片 */
+.card { background: var(--bg-surface); border: var(--card-border); border-radius: var(--radius-md); padding: 12px; }
+.card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.card-icon { width: 28px; height: 28px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 14px; background: var(--bg-elevated); color: var(--text-secondary); }
+.card-icon.accent { background: var(--tag-accent-bg); color: var(--tag-accent-color); }
+.card-icon.gold { background: var(--tag-gold-bg); color: var(--gold); }
+.card-icon.warning { background: rgba(200, 80, 80, 0.15); color: var(--danger); }
+.card-icon.secondary { background: rgba(136, 184, 120, 0.15); color: var(--accent-secondary); }
+.card-title { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+.card.full-width { grid-column: 1 / -1; }
+.card.accent-border { border-color: rgba(200, 120, 64, 0.4); }
+.card.warning-border { border-color: rgba(200, 80, 80, 0.4); }
+.card.gold-border { border-color: rgba(212, 168, 80, 0.4); }
+
+/* 数值 */
+.stat-value { font-size: 28px; font-weight: 700; color: var(--text-primary); line-height: 1.2; }
+.stat-value.xxl { font-size: 36px; }
+.stat-value.xl { font-size: 24px; }
+
+/* 进度条 */
+.progress-bar { height: 6px; background: var(--pbar-bg); border-radius: 3px; margin-top: 6px; overflow: hidden; }
+.progress-bar.large { height: 10px; border-radius: 5px; }
+.progress-fill { height: 100%; border-radius: 3px; background: var(--accent); transition: width 0.4s ease; }
+.progress-fill.accent { background: var(--accent); }
+.progress-fill.secondary { background: var(--accent-secondary); }
+.progress-fill.gold { background: var(--gold); }
+.progress-fill.danger { background: var(--danger); }
+
+/* 标签 */
+.stage-tag { display: inline-block; padding: 4px 12px; border-radius: var(--radius-sm); font-size: 13px; background: var(--tag-accent-bg); color: var(--tag-accent-color); }
+.stage-tag.gold { background: var(--tag-gold-bg); color: var(--gold); }
+
+/* 描述文字 */
+.desc-text { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+
+/* 网格布局 */
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+
+/* 间距 */
+.section-gap { height: 10px; }
+
+/* 分支列表 */
+.branch-list { display: flex; flex-direction: column; gap: 8px; }
+.branch-item { display: flex; align-items: center; gap: 10px; padding: 8px; background: var(--bg-elevated); border-radius: var(--radius-sm); }
+.branch-name { width: 60px; font-size: 12px; color: var(--text-secondary); }
+.branch-item .progress-bar { flex: 1; margin: 0; }
+.branch-value { width: 30px; text-align: right; font-size: 12px; color: var(--text-muted); font-family: var(--font-mono); }
+
+/* 设置页面 */
+.settings-group { background: var(--bg-surface); border: var(--card-border); border-radius: var(--radius-md); padding: 12px; margin-bottom: 10px; }
+.settings-title { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
+.theme-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.theme-card { padding: 10px; border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); cursor: pointer; text-align: center; font-size: 13px; color: var(--text-secondary); transition: all 0.2s; }
+.theme-card:hover { border-color: var(--accent); color: var(--accent); }
+.theme-card.active { border-color: var(--accent); background: var(--tag-accent-bg); color: var(--tag-accent-color); }
+.toggle-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; font-size: 14px; color: var(--text-primary); cursor: pointer; }
+.toggle-row input[type="checkbox"] { width: 44px; height: 24px; appearance: none; background: var(--bg-elevated); border-radius: 12px; position: relative; cursor: pointer; transition: all 0.2s; }
+.toggle-row input[type="checkbox"]::before { content: ''; position: absolute; width: 20px; height: 20px; border-radius: 50%; background: var(--text-muted); top: 2px; left: 2px; transition: all 0.2s; }
+.toggle-row input[type="checkbox"]:checked { background: var(--accent); }
+.toggle-row input[type="checkbox"]:checked::before { left: 22px; background: #fff; }
+
+/* 暗色模式 */
+.dark { }
+.dark .sbc-header { background: var(--bg-surface); }
+.dark .nav-item:hover { background: var(--bg-elevated); }
+
+/* 响应式 */
+@media (max-width: 400px) {
+  .grid-2 { grid-template-columns: 1fr; }
+  .sbc-body { padding: 8px; }
+  .nav-item { padding: 5px 8px; font-size: 12px; }
+}
+
+/* 滚动条 */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-base); }
+::-webkit-scrollbar-thumb { background: var(--scroll-thumb); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+</style>
+</head>
+<body>
+<div id="mvu-status-bar" class="sbc theme-earth">
+
+  <div class="sbc-header">
+    <div class="char-info">
+      <div class="char-avatar" id="char-avatar"></div>
+      <div class="char-name-wrap">
+        <div class="char-name">陈军</div>
+        <div class="char-status" id="char-status">平静</div>
+      </div>
+    </div>
+    <div class="nav">
+      <div class="nav-item active" data-tab="relation"><i class="fa-solid fa-heart"></i> 关系</div>
+      <div class="nav-item" data-tab="body"><i class="fa-solid fa-person"></i> 身体</div>
+      <div class="nav-item" data-tab="env"><i class="fa-solid fa-tree"></i> 环境</div>
+      <div class="nav-item" data-tab="branch"><i class="fa-solid fa-route"></i> 分支</div>
+      <div class="nav-item" data-tab="settings"><i class="fa-solid fa-gear"></i> 设置</div>
+    </div>
+  </div>
+
+  <div class="sbc-body">
+
+    <!-- ═══════════════════════════════════════ 关系 Tab ═══════════════════════════════════════ -->
+    <div id="tab-relation" class="tab-content active">
+      <div class="grid-2">
+        <div class="card accent-border">
+          <div class="card-header">
+            <div class="card-icon accent"><i class="fa-solid fa-heart"></i></div>
+            <div class="card-title">好感度</div>
+          </div>
+          <div class="stat-value xxl" id="val-affection">20</div>
+          <div class="progress-bar"><div class="progress-fill accent" id="bar-affection" style="width:20%"></div></div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon"><i class="fa-solid fa-handshake"></i></div>
+            <div class="card-title">信任度</div>
+          </div>
+          <div class="stat-value xxl" id="val-trust">30</div>
+          <div class="progress-bar"><div class="progress-fill" id="bar-trust" style="width:30%"></div></div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon"><i class="fa-solid fa-brain"></i></div>
+            <div class="card-title">性认知</div>
+          </div>
+          <div class="stat-value" id="val-sexual">0</div>
+          <div class="progress-bar"><div class="progress-fill secondary" id="bar-sexual" style="width:0%"></div></div>
+        </div>
+        <div class="card warning-border">
+          <div class="card-header">
+            <div class="card-icon warning"><i class="fa-solid fa-shield"></i></div>
+            <div class="card-title">抗拒度</div>
+          </div>
+          <div class="stat-value" id="val-resist">85</div>
+          <div class="progress-bar"><div class="progress-fill danger" id="bar-resist" style="width:85%"></div></div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon"><i class="fa-solid fa-hand-holding-heart"></i></div>
+            <div class="card-title">亲密接触度</div>
+          </div>
+          <div class="stat-value" id="val-intimacy">0</div>
+          <div class="progress-bar"><div class="progress-fill" id="bar-intimacy" style="width:0%"></div></div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon"><i class="fa-solid fa-link"></i></div>
+            <div class="card-title">依赖度</div>
+          </div>
+          <div class="stat-value" id="val-depend">10</div>
+          <div class="progress-bar"><div class="progress-fill secondary" id="bar-depend" style="width:10%"></div></div>
+        </div>
+      </div>
+
+      <div class="section-gap"></div>
+
+      <div class="card full-width">
+        <div class="card-header">
+          <div class="card-icon gold"><i class="fa-solid fa-user"></i></div>
+          <div class="card-title">心理阶段</div>
+        </div>
+        <div class="stage-tag" id="tag-stage">无知</div>
+      </div>
+
+      <div class="section-gap"></div>
+
+      <div class="card full-width">
+        <div class="card-header">
+          <div class="card-icon accent"><i class="fa-solid fa-comment"></i></div>
+          <div class="card-title">对玩家的看法</div>
+        </div>
+        <div class="desc-text" id="val-view">城里来的邻居，人实在，对我好</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════ 身体 Tab ═══════════════════════════════════════ -->
+    <div id="tab-body" class="tab-content">
+      <div class="card full-width">
+        <div class="card-header">
+          <div class="card-icon accent"><i class="fa-solid fa-fire"></i></div>
+          <div class="card-title">体力</div>
+        </div>
+        <div class="stat-value xl" id="val-stamina">80</div>
+        <div class="progress-bar large">
+          <div class="progress-fill accent" id="bar-stamina" style="width:80%"></div>
+        </div>
+      </div>
+
+      <div class="section-gap"></div>
+
+      <div class="card full-width">
+        <div class="card-header">
+          <div class="card-icon"><i class="fa-solid fa-face-smile"></i></div>
+          <div class="card-title">当前情绪</div>
+        </div>
+        <div class="stage-tag" id="tag-emotion">平静</div>
+      </div>
+
+      <div class="section-gap"></div>
+
+      <div class="card full-width">
+        <div class="card-header">
+          <div class="card-icon gold"><i class="fa-solid fa-moon"></i></div>
+          <div class="card-title">近期心境</div>
+        </div>
+        <div class="desc-text" id="val-mood">安安稳稳过日子</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════ 环境 Tab ═══════════════════════════════════════ -->
+    <div id="tab-env" class="tab-content">
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon accent"><i class="fa-solid fa-sun"></i></div>
+            <div class="card-title">季节</div>
+          </div>
+          <div class="stat-value" id="val-season">夏</div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon gold"><i class="fa-solid fa-cloud"></i></div>
+            <div class="card-title">天气</div>
+          </div>
+          <div class="stat-value" id="val-weather">晴</div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon"><i class="fa-solid fa-clock"></i></div>
+            <div class="card-title">时段</div>
+          </div>
+          <div class="stat-value" id="val-time-of-day">上午</div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon"><i class="fa-solid fa-map"></i></div>
+            <div class="card-title">地点</div>
+          </div>
+          <div class="stat-value" id="val-location">村里</div>
+        </div>
+      </div>
+
+      <div class="section-gap"></div>
+
+      <div class="card full-width">
+        <div class="card-header">
+          <div class="card-icon secondary"><i class="fa-solid fa-sparkles"></i></div>
+          <div class="card-title">场景氛围</div>
+        </div>
+        <div class="stage-tag" id="tag-atmosphere">平常</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════ 分支 Tab ═══════════════════════════════════════ -->
+    <div id="tab-branch" class="tab-content">
+      <div class="card full-width">
+        <div class="card-header">
+          <div class="card-icon accent"><i class="fa-solid fa-flag"></i></div>
+          <div class="card-title">主线分支</div>
+        </div>
+        <div class="stage-tag gold" id="tag-branch">未触发</div>
+      </div>
+
+      <div class="section-gap"></div>
+
+      <div class="branch-list" id="branch-list">
+        <div class="branch-item">
+          <span class="branch-name">直男线</span>
+          <div class="progress-bar small"><div class="progress-fill" id="bar-straight" style="width:0%"></div></div>
+          <span class="branch-value" id="val-straight">0</span>
+        </div>
+        <div class="branch-item">
+          <span class="branch-name">掰弯线</span>
+          <div class="progress-bar small"><div class="progress-fill accent" id="bar-bend" style="width:0%"></div></div>
+          <span class="branch-value" id="val-bend">0</span>
+        </div>
+        <div class="branch-item">
+          <span class="branch-name">事业线</span>
+          <div class="progress-bar small"><div class="progress-fill gold" id="bar-career" style="width:0%"></div></div>
+          <span class="branch-value" id="val-career">0</span>
+        </div>
+        <div class="branch-item">
+          <span class="branch-name">沉沦线</span>
+          <div class="progress-bar small"><div class="progress-fill danger" id="bar-fall" style="width:0%"></div></div>
+          <span class="branch-value" id="val-fall">0</span>
+        </div>
+        <div class="branch-item">
+          <span class="branch-name">依赖线</span>
+          <div class="progress-bar small"><div class="progress-fill secondary" id="bar-depend-line" style="width:0%"></div></div>
+          <span class="branch-value" id="val-depend-line">0</span>
+        </div>
+        <div class="branch-item">
+          <span class="branch-name">兄弟线</span>
+          <div class="progress-bar small"><div class="progress-fill" id="bar-brother" style="width:0%"></div></div>
+          <span class="branch-value" id="val-brother">0</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════ 设置 Tab ═══════════════════════════════════════ -->
+    <div id="tab-settings" class="tab-content">
+      <div class="settings-group">
+        <div class="settings-title">主题</div>
+        <div class="theme-grid">
+          <div class="theme-card" data-theme="theme-earth"><i class="fa-solid fa-mountain"></i> 乡土</div>
+          <div class="theme-card active" data-theme="theme-paper"><i class="fa-solid fa-scroll"></i> 宣纸</div>
+          <div class="theme-card" data-theme="theme-sunset"><i class="fa-solid fa-sun"></i> 暖阳</div>
+          <div class="theme-card" data-theme="theme-night"><i class="fa-solid fa-moon"></i> 夜色</div>
+        </div>
+      </div>
+      <div class="settings-group">
+        <div class="settings-title">显示</div>
+        <label class="toggle-row">
+          <span>暗色模式</span>
+          <input type="checkbox" id="dark-toggle">
+        </label>
+      </div>
+    </div>
+
+  </div>
+</div>
+<script src="../../公共/utils.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
